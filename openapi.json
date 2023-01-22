@@ -1,0 +1,1622 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Rivet Chat API",
+    "version": "2022-5-28"
+  },
+  "paths": {
+    "/identities/{identity_id}/thread": {
+      "get": {
+        "description": "Returns a thread ID with a given identity.",
+        "operationId": "GetDirectThread",
+        "parameters": [
+          {
+            "name": "identity_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GetDirectThread 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDirectThreadResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/messages": {
+      "post": {
+        "description": "Sends a chat message to a given topic.",
+        "operationId": "SendChatMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendChatMessageRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "SendChatMessage 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendChatMessageResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/threads/{thread_id}/history": {
+      "get": {
+        "description": "Returns message history for a given thread in a certain direction.\n\nDefaults to querying messages before ts.",
+        "operationId": "GetThreadHistory",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          },
+          {
+            "name": "ts",
+            "in": "query",
+            "description": "RFC3339 timestamp.",
+            "schema": {
+              "type": "string",
+              "description": "RFC3339 timestamp.",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "How many messages to collect in each direction.\n\nIf querying `rivet.api.chat.common#QueryDirection$before_and_after`,\n`rivet.api.chat.common#QueryDirection$chat_messages` will be `count *\n2`.",
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "description": "How many messages to collect in each direction.\n\nIf querying `rivet.api.chat.common#QueryDirection$before_and_after`,\n`rivet.api.chat.common#QueryDirection$chat_messages` will be `count *\n2`.",
+              "format": "int32",
+              "nullable": true
+            },
+            "required": true
+          },
+          {
+            "name": "query_direction",
+            "in": "query",
+            "description": "Represents which direction to query messages from relative to the given\ntimestamp.",
+            "schema": {
+              "$ref": "#/components/schemas/QueryDirection"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GetThreadHistory 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetThreadHistoryResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/threads/{thread_id}/live": {
+      "get": {
+        "description": "Fetches all relevant changes from a thread that have happened since the\ngiven watch index.",
+        "operationId": "WatchThread",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          },
+          {
+            "name": "watch_index",
+            "in": "query",
+            "description": "A query parameter denoting the requests watch index.",
+            "schema": {
+              "type": "string",
+              "description": "A query parameter denoting the requests watch index."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "WatchThread 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WatchThreadResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/threads/{thread_id}/read": {
+      "post": {
+        "description": "Updates the current identity's last read timestamp in the given thread.",
+        "operationId": "SetThreadRead",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetThreadReadRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SetThreadRead 200 response"
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/threads/{thread_id}/topic": {
+      "get": {
+        "description": "Fetches the topic of a thread.",
+        "operationId": "GetThreadTopic",
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GetThreadTopic 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetThreadTopicResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    },
+    "/threads/{thread_id}/typing-status": {
+      "put": {
+        "description": "Updates the current identity's typing status in the given thread.",
+        "operationId": "SetTypingStatus",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTypingStatusRequestContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "A universally unique identifier.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "description": "A universally unique identifier."
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SetTypingStatus 200 response"
+          },
+          "400": {
+            "description": "BadRequestError 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError 403 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundError 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponseContent"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "UnauthorizedError 408 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateLimitError 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitErrorResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalError 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["identity", "portal"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BadRequestErrorResponseContent": {
+        "type": "object",
+        "description": "An error thrown when the requestee has sent an invalid or malformed request.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "ChatIdentityTypingStatus": {
+        "type": "object",
+        "description": "The chat typing status of an identity.",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ChatTypingStatus"
+          }
+        },
+        "required": ["identity", "status"]
+      },
+      "ChatMessage": {
+        "type": "object",
+        "description": "A chat message.",
+        "properties": {
+          "chat_message_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "thread_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "send_ts": {
+            "type": "string",
+            "description": "RFC3339 timestamp.",
+            "format": "date-time"
+          },
+          "body": {
+            "$ref": "#/components/schemas/ChatMessageBody"
+          }
+        },
+        "required": ["body", "chat_message_id", "send_ts", "thread_id"]
+      },
+      "ChatMessageBody": {
+        "description": "Represents types of chat message bodies.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "text",
+            "properties": {
+              "text": {
+                "$ref": "#/components/schemas/ChatMessageBodyText"
+              }
+            },
+            "required": ["text"]
+          },
+          {
+            "type": "object",
+            "title": "chat_create",
+            "properties": {
+              "chat_create": {
+                "$ref": "#/components/schemas/ChatMessageBodyChatCreate"
+              }
+            },
+            "required": ["chat_create"]
+          },
+          {
+            "type": "object",
+            "title": "identity_follow",
+            "properties": {
+              "identity_follow": {
+                "$ref": "#/components/schemas/ChatMessageBodyIdentityFollow"
+              }
+            },
+            "required": ["identity_follow"]
+          },
+          {
+            "type": "object",
+            "title": "group_join",
+            "properties": {
+              "group_join": {
+                "$ref": "#/components/schemas/ChatMessageBodyGroupJoin"
+              }
+            },
+            "required": ["group_join"]
+          },
+          {
+            "type": "object",
+            "title": "group_leave",
+            "properties": {
+              "group_leave": {
+                "$ref": "#/components/schemas/ChatMessageBodyGroupLeave"
+              }
+            },
+            "required": ["group_leave"]
+          },
+          {
+            "type": "object",
+            "title": "party_invite",
+            "properties": {
+              "party_invite": {
+                "$ref": "#/components/schemas/ChatMessageBodyPartyInvite"
+              }
+            },
+            "required": ["party_invite"]
+          },
+          {
+            "type": "object",
+            "title": "party_join_request",
+            "properties": {
+              "party_join_request": {
+                "$ref": "#/components/schemas/ChatMessageBodyPartyJoinRequest"
+              }
+            },
+            "required": ["party_join_request"]
+          },
+          {
+            "type": "object",
+            "title": "party_join",
+            "properties": {
+              "party_join": {
+                "$ref": "#/components/schemas/ChatMessageBodyPartyJoin"
+              }
+            },
+            "required": ["party_join"]
+          },
+          {
+            "type": "object",
+            "title": "party_leave",
+            "properties": {
+              "party_leave": {
+                "$ref": "#/components/schemas/ChatMessageBodyPartyLeave"
+              }
+            },
+            "required": ["party_leave"]
+          },
+          {
+            "type": "object",
+            "title": "party_activity_change",
+            "properties": {
+              "party_activity_change": {
+                "$ref": "#/components/schemas/ChatMessageBodyPartyActivityChange"
+              }
+            },
+            "required": ["party_activity_change"]
+          }
+        ]
+      },
+      "ChatMessageBodyChatCreate": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating a new chat was created."
+      },
+      "ChatMessageBodyGroupJoin": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity joined the group.",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        },
+        "required": ["identity"]
+      },
+      "ChatMessageBodyGroupLeave": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity left the group.",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        },
+        "required": ["identity"]
+      },
+      "ChatMessageBodyIdentityFollow": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity followed the identity."
+      },
+      "ChatMessageBodyPartyActivityChange": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating a change in the party's current\nactivity."
+      },
+      "ChatMessageBodyPartyInvite": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant holding an a party invitation.",
+        "properties": {
+          "sender": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          },
+          "party": {
+            "$ref": "#/components/schemas/PartyHandle"
+          },
+          "invite_token": {
+            "type": "string",
+            "description": "Pass to `rivet.api.party#GetPartyFromInvite$token` to view more information about the party.\n\nPass to `rivet.api.party.common#JoinPartyInvite$token` to join the party.",
+            "format": "password"
+          }
+        },
+        "required": ["sender"]
+      },
+      "ChatMessageBodyPartyJoin": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity joined the party.",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        },
+        "required": ["identity"]
+      },
+      "ChatMessageBodyPartyJoinRequest": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity requesting to join your party.",
+        "properties": {
+          "sender": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        },
+        "required": ["sender"]
+      },
+      "ChatMessageBodyPartyLeave": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for indicating an identity left the party.",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        },
+        "required": ["identity"]
+      },
+      "ChatMessageBodyText": {
+        "type": "object",
+        "description": "`rivet.chat#ChatMessageBody` variant for text messages.\n\nSent by other identities using the chat interface.",
+        "properties": {
+          "sender": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          },
+          "body": {
+            "type": "string",
+            "description": "The text in the message."
+          }
+        },
+        "required": ["body", "sender"]
+      },
+      "ChatSimpleTopic": {
+        "description": "Represents a topic of the given chat thread without the associated handles\nfor the topic.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "group",
+            "properties": {
+              "group": {
+                "$ref": "#/components/schemas/ChatSimpleTopicGroup"
+              }
+            },
+            "required": ["group"]
+          },
+          {
+            "type": "object",
+            "title": "party",
+            "properties": {
+              "party": {
+                "$ref": "#/components/schemas/ChatSimpleTopicParty"
+              }
+            },
+            "required": ["party"]
+          },
+          {
+            "type": "object",
+            "title": "direct",
+            "properties": {
+              "direct": {
+                "$ref": "#/components/schemas/ChatSimpleTopicDirect"
+              }
+            },
+            "required": ["direct"]
+          }
+        ]
+      },
+      "ChatSimpleTopicDirect": {
+        "type": "object",
+        "description": "`rivet.chat#ChatSimpleTopic` variant for direct (identity to identity) chats.",
+        "properties": {
+          "identity_a_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "identity_b_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          }
+        },
+        "required": ["identity_a_id", "identity_b_id"]
+      },
+      "ChatSimpleTopicGroup": {
+        "type": "object",
+        "description": "`rivet.chat#ChatSimpleTopic` variant for groups.",
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          }
+        },
+        "required": ["group_id"]
+      },
+      "ChatSimpleTopicParty": {
+        "type": "object",
+        "description": "`rivet.chat#ChatSimpleTopic` variant for parties.",
+        "properties": {
+          "party_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          }
+        },
+        "required": ["party_id"]
+      },
+      "ChatTypingStatus": {
+        "description": "Represents a chat typing status.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "idle",
+            "properties": {
+              "idle": {
+                "$ref": "#/components/schemas/Unit"
+              }
+            },
+            "required": ["idle"]
+          },
+          {
+            "type": "object",
+            "title": "typing",
+            "properties": {
+              "typing": {
+                "$ref": "#/components/schemas/Unit"
+              }
+            },
+            "required": ["typing"]
+          }
+        ]
+      },
+      "ForbiddenErrorResponseContent": {
+        "type": "object",
+        "description": "An error thrown when the requestee requests a resource they do not have access to.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "GameHandle": {
+        "type": "object",
+        "description": "A game handle.",
+        "properties": {
+          "game_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "name_id": {
+            "type": "string",
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9](?:[a-zA-Z0-9]-?)+[a-zA-Z0-9]$",
+            "description": "A human readable short identifier used to references resources.\n\nDifferent than a `rivet.common#Uuid` because this is intended to be human readable.\n\nDifferent than `rivet.common#DisplayName` because this should not include special\ncharacters and be short."
+          },
+          "display_name": {
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 1,
+            "pattern": "^(?:[^ \\n\\r] ?)+[^ \\n\\r]$",
+            "description": "Represent a resource's readable display name."
+          },
+          "logo_url": {
+            "type": "string",
+            "description": "The URL of this game's logo image."
+          },
+          "banner_url": {
+            "type": "string",
+            "description": "The URL of this game's banner image."
+          }
+        },
+        "required": ["display_name", "game_id", "name_id"]
+      },
+      "GetDirectThreadResponseContent": {
+        "type": "object",
+        "properties": {
+          "thread_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "identity": {
+            "$ref": "#/components/schemas/IdentityHandle"
+          }
+        }
+      },
+      "GetThreadHistoryResponseContent": {
+        "type": "object",
+        "properties": {
+          "chat_messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "description": "Ordered old to new.\n\nIf querying `rivet.api.chat.common#before_and_after`, this will be\n`count * 2` long."
+          }
+        },
+        "required": ["chat_messages"]
+      },
+      "GetThreadTopicResponseContent": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "$ref": "#/components/schemas/ChatSimpleTopic"
+          }
+        },
+        "required": ["topic"]
+      },
+      "IdentityExternalLinks": {
+        "type": "object",
+        "description": "External links for an identity.",
+        "properties": {
+          "profile": {
+            "type": "string",
+            "description": "A link to this identity's profile page."
+          },
+          "settings": {
+            "type": "string",
+            "description": "A link to the Rivet settings page."
+          },
+          "chat": {
+            "type": "string",
+            "description": "A link to a chat page with the given identity."
+          }
+        },
+        "required": ["profile"]
+      },
+      "IdentityGameActivity": {
+        "type": "object",
+        "description": "The game an identity is currently participating in.",
+        "properties": {
+          "game": {
+            "$ref": "#/components/schemas/GameHandle"
+          },
+          "message": {
+            "type": "string",
+            "description": "A short activity message about the current game activity."
+          },
+          "public_metadata": {
+            "description": "JSON data seen by anyone."
+          },
+          "mutual_metadata": {
+            "description": "JSON data seen only by the given identity and their mutual followers."
+          }
+        },
+        "required": ["game", "message"]
+      },
+      "IdentityHandle": {
+        "type": "object",
+        "description": "An identity handle.",
+        "properties": {
+          "identity_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "display_name": {
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 1,
+            "pattern": "^(?:[^ \\n\\r] ?)+[^ \\n\\r]$",
+            "description": "Represent a resource's readable display name."
+          },
+          "account_number": {
+            "type": "number",
+            "maximum": 9999,
+            "minimum": 0,
+            "description": "Identity profile account number (#1234).\n\nThese are assigned in addition to an identity's display name in order to\nallow multiple identities to have the same display name while still\nproviding a unique handle.\n\nThese are unique to each display name; you can have multiple accounts with\ndifferent display names and the same account number.",
+            "format": "int32",
+            "nullable": true
+          },
+          "avatar_url": {
+            "type": "string",
+            "description": "The URL of this identity's avatar image."
+          },
+          "presence": {
+            "$ref": "#/components/schemas/IdentityPresence"
+          },
+          "party": {
+            "$ref": "#/components/schemas/PartyHandle"
+          },
+          "is_registered": {
+            "type": "boolean",
+            "description": "Whether or not this identity is registered with a linked account.",
+            "nullable": true
+          },
+          "external": {
+            "$ref": "#/components/schemas/IdentityExternalLinks"
+          }
+        },
+        "required": [
+          "account_number",
+          "avatar_url",
+          "display_name",
+          "external",
+          "identity_id",
+          "is_registered"
+        ]
+      },
+      "IdentityPresence": {
+        "type": "object",
+        "description": "Information about the identity's current status, party, and active game.",
+        "properties": {
+          "update_ts": {
+            "type": "string",
+            "description": "RFC3339 timestamp.",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/IdentityStatus"
+          },
+          "game_activity": {
+            "$ref": "#/components/schemas/IdentityGameActivity"
+          }
+        },
+        "required": ["status", "update_ts"]
+      },
+      "IdentityStatus": {
+        "type": "string",
+        "description": "The current status of an identity. This helps players understand if another\nplayer is currently playing or has their game in the background.",
+        "enum": ["online", "away", "offline"]
+      },
+      "InternalErrorResponseContent": {
+        "type": "object",
+        "description": "An error caused by internal server problems.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "NotFoundErrorResponseContent": {
+        "type": "object",
+        "description": "An error thrown when the requestee requests a non existant resource.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "PartyActivity": {
+        "description": "A union representing the activity of a given party.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "idle",
+            "properties": {
+              "idle": {
+                "$ref": "#/components/schemas/PartyActivityIdle"
+              }
+            },
+            "required": ["idle"]
+          },
+          {
+            "type": "object",
+            "title": "matchmaker_finding_lobby",
+            "properties": {
+              "matchmaker_finding_lobby": {
+                "$ref": "#/components/schemas/PartyActivityMatchmakerFindingLobby"
+              }
+            },
+            "required": ["matchmaker_finding_lobby"]
+          },
+          {
+            "type": "object",
+            "title": "matchmaker_lobby",
+            "properties": {
+              "matchmaker_lobby": {
+                "$ref": "#/components/schemas/PartyActivityMatchmakerLobby"
+              }
+            },
+            "required": ["matchmaker_lobby"]
+          }
+        ]
+      },
+      "PartyActivityIdle": {
+        "type": "object",
+        "description": "A party activity denoting that the party is idle."
+      },
+      "PartyActivityMatchmakerFindingLobby": {
+        "type": "object",
+        "description": "A party activity denoting that the party is currently searching for a lobby.",
+        "properties": {
+          "game": {
+            "$ref": "#/components/schemas/GameHandle"
+          }
+        },
+        "required": ["game"]
+      },
+      "PartyActivityMatchmakerLobby": {
+        "type": "object",
+        "description": "A party activity denoting that the party is currently in a lobby.",
+        "properties": {
+          "lobby": {
+            "$ref": "#/components/schemas/PartyMatchmakerLobby"
+          },
+          "game": {
+            "$ref": "#/components/schemas/GameHandle"
+          }
+        },
+        "required": ["game", "lobby"]
+      },
+      "PartyExternalLinks": {
+        "type": "object",
+        "description": "External links for a party.",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "A link to the given party's chat thread."
+          }
+        },
+        "required": ["chat"]
+      },
+      "PartyHandle": {
+        "type": "object",
+        "description": "A party handle.",
+        "properties": {
+          "party_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          },
+          "create_ts": {
+            "type": "string",
+            "description": "RFC3339 timestamp.",
+            "format": "date-time"
+          },
+          "activity": {
+            "$ref": "#/components/schemas/PartyActivity"
+          },
+          "external": {
+            "$ref": "#/components/schemas/PartyExternalLinks"
+          }
+        },
+        "required": ["activity", "create_ts", "external", "party_id"]
+      },
+      "PartyMatchmakerLobby": {
+        "type": "object",
+        "description": "A party lobby.",
+        "properties": {
+          "lobby_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          }
+        },
+        "required": ["lobby_id"]
+      },
+      "QueryDirection": {
+        "type": "string",
+        "description": "Represents which direction to query messages from relative to the given\ntimestamp.",
+        "enum": ["before", "after", "before_and_after"]
+      },
+      "RateLimitErrorResponseContent": {
+        "type": "object",
+        "description": "An error thrown when the requestee has hit a rate limit. You are sending too many requests too quickly.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "SendChatMessageRequestContent": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "$ref": "#/components/schemas/SendChatTopic"
+          },
+          "message_body": {
+            "$ref": "#/components/schemas/SendMessageBody"
+          }
+        },
+        "required": ["message_body", "topic"]
+      },
+      "SendChatMessageResponseContent": {
+        "type": "object",
+        "properties": {
+          "chat_message_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "description": "A universally unique identifier."
+          }
+        },
+        "required": ["chat_message_id"]
+      },
+      "SendChatTopic": {
+        "description": "Topic to send a chat message to.\n\nIf you already know the thread ID, use `thread_id`.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "thread_id",
+            "properties": {
+              "thread_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "description": "A universally unique identifier."
+              }
+            },
+            "required": ["thread_id"]
+          },
+          {
+            "type": "object",
+            "title": "group_id",
+            "properties": {
+              "group_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "description": "A universally unique identifier."
+              }
+            },
+            "required": ["group_id"]
+          },
+          {
+            "type": "object",
+            "title": "party_id",
+            "properties": {
+              "party_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "description": "A universally unique identifier."
+              }
+            },
+            "required": ["party_id"]
+          },
+          {
+            "type": "object",
+            "title": "identity_id",
+            "properties": {
+              "identity_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "description": "A universally unique identifier."
+              }
+            },
+            "required": ["identity_id"]
+          }
+        ]
+      },
+      "SendMessageBody": {
+        "description": "Data to send in a chat message.",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "text",
+            "properties": {
+              "text": {
+                "$ref": "#/components/schemas/SendMessageBodyText"
+              }
+            },
+            "required": ["text"]
+          },
+          {
+            "type": "object",
+            "title": "party_invite",
+            "properties": {
+              "party_invite": {
+                "$ref": "#/components/schemas/SendMessageBodyPartyInvite"
+              }
+            },
+            "required": ["party_invite"]
+          }
+        ]
+      },
+      "SendMessageBodyPartyInvite": {
+        "type": "object",
+        "description": "`SendMessageBody` variant for party invite messages. Cannot send to party topics.",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "An invite token.",
+            "format": "password"
+          }
+        },
+        "required": ["token"]
+      },
+      "SendMessageBodyText": {
+        "type": "object",
+        "description": "`rivet.api.chat.common#SendMessageBody` variant for text messages.",
+        "properties": {
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": ["body"]
+      },
+      "SetThreadReadRequestContent": {
+        "type": "object",
+        "properties": {
+          "last_read_ts": {
+            "type": "string",
+            "description": "Any messages newer than this timestamp will be marked as unread.\n\nThis should be the current timestamp (in milliseconds).",
+            "format": "date-time"
+          }
+        },
+        "required": ["last_read_ts"]
+      },
+      "SetTypingStatusRequestContent": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ChatTypingStatus"
+          }
+        },
+        "required": ["status"]
+      },
+      "UnauthorizedErrorResponseContent": {
+        "type": "object",
+        "description": "An error thrown when the requestee is not authenticated.",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Unstructured metadata relating to an error. Must be manually parsed."
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "Unit": {
+        "type": "object"
+      },
+      "WatchResponse": {
+        "type": "object",
+        "description": "Provided by watchable endpoints used in blocking loops.",
+        "properties": {
+          "index": {
+            "type": "string",
+            "description": "Index indicating the version of the data responded.\n\nPas this to `rivet.common#WatchQuery` to block and wait for the next response."
+          }
+        },
+        "required": ["index"]
+      },
+      "WatchThreadResponseContent": {
+        "type": "object",
+        "properties": {
+          "chat_messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "description": "All messages new messages posted to this thread. Ordered\nold to new."
+          },
+          "typing_statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatIdentityTypingStatus"
+            },
+            "description": "All identities that are currently typing in this thread."
+          },
+          "watch": {
+            "$ref": "#/components/schemas/WatchResponse"
+          }
+        },
+        "required": ["chat_messages", "watch"]
+      }
+    },
+    "securitySchemes": {
+      "smithy.api.httpBearerAuth": {
+        "type": "http",
+        "description": "HTTP Bearer authentication",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "smithy.api.httpBearerAuth": []
+    }
+  ]
+}
