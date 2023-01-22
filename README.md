@@ -1,8 +1,8 @@
 # Rivet Documentation
 
-The content and configuration powering the documentation available at [docs.rivet.gg](https://docs.rivet.gg)
+Available at [docs.rivet.gg](https://docs.rivet.gg).
 
-### 👩‍💻 Development
+### Development
 
 Run the following command at the root of this directory:
 
