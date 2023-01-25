@@ -1,0 +1,2475 @@
+openapi: 3.0.1
+info:
+  title: Rivet API
+  version: ''
+servers:
+  - url: https://blah.api.rivet.gg/v1
+paths:
+  /activities:
+    get:
+      description: Returns an overview of all players currently online or in game.
+      operationId: ActivityService.list
+      tags:
+        - IdentityActivities
+      parameters:
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CommonsWatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityListActivitiesOutput'
+      security: &ref_0
+        - BearerAuth: []
+  /events/live:
+    get:
+      description: Returns all events relative to the current identity.
+      operationId: EventsService.watch
+      tags:
+        - IdentityEvents
+      parameters:
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CommonsWatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityWatchEventsOutput'
+      security: *ref_0
+  /game-links:
+    post:
+      description: >
+        Begins the process for linking an identity with the Rivet Hub.
+
+
+        # Importance of Linking Identities
+
+
+        When an identity is created via `rivet.api.identity#SetupIdentity`, the
+        identity is temporary
+
+        and is not shared with other games the user plays.
+
+
+        In order to make the identity permanent and synchronize the identity
+        with
+
+        other games, the identity must be linked with the hub.
+
+
+        # Linking Process
+
+
+        The linking process works by opening `identity_link_url` in a browser
+        then polling
+
+        `rivet.api.identity#GetGameLink` to wait for it to complete.
+
+
+        This is designed to be as flexible as possible so `identity_link_url`
+        can be opened
+
+        on any device. For example, when playing a console game, the user can
+        scan a
+
+        QR code for `identity_link_url` to authenticate on their phone.
+      operationId: GameLinkService.prepare
+      tags:
+        - IdentityLinks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityPrepareGameLinkOutput'
+      security: *ref_0
+    get:
+      description: >-
+        Returns the current status of a linking process. Once `status` is
+        `complete`, the identity's profile should be fetched again since they
+        may have switched accounts.
+      operationId: GameLinkService.get
+      tags:
+        - IdentityLinks
+      parameters:
+        - name: identity_link_token
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/CommonsJWT'
+        - name: watch_index
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/CommonsWatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityGetGameLinkOutput'
+      security: *ref_0
+  /game-links/complete:
+    post:
+      description: >-
+        Completes a game link process and returns whether or not the link is
+        valid.
+      operationId: GameLinkService.complete
+      tags:
+        - IdentityLinks
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identity_link_token:
+                  $ref: '#/components/schemas/CommonsJWT'
+              required:
+                - identity_link_token
+  /game-links/cancel:
+    post:
+      description: >-
+        Cancels a game link. It can no longer be used to link after
+        cancellation.
+      operationId: GameLinkService.cancel
+      tags:
+        - IdentityLinks
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identity_link_token:
+                  $ref: '#/components/schemas/CommonsJWT'
+              required:
+                - identity_link_token
+  /lobbies/ready:
+    post:
+      description: >-
+        Marks the current lobby as ready to accept connections.  Players will
+        not be able to connect to this lobby until the  lobby is flagged as
+        ready.
+      operationId: LobbiesService.ready
+      tags:
+        - MatchmakerLobbies
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /lobbies/closed:
+    put:
+      description: >
+        If `is_closed` is `true`, players will be prevented from joining the
+        lobby.
+
+        Does not shutdown the lobby.
+      operationId: LobbiesService.setClosed
+      tags:
+        - MatchmakerLobbies
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_closed:
+                  type: boolean
+              required:
+                - is_closed
+  /lobbies/find:
+    post:
+      description: |
+        Finds a lobby based on the given criteria.
+        If a lobby is not found and `prevent_auto_create_lobby` is `true`, 
+        a new lobby will be created.
+      operationId: LobbiesService.find
+      tags:
+        - MatchmakerLobbies
+      parameters:
+        - name: origin
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchmakerFindLobbyOutput'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                game_modes:
+                  type: array
+                  items:
+                    type: string
+                regions:
+                  type: array
+                  items:
+                    type: string
+                prevent_auto_create_lobby:
+                  type: boolean
+                captcha:
+                  $ref: '#/components/schemas/CommonsCaptchaConfig'
+              required:
+                - game_modes
+  /lobbies/join:
+    post:
+      description: |
+        Joins a specific lobby.
+        This request will use the direct player count configured for the
+        lobby group.
+      operationId: LobbiesService.join
+      tags:
+        - MatchmakerLobbies
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchmakerJoinLobbyOutput'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lobby_id:
+                  type: string
+                captcha:
+                  $ref: '#/components/schemas/CommonsCaptchaConfig'
+              required:
+                - lobby_id
+  /lobbies/list:
+    get:
+      description: Lists all open lobbies.
+      operationId: LobbiesService.list
+      tags:
+        - MatchmakerLobbies
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchmakerListLobbiesOutput'
+      security: *ref_0
+  /players/connected:
+    post:
+      description: >
+        Validates the player token is valid and has not already been consumed
+        then
+
+        marks the player as connected.
+
+
+        # Player Tokens and Reserved Slots
+
+
+        Player tokens reserve a spot in the lobby until they expire. This allows
+        for
+
+        precise matchmaking up to exactly the lobby's player limit, which is
+
+        important for games with small lobbies and a high influx of players.
+
+
+        By calling this endpoint with the player token, the player's spot is
+        marked
+
+        as connected and will not expire. If this endpoint is never called, the
+
+        player's token will expire and this spot will be filled by another
+        player.
+
+
+        # Anti-Botting
+
+
+        Player tokens are only issued by caling `lobbies.join`, calling
+        `lobbies.find`, or
+
+        from the `GlobalEventMatchmakerLobbyJoin` event.
+
+        These endpoints have anti-botting measures (i.e. enforcing max player
+
+        limits, captchas, and detecting bots), so valid player tokens provide
+        some
+
+        confidence that the player is not a bot.
+
+
+        Therefore, it's important to make sure the token is valid by waiting for
+
+        this endpoint to return OK before allowing the connected socket to do
+
+        anything else. If this endpoint returns an error, the socket should be
+
+        disconnected immediately.
+
+
+        # How to Transmit the Player Token
+
+
+        The client is responsible for acquiring the player token by caling
+
+        `lobbies.join`, calling `lobbies.find`, or from the
+        `GlobalEventMatchmakerLobbyJoin`
+
+        event.  Beyond that, it's up to the developer how the player token is
+
+        transmitted to the lobby.
+
+
+        If using WebSockets, the player token can be transmitted as a query
+
+        parameter.
+
+
+        Otherwise, the player token will likely be automatically sent by the
+        client
+
+        once the socket opens. As mentioned above, nothing else should happen
+        until
+
+        the player token is validated.
+      operationId: PlayersService.connected
+      tags:
+        - MatchmakerPlayers
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                player_token:
+                  type: string
+              required:
+                - player_token
+  /players/disconnected:
+    post:
+      description: >-
+        Marks a player as disconnected.
+
+        # Ghost Players
+
+        If players are not marked as disconnected, lobbies will result with
+        "ghost players" that the matchmaker thinks exist but are no longer
+        connected to the lobby.
+      operationId: PlayersService.disconnected
+      tags:
+        - MatchmakerPlayers
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                player_token:
+                  type: string
+              required:
+                - player_token
+  /regions:
+    get:
+      description: >
+        Returns a list of regions available to this namespace.
+
+
+        Regions are sorted by most optimal to least optimal. The player's IP
+        address
+
+        is used to calculate the regions' optimality.
+      operationId: RegionsService.list
+      tags:
+        - MatchmakerRegions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchmakerListRegionsOutput'
+      security: *ref_0
+  /identities:
+    post:
+      description: >-
+        Gets or creates an identity.
+
+        Passing an existing identity token in the body refreshes the token.
+
+        Temporary Accounts
+
+        Until the identity is linked with the Rivet Hub (see `PrepareGameLink`),
+        this identity will be temporary but still behave like all other
+        identities.
+
+        This is intended to allow users to play the game without signing up
+        while still having the benefits of having an account. When they are
+        ready to save their account, they should be instructed to link their
+        account (see `PrepareGameLink`).
+
+        Storing Token
+
+        `identity_token` should be stored in some form of persistent storage.
+        The token should be read from storage and passed to `SetupIdentity`
+        every time the client starts.
+      operationId: IdentityService.setup
+      tags:
+        - Identity
+      parameters:
+        - name: identity_link_token
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/CommonsJWT'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIdentityOutput'
+      security: *ref_0
+  /identities/{identity_id}/profile:
+    get:
+      description: Fetches an identity profile.
+      operationId: IdentityService.getProfile
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CommonsWatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityProfileOutput'
+      security: *ref_0
+  /identities/self/profile:
+    get:
+      description: Fetches the current identity's profile.
+      operationId: IdentityService.getSelfProfile
+      tags:
+        - Identity
+      parameters:
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/CommonsWatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityProfileOutput'
+      security: *ref_0
+    post:
+      description: Updates profile of the current identity.
+      operationId: IdentityService.updateIdentityProfile
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  $ref: '#/components/schemas/CommonsDisplayName'
+                account_number:
+                  $ref: '#/components/schemas/CommonsAccountNumber'
+                bio:
+                  $ref: '#/components/schemas/CommonsBio'
+  /identities/batch/handle:
+    get:
+      description: Fetches a list of identity handles.
+      operationId: IdentityService.getIdentityHandles
+      tags:
+        - Identity
+      parameters:
+        - name: identity_ids
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityHandlesOutput'
+      security: *ref_0
+  /identities/batch/summary:
+    get:
+      description: Fetches a list of identity summaries.
+      operationId: IdentityService.getIdentitySummaries
+      tags:
+        - Identity
+      parameters:
+        - name: identity_ids
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentitySummariesOutput'
+      security: *ref_0
+  /identities/self/profile/validate:
+    post:
+      description: >-
+        Validate contents of identity profile. Use to provide immediate feedback
+        on profile changes before committing them.
+      operationId: IdentityService.validateIdentityProfile
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  $ref: '#/components/schemas/CommonsDisplayName'
+                account_number:
+                  $ref: '#/components/schemas/CommonsAccountNumber'
+                bio:
+                  $ref: '#/components/schemas/CommonsBio'
+  /identities/search:
+    get:
+      description: Fuzzy search for identities.
+      operationId: IdentityService.search
+      tags:
+        - Identity
+      parameters:
+        - name: query
+          in: query
+          description: >-
+            The query to match identity display names and account numbers
+            against.
+          required: true
+          schema:
+            type: string
+        - name: anchor
+          in: query
+          description: How many identities to offset the search by.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Amount of identities to return. Must be between 1 and 32 inclusive.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchIdentitiesOutput'
+      security: *ref_0
+  /identities/self/activity:
+    post:
+      description: >-
+        Sets the current identity's game activity. This activity will
+        automatically be removed when the identity goes offline.
+      operationId: IdentityService.setGameActivity
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                game_activity:
+                  $ref: '#/components/schemas/IdentityUpdateIdentityGameActivity'
+              required:
+                - game_activity
+    delete:
+      description: Removes the current identity's game activity.
+      operationId: IdentityService.removeGameActivity
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /identities/identities/self/status:
+    post:
+      description: Updates the current identity's status.
+      operationId: IdentityService.updateIdentityStatus
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/CommonsIdentityStatus'
+              required:
+                - status
+  /identities/{identity_id}/follow:
+    post:
+      description: >-
+        Follows the given identity. In order for identities to be "friends", the
+        other identity has to also follow this identity.
+      operationId: IdentityService.follow
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+    delete:
+      description: Unfollows the given identity.
+      operationId: IdentityService.unfollow
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /identities/avatar-upload/prepare:
+    post:
+      description: >-
+        Prepares an avatar image upload. Complete upload with
+        `CompleteIdentityAvatarUpload`.
+      operationId: IdentityService.prepareIdentityAvatarUpload
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrepareIdentityAvatarUploadOutput'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                mime:
+                  type: string
+                  description: >-
+                    See
+                    https://www.iana.org/assignments/media-types/media-types.xhtml
+                content_length:
+                  type: integer
+                  format: int64
+              required:
+                - path
+                - mime
+                - content_length
+  /identities/avatar-upload/{upload_id}/complete:
+    post:
+      description: >-
+        Completes an avatar image upload. Must be called after the file upload
+        process completes.
+      operationId: IdentityService.completeIdentityAvatarUpload
+      tags:
+        - Identity
+      parameters:
+        - name: upload_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /identities/self/beta-signup:
+    post:
+      description: Submits a beta signup form.
+      operationId: IdentityService.signupForBeta
+      tags:
+        - Identity
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                company_name:
+                  type: string
+                company_size:
+                  type: string
+                preferred_tools:
+                  type: string
+                goals:
+                  type: string
+              required:
+                - name
+                - company_size
+                - preferred_tools
+                - goals
+  /identities/{identity_id}/report:
+    post:
+      description: Creates an abuse report for an identity.
+      operationId: IdentityService.report
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+              required:
+                - reason
+  /identities/{identity_id}/followers:
+    get:
+      operationId: IdentityService.listFollowers
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: anchor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Range is between 1 and 32 (inclusive).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFollowersOutput'
+      security: *ref_0
+  /identities/self/friends:
+    get:
+      operationId: IdentityService.listFriends
+      tags:
+        - Identity
+      parameters:
+        - name: anchor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Range is between 1 and 32 (inclusive).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFriendsOutput'
+      security: *ref_0
+  /identities/{identity_id}/mutual-friends:
+    get:
+      operationId: IdentityService.listMutualFriends
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: anchor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Range is between 1 and 32 (inclusive).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMutualFriendsOutput'
+      security: *ref_0
+components:
+  schemas:
+    CommonsCaptchaConfig:
+      oneOf:
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsCaptchaConfigHcaptcha'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - hcaptcha
+      description: Methods to verify a captcha
+    CommonsCaptchaConfigHcaptcha:
+      type: object
+      description: Captcha configuration.
+      properties:
+        client_response:
+          type: string
+      required:
+        - client_response
+    CommonsChatThread:
+      type: object
+      description: A chat thread
+      properties:
+        thread_id:
+          type: string
+          format: uuid
+        create_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        topic:
+          $ref: '#/components/schemas/CommonsChatTopic'
+        tail_message:
+          $ref: '#/components/schemas/CommonsChatMessage'
+        last_read_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        unread_count:
+          type: integer
+        external:
+          $ref: '#/components/schemas/CommonsChatThreadExternalLinks'
+      required:
+        - thread_id
+        - create_ts
+        - topic
+        - last_read_ts
+        - unread_count
+        - external
+    CommonsChatMessage:
+      type: object
+      properties:
+        chat_message_id:
+          type: string
+          format: uuid
+        thread_id:
+          type: string
+          format: uuid
+        send_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+      required:
+        - chat_message_id
+        - thread_id
+        - send_ts
+    CommonsChatTopic:
+      oneOf:
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsChatTopicGroup'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - group
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsChatTopicParty'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - party
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsChatTopicDirect'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - direct
+      description: Represents the topic of the given chat thread.
+    CommonsChatTopicGroup:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/CommonsGroupHandle'
+      required:
+        - group
+    CommonsChatTopicParty:
+      type: object
+      properties:
+        party:
+          $ref: '#/components/schemas/CommonsPartyHandle'
+      required:
+        - party
+    CommonsChatTopicDirect:
+      type: object
+      properties:
+        identity_a:
+          $ref: '#/components/schemas/CommonsIdentityHandle'
+        identity_b:
+          $ref: '#/components/schemas/CommonsIdentityHandle'
+      required:
+        - identity_a
+        - identity_b
+    CommonsChatThreadExternalLinks:
+      type: object
+      properties:
+        chat:
+          type: string
+      required:
+        - chat
+    CommonsIdentifier:
+      type: string
+      description: >-
+        A human readable short identifier used to references resources.
+        Different than a `uuid` because this is intended to be human readable.
+        Different than `DisplayName` because this should not include special
+        characters and be short.
+    CommonsBio:
+      type: string
+      description: Follows regex ^(?:[^\n\r]+\n?|\n){1,5}$
+    CommonsEmail:
+      type: string
+      description: A valid email address
+    CommonsJWT:
+      type: string
+      description: Documentation at https://jwt.io/
+    CommonsWatchQuery:
+      type: string
+      description: A query parameter denoting the requests watch index.
+    CommonsWatchResponse:
+      type: object
+      description: Provided by watchable endpoints used in blocking loops.
+      properties:
+        index:
+          type: string
+          description: |
+            Index indicating the version of the data responded.
+            Pass this to `WatchQuery` to block and wait for the next response.
+      required:
+        - index
+    CommonsDisplayName:
+      type: string
+    CommonsAccountNumber:
+      type: integer
+    CommonsTimestamp:
+      type: string
+      description: RFC3339 timestamp
+    CommonsGlobalEventNotification:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        thumbnail_url:
+          type: string
+        url:
+          type: string
+      required:
+        - title
+        - description
+        - thumbnail_url
+        - url
+    CommonsGlobalEventChatThreadRemove:
+      type: object
+      properties:
+        thread_id:
+          type: string
+          format: uuid
+      required:
+        - thread_id
+    CommonsValidationError:
+      type: object
+      description: An error given by failed content validation.
+      properties:
+        path:
+          type: array
+          items:
+            type: string
+          description: A list of strings denoting the origin of a validation error.
+      required:
+        - path
+    CommonsGameHandle:
+      type: object
+      properties:
+        game_id:
+          type: string
+          format: uuid
+        name_id:
+          $ref: '#/components/schemas/CommonsIdentifier'
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        logo_url:
+          type: string
+        banner_url:
+          type: string
+      required:
+        - game_id
+        - name_id
+        - display_name
+        - logo_url
+        - banner_url
+    CommonsGameSummary:
+      type: object
+      properties:
+        game_id:
+          type: string
+          format: uuid
+        name_id:
+          $ref: '#/components/schemas/CommonsIdentifier'
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        logo_url:
+          type: string
+          description: The URL of this game's logo image.
+        banner_url:
+          type: string
+          description: The URL of this game's banner image.
+        url:
+          type: string
+        developer:
+          $ref: '#/components/schemas/CommonsGroupHandle'
+      required:
+        - game_id
+        - name_id
+        - display_name
+        - url
+        - developer
+    CommonsGameStatSummary:
+      type: object
+      description: A game statistic summary.
+      properties:
+        game:
+          $ref: '#/components/schemas/CommonsGameHandle'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsGameStat'
+      required:
+        - game
+        - stats
+    CommonsGameStat:
+      type: object
+      description: A game statistic.
+      properties:
+        config:
+          $ref: '#/components/schemas/CommonsGameStatConfig'
+        overall_value:
+          type: number
+          format: double
+          description: A single overall value of the given statistic.
+      required:
+        - config
+        - overall_value
+    CommonsGameStatConfig:
+      type: object
+      description: A game statistic config.
+      properties:
+        record_id:
+          type: string
+          format: uuid
+        icon_id:
+          type: string
+          format: uuid
+        format:
+          $ref: '#/components/schemas/CommonsGameStatFormatMethod'
+        aggregation:
+          $ref: '#/components/schemas/CommonsGameStatAggregationMethod'
+        sorting:
+          $ref: '#/components/schemas/CommonsGameStatSortingMethod'
+        priority:
+          type: integer
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        postfix_singular:
+          type: string
+          description: >-
+            A string appended to the end of a singular game statistic's value.
+            Example: 1 **dollar**.
+        postfix_plural:
+          type: string
+          description: >-
+            A string appended to the end of a game statistic's value that is not
+            exactly 1. Example: 45 **dollars**.
+        prefix_singular:
+          type: string
+          description: >-
+            A string appended to the beginning of a singular game statistic's
+            value. Example: **value** 1.
+        prefix_plural:
+          type: string
+          description: >-
+            A string prepended to the beginning of a game statistic's value that
+            is not exactly 1. Example: **values** 45.
+      required:
+        - record_id
+        - icon_id
+        - format
+        - aggregation
+        - sorting
+        - priority
+        - display_name
+    CommonsGameStatFormatMethod:
+      type: string
+      enum:
+        - integer
+        - float_1
+        - float_2
+        - float_3
+        - duration_minute
+        - duration_second
+        - duration_hundredth_second
+      description: A value denoting the format method of a game statistic.
+    CommonsGameStatAggregationMethod:
+      type: string
+      enum:
+        - sum
+        - average
+        - min
+        - max
+      description: A value denoting the aggregation method of a game statistic.
+    CommonsGameStatSortingMethod:
+      type: string
+      enum:
+        - desc
+        - asc
+      description: A value denoting the sorting method of a game statistic.
+    CommonsCoord:
+      type: object
+      description: Geographical coordinates for a location on Planet Earth.
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      required:
+        - latitude
+        - longitude
+    CommonsDistance:
+      type: object
+      description: Distance available in multiple units.
+      properties:
+        kilometers:
+          type: number
+          format: double
+        miles:
+          type: number
+          format: double
+      required:
+        - kilometers
+        - miles
+    CommonsGroupSummary:
+      type: object
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        dispay_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        avatar_url:
+          type: string
+          description: The URL of this group's avatar image.
+        external:
+          $ref: '#/components/schemas/CommonsGroupExternalLinks'
+        is_developer:
+          type: boolean
+          description: Whether or not this group is a developer.
+        bio:
+          $ref: '#/components/schemas/CommonsBio'
+        is_currently_identity_member:
+          type: boolean
+          description: Whether or not the current identity is a member of this group.
+        publicity:
+          $ref: '#/components/schemas/CommonsGroupPublicity'
+        member_count:
+          type: integer
+      required:
+        - group_id
+        - dispay_name
+        - external
+        - is_developer
+        - bio
+        - is_currently_identity_member
+        - publicity
+        - member_count
+    CommonsGroupPublicity:
+      type: string
+      enum:
+        - open
+        - closed
+      description: The current publicity value for the given group.
+    CommonsGroupHandle:
+      type: object
+      description: A group handle.
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        avatar_url:
+          type: string
+          description: The URL of this group's avatar image
+        external:
+          $ref: '#/components/schemas/CommonsGroupExternalLinks'
+        is_developer:
+          type: boolean
+          description: Whether or not this group is a developer group.
+      required:
+        - group_id
+        - display_name
+        - avatar_url
+        - external
+    CommonsGroupExternalLinks:
+      type: object
+      description: External links for this group.
+      properties:
+        profile:
+          type: string
+          description: A link to this group's profile page.
+        chat:
+          type: string
+          description: A link to this group's chat page.
+      required:
+        - profile
+        - chat
+    CommonsIdentityHandle:
+      type: object
+      description: An identity handle.
+      properties:
+        identity_id:
+          type: string
+          format: uuid
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        account_number:
+          $ref: '#/components/schemas/CommonsAccountNumber'
+        avatar_url:
+          type: string
+          description: The URL of this identity's avatar image.
+        presence:
+          $ref: '#/components/schemas/CommonsIdentityPresence'
+        party:
+          $ref: '#/components/schemas/CommonsPartyHandle'
+        is_registered:
+          type: boolean
+          description: Whether or not this identity is registered with a linked account.
+        external:
+          $ref: '#/components/schemas/CommonsIdentityExternalLinks'
+      required:
+        - identity_id
+        - display_name
+        - account_number
+        - avatar_url
+        - is_registered
+        - external
+    CommonsIdentitySummary:
+      type: object
+      description: An identity summary.
+      properties:
+        identity_id:
+          type: string
+          format: uuid
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        account_number:
+          $ref: '#/components/schemas/CommonsAccountNumber'
+        avatar_url:
+          type: string
+          description: The URL of this identity's avatar image.
+        presence:
+          $ref: '#/components/schemas/CommonsIdentityPresence'
+        party:
+          $ref: '#/components/schemas/CommonsPartyHandle'
+        is_registered:
+          type: boolean
+          description: Whether or not this identity is registered with a linked account.
+        external:
+          $ref: '#/components/schemas/CommonsIdentityExternalLinks'
+        following:
+          type: boolean
+          description: Whether or not the requestee's identity is following this identity.
+        is_following_me:
+          type: boolean
+          description: >-
+            Whether or not this identity is both followng and is followed by the
+            requestee's identity.
+        is_mutual_following:
+          type: boolean
+      required:
+        - identity_id
+        - display_name
+        - account_number
+        - avatar_url
+        - is_registered
+        - external
+        - following
+        - is_following_me
+        - is_mutual_following
+    CommonsIdentityProfile:
+      type: object
+      description: An identity profile.
+      properties:
+        identity_id:
+          type: string
+          format: uuid
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+        account_number:
+          $ref: '#/components/schemas/CommonsAccountNumber'
+        avatar_url:
+          type: string
+          description: The URL of this identity's avatar image.
+        presence:
+          $ref: '#/components/schemas/CommonsIdentityPresence'
+        party:
+          $ref: '#/components/schemas/CommonsPartySummary'
+          description: Whether or not this identity is registered with a linked account.
+        is_registered:
+          type: boolean
+          description: Whether or not this identity is registered with a linked account.
+        external:
+          $ref: '#/components/schemas/CommonsIdentityExternalLinks'
+        is_admin:
+          type: boolean
+          description: Whether or not this identity is an admin.
+        is_game_linked:
+          type: boolean
+          description: >-
+            Whether or not this game user has been linked through the Rivet
+            dashboard.
+        dev_state:
+          $ref: '#/components/schemas/CommonsIdentityDevState'
+        follower_count:
+          type: integer
+        following_count:
+          type: integer
+        following:
+          type: boolean
+          description: Whether or not the requestee's identity is following this identity.
+        is_following_me:
+          type: boolean
+          description: >-
+            Whether or not this identity is both followng and is followed by the
+            requestee's identity.
+        is_mutual_following:
+          type: boolean
+        join_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        bio:
+          $ref: '#/components/schemas/CommonsBio'
+        linked_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityLinkedAccount'
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityGroup'
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsGameStatSummary'
+      required:
+        - identity_id
+        - display_name
+        - account_number
+        - avatar_url
+        - is_registered
+        - external
+        - is_admin
+        - follower_count
+        - following_count
+        - following
+        - is_following_me
+        - is_mutual_following
+        - join_ts
+        - bio
+        - linked_accounts
+        - groups
+        - games
+    CommonsIdentityExternalLinks:
+      type: object
+      description: External links for an identity.
+      properties:
+        profile:
+          type: string
+          description: A link to this identity's profile page.
+        settings:
+          type: string
+          description: A link to the Rivet settings page.
+        chat:
+          type: string
+          description: A link to a chat page with the given identity.
+      required:
+        - profile
+    CommonsIdentityPresence:
+      type: object
+      description: Information about the identity's current status, party, and active game.
+      properties:
+        update_ts:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/CommonsIdentityStatus'
+        game_activity:
+          $ref: '#/components/schemas/CommonsIdentityGameActivity'
+      required:
+        - update_ts
+        - status
+    CommonsIdentityStatus:
+      type: string
+      enum:
+        - online
+        - away
+        - offline
+      description: >-
+        The current status of an identity. This helps players understand if
+        another player is currently playing or has their game in the background.
+    CommonsIdentityGameActivity:
+      type: object
+      description: The game an identity is currently participating in.
+      properties:
+        game:
+          $ref: '#/components/schemas/CommonsGameHandle'
+        message:
+          type: string
+          description: A short activity message about the current game activity.
+        public_metadata:
+          description: JSON data seen by anyone.
+        mutual_metadata:
+          description: >-
+            JSON data seen only by the given identity and their mutual
+            followers.
+      required:
+        - game
+        - message
+        - public_metadata
+        - mutual_metadata
+    CommonsIdentityGroup:
+      type: object
+      description: A group that the given identity.
+      properties:
+        group:
+          $ref: '#/components/schemas/CommonsGroupHandle'
+      required:
+        - group
+    CommonsIdentityDevState:
+      type: string
+      enum:
+        - inactive
+        - pending
+        - accepted
+      description: The state of the given identity's developer status.
+    CommonsIdentityLinkedAccount:
+      oneOf:
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsIdentityEmailLinkedAccount'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - email
+      description: A union representing an identity's linked accounts.
+    CommonsIdentityEmailLinkedAccount:
+      type: object
+      description: An identity's linked email.
+      properties:
+        email:
+          $ref: '#/components/schemas/CommonsEmail'
+      required:
+        - email
+    CommonsGameLinkStatus:
+      type: string
+      enum:
+        - incomplete
+        - complete
+        - cancelled
+    CommonsMatchmakerLobbyJoinInfo:
+      type: object
+      description: A matchmaker lobby.
+      properties:
+        lobby_id:
+          type: string
+          format: uuid
+        region:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfoRegion'
+        ports:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfoPort'
+        player:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfoPlayer'
+      required:
+        - lobby_id
+        - region
+        - ports
+        - player
+    CommonsMatchmakerLobbyJoinInfoRegion:
+      type: object
+      description: A matchmaker lobby region.
+      properties:
+        region_id:
+          $ref: '#/components/schemas/CommonsIdentifier'
+        display_name:
+          $ref: '#/components/schemas/CommonsDisplayName'
+      required:
+        - region_id
+        - display_name
+    CommonsMatchmakerLobbyJoinInfoPort:
+      type: object
+      properties:
+        host:
+          type: string
+          description: |
+            The host for the given port. Will be null if using a port range.
+        hostname:
+          type: string
+        port:
+          type: integer
+          description: |
+            The port number for this lobby. Will be null if using a port range.
+        port_range:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfoPortRange'
+          description: >
+            Whether or not this lobby port uses TLS. You cannot mix a non-TLS
+            and TLS ports.
+        is_tls:
+          type: boolean
+      required:
+        - hostname
+        - port_range
+        - is_tls
+    CommonsMatchmakerLobbyJoinInfoPortRange:
+      type: object
+      description: Inclusive range of ports that can be connected to.
+      properties:
+        min:
+          type: integer
+          description: Minimum port that can be connected to. Inclusive range.
+        max:
+          type: integer
+          description: Maximum port that can be connected to. Inclusive range.
+      required:
+        - min
+        - max
+    CommonsMatchmakerLobbyJoinInfoPlayer:
+      type: object
+      description: A matchmaker lobby player.
+      properties:
+        token:
+          $ref: '#/components/schemas/CommonsJWT'
+          description: >
+            Pass this token through the socket to the lobby server. The lobby
+            server will validate this token with `PlayerConnected.player_token`
+      required:
+        - token
+    CommonsPartySummary:
+      type: object
+      properties:
+        party_id:
+          type: string
+          format: uuid
+        create_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        activity:
+          $ref: '#/components/schemas/CommonsPartyActivity'
+        external:
+          $ref: '#/components/schemas/CommonsPartyExternalLinks'
+        publicity:
+          $ref: '#/components/schemas/CommonsPartyPublicity'
+        party_size:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsPartyMemberSummary'
+        thread_id:
+          type: string
+          format: uuid
+      required:
+        - party_id
+        - create_ts
+        - activity
+        - external
+        - publicity
+        - party_size
+        - members
+        - thread_id
+    CommonsPartyHandle:
+      type: object
+      properties:
+        party_id:
+          type: string
+          format: uuid
+        create_ts:
+          type: string
+          format: date-time
+        activity:
+          $ref: '#/components/schemas/CommonsPartyActivity'
+        external:
+          $ref: '#/components/schemas/CommonsPartyExternalLinks'
+      required:
+        - party_id
+        - create_ts
+        - activity
+        - external
+    CommonsPartyActivity:
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - idle
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsPartyActivityMatchmakerFindingLobby'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - matchmaker_finding_lobby
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsPartyActivityMatchmakerLobby'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - matchmaker_lobby
+      description: A union representing the activity of a given party.
+    CommonsPartyActivityMatchmakerFindingLobby:
+      type: object
+      description: >-
+        A party activity denoting that the party is currently searching for a
+        lobby.
+      properties:
+        game:
+          $ref: '#/components/schemas/CommonsGameHandle'
+      required:
+        - game
+    CommonsPartyActivityMatchmakerLobby:
+      type: object
+      description: A party activity denoting that the party is currently in a lobby.
+      properties:
+        lobby:
+          $ref: '#/components/schemas/CommonsPartyMatchmakerLobby'
+        game:
+          $ref: '#/components/schemas/CommonsGameHandle'
+      required:
+        - lobby
+        - game
+    CommonsPartyExternalLinks:
+      type: object
+      description: External links for a party.
+      properties:
+        chat:
+          type: string
+          description: A link to the given party's chat thread.
+      required:
+        - chat
+    CommonsPartyMatchmakerLobby:
+      type: object
+      description: A party lobby.
+      properties:
+        lobby_id:
+          type: string
+          format: uuid
+      required:
+        - lobby_id
+    CommonsPartyPublicity:
+      type: object
+      properties:
+        public:
+          $ref: '#/components/schemas/CommonsPartyPublicityLevel'
+        mutual_followers:
+          $ref: '#/components/schemas/CommonsPartyPublicityLevel'
+        groups:
+          $ref: '#/components/schemas/CommonsPartyPublicityLevel'
+      required:
+        - public
+        - mutual_followers
+        - groups
+    CommonsPartyPublicityLevel:
+      type: string
+      enum:
+        - none
+        - view
+        - join
+    CommonsPartyMemberSummary:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/CommonsIdentityHandle'
+        is_leader:
+          type: boolean
+          description: Whether or not this party member is the leader of the given party.
+        join_ts:
+          type: string
+          format: date-time
+        state:
+          $ref: '#/components/schemas/CommonsPartyMemberState'
+      required:
+        - identity
+        - is_leader
+        - join_ts
+        - state
+    CommonsPartyMemberState:
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - idle
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - matchmaker_pending
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - matchmaker_finding_lobby
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/CommonsPartyMemberStateMatchmakerLobby'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - matchmaker_lobby
+    CommonsPartyMemberStateMatchmakerLobby:
+      type: object
+      description: A party member state denoting that the member is in a lobby.
+      properties:
+        player_id:
+          type: string
+          format: uuid
+      required:
+        - player_id
+    CommonsUploadPresignedRequest:
+      type: object
+      description: >
+        A presigned request used to upload files.  Upload your file to the given
+        URL via a PUT request.
+      properties:
+        path:
+          type: string
+          description: >
+            The name of the file to upload.  This is the same as the one given
+            in the upload prepare file.
+        url:
+          type: string
+          description: |
+            The URL of the presigned request for which to upload your file to.
+      required:
+        - path
+        - url
+    IdentityListActivitiesOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsGameSummary'
+        parties:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsPartySummary'
+        suggested_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsGroupSummary'
+        suggested_players:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+        watch:
+          $ref: '#/components/schemas/CommonsWatchResponse'
+      required:
+        - identities
+        - games
+        - parties
+        - suggested_groups
+        - suggested_players
+        - watch
+    IdentityGlobalEvent:
+      type: object
+      description: An event relevant to the current identity.
+      properties:
+        ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        kind:
+          $ref: '#/components/schemas/IdentityGlobalEventKind'
+        notification:
+          $ref: '#/components/schemas/IdentityGlobalEventNotification'
+      required:
+        - ts
+        - kind
+        - notification
+    IdentityGlobalEventKind:
+      oneOf:
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventChatMessage'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - chat_message
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventChatRead'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - chat_read
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventPartyUpdate'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - party_update
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventIdentityUpdate'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - identity_update
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventMatchmakerLobbyJoin'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - matchmaker_lobby_join
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/IdentityGlobalEventChatThreadRemove'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - chat_thread_remove
+    IdentityGlobalEventNotification:
+      type: object
+      description: >
+        Notifications represent information that should be presented to the user
+
+        immediately.
+
+        At the moment, only chat message events have associated notifications.
+
+
+        # Display
+
+
+        Notifications should be displayed in an unobtrusive manner throughout
+        the
+
+        entire game. Notifications should disappear after a few seconds if not
+
+        interacted with.
+
+
+        # Interactions
+
+
+        If your platform supports it, notifications should be able to be clicked
+        or
+
+        tapped in order to open the relevant context for the event.
+
+
+        For a simple implementation of notification interactions, open `url` in
+        a
+
+        web browser to present the relevant context. For example, a chat message
+
+        notification will open the thread the chat message was sent in.
+
+
+        For advanced implementations that implement a custom chat UI, use
+
+        `GlobalEvent.kind` to determine what action to take when the
+        notification is interacted with. 
+
+        For example, if the global event kind is `GlobalEventChatMessage`, then
+        open
+
+        the chat UI for the given thread.
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        thumbnail_url:
+          type: string
+          description: >-
+            URL to an image thumbnail that should be shown for this
+            notification.
+        url:
+          type: string
+          description: Rivet Hub URL that holds the relevant context for this notification.
+      required:
+        - title
+        - description
+        - thumbnail_url
+        - url
+    IdentityGlobalEventChatMessage:
+      type: object
+      properties:
+        thread:
+          $ref: '#/components/schemas/CommonsChatThread'
+      required:
+        - thread
+    IdentityGlobalEventChatRead:
+      type: object
+      properties:
+        thread_id:
+          type: string
+          format: uuid
+        read_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+      required:
+        - thread_id
+        - read_ts
+    IdentityGlobalEventPartyUpdate:
+      type: object
+      properties:
+        party:
+          $ref: '#/components/schemas/CommonsPartySummary'
+      required:
+        - party
+    IdentityGlobalEventIdentityUpdate:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/CommonsIdentityProfile'
+      required:
+        - identity
+    IdentityGlobalEventMatchmakerLobbyJoin:
+      type: object
+      properties:
+        lobby:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfo'
+      required:
+        - lobby
+    IdentityGlobalEventChatThreadRemove:
+      type: object
+      description: >
+        Received any time the current identity is no longer able to access the 
+        given thread. This can happen if the identity leaves a group or party. 
+      properties:
+        thread_id:
+          type: string
+          format: uuid
+      required:
+        - thread_id
+    IdentityUpdateIdentityGameActivity:
+      type: object
+      description: >-
+        Information about the identity's current game. This is information that
+        all other identities can see about what the current identity is doing.
+      properties:
+        message:
+          type: string
+          description: A short message about the current game activity.
+        public_metadata:
+          description: JSON data seen by anyone.
+        mutual_metadata:
+          description: >-
+            JSON data seen only by the given identity and their mutual
+            followers.
+      required:
+        - public_metadata
+        - mutual_metadata
+    IdentityWatchEventsOutput:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityGlobalEvent'
+        watch:
+          $ref: '#/components/schemas/CommonsWatchResponse'
+      required:
+        - events
+        - watch
+    IdentityPrepareGameLinkOutput:
+      type: object
+      properties:
+        identity_link_token:
+          type: string
+          description: >-
+            Pass this to `GetGameLink` to get the linking status. Valid for 15
+            minutes.
+        identity_link_url:
+          type: string
+        expire_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+      required:
+        - identity_link_token
+        - identity_link_url
+        - expire_ts
+    IdentityGetGameLinkOutput:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CommonsGameLinkStatus'
+        game:
+          $ref: '#/components/schemas/CommonsGameHandle'
+        current_identity:
+          $ref: '#/components/schemas/CommonsIdentityHandle'
+        new_identity:
+          $ref: '#/components/schemas/IdentityGetGameLinkNewIdentity'
+        watch:
+          $ref: '#/components/schemas/CommonsWatchResponse'
+      required:
+        - status
+        - game
+        - current_identity
+        - new_identity
+        - watch
+    IdentityGetGameLinkNewIdentity:
+      type: object
+      properties:
+        identity_token:
+          $ref: '#/components/schemas/CommonsJWT'
+        identity_token_expire_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+        identity:
+          $ref: '#/components/schemas/CommonsIdentityProfile'
+      required:
+        - identity_token
+        - identity_token_expire_ts
+        - identity
+    MatchmakerLobbyInfo:
+      type: object
+      description: A public lobby in the lobby list.
+      properties:
+        region_id:
+          type: string
+        game_mode_id:
+          type: string
+        lobby_id:
+          type: string
+          format: uuid
+        max_players_normal:
+          type: integer
+        max_players_direct:
+          type: integer
+        max_players_party:
+          type: integer
+        total_player_count:
+          type: integer
+      required:
+        - region_id
+        - game_mode_id
+        - lobby_id
+        - max_players_normal
+        - max_players_direct
+        - max_players_party
+        - total_player_count
+    MatchmakerGameModeInfo:
+      type: object
+      description: A game mode that the player can join.
+      properties:
+        game_mode_id:
+          $ref: '#/components/schemas/CommonsIdentifier'
+      required:
+        - game_mode_id
+    MatchmakerRegionInfo:
+      type: object
+      description: A region that the player can connect to.
+      properties:
+        region_id:
+          $ref: '#/components/schemas/CommonsIdentifier'
+        provider_display_name:
+          type: string
+          format: uuid
+        region_display_name:
+          type: string
+          format: uuid
+        datacenter_coord:
+          $ref: '#/components/schemas/CommonsCoord'
+        datacenter_distance_from_client:
+          $ref: '#/components/schemas/CommonsDistance'
+      required:
+        - region_id
+        - provider_display_name
+        - region_display_name
+        - datacenter_coord
+        - datacenter_distance_from_client
+    MatchmakerFindLobbyOutput:
+      type: object
+      properties:
+        lobby:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfo'
+      required:
+        - lobby
+    MatchmakerJoinLobbyOutput:
+      type: object
+      properties:
+        lobby:
+          $ref: '#/components/schemas/CommonsMatchmakerLobbyJoinInfo'
+      required:
+        - lobby
+    MatchmakerListLobbiesOutput:
+      type: object
+      properties:
+        game_modes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchmakerGameModeInfo'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchmakerRegionInfo'
+        lobbies:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchmakerLobbyInfo'
+      required:
+        - game_modes
+        - regions
+        - lobbies
+    MatchmakerListRegionsOutput:
+      type: object
+      properties:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchmakerRegionInfo'
+      required:
+        - regions
+    SetupIdentityOutput:
+      type: object
+      properties:
+        identity_token:
+          $ref: '#/components/schemas/CommonsJWT'
+          description: >
+            Token used to authenticate the identity. 
+
+            Should be stored somewhere permanent. 
+
+            Pass this to
+            `rivet.api.identity#SetupIdentity$existing_identity_token` next time
+            `rivet.api.identity#SetupIdentity` is called. 
+
+            Token has a 90 day TTL. 
+
+            This means that if `rivet.api.identity#SetupIdentity` is not called
+            again within 90 days, the token will no longer be valid. 
+
+            If this happens, the user can recover their account through the
+            linking process (see `rivet.api.identity#PrepareGameLink`). 
+
+            This token should be stored locally and never sent to a server or
+            another device. 
+
+            If this token is comprimised, anyone with access to this token has
+            control of the identity.
+        identity_token_expire_ts:
+          $ref: '#/components/schemas/CommonsTimestamp'
+          description: |
+            Timestamp (in milliseconds) at which the token expires.
+        identity:
+          $ref: '#/components/schemas/CommonsIdentityProfile'
+          description: |
+            Information about the identity that was just authenticated.
+        game_id:
+          type: string
+          format: uuid
+      required:
+        - identity_token
+        - identity_token_expire_ts
+        - identity
+        - game_id
+    GetIdentityProfileOutput:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/CommonsIdentityProfile'
+        watch:
+          $ref: '#/components/schemas/CommonsWatchResponse'
+      required:
+        - identity
+        - watch
+    GetIdentityHandlesOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+      required:
+        - identities
+    GetIdentitySummariesOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentitySummary'
+      required:
+        - identities
+    ValidateIdentityProfileOutput:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsValidationError'
+      required:
+        - errors
+    SearchIdentitiesOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+        anchor:
+          type: string
+          description: |
+            The pagination anchor.
+      required:
+        - identities
+        - anchor
+    PrepareIdentityAvatarUploadOutput:
+      type: object
+      properties:
+        upload_id:
+          type: string
+          format: uuid
+        presigned_request:
+          $ref: '#/components/schemas/CommonsUploadPresignedRequest'
+      required:
+        - upload_id
+        - presigned_request
+    ListFollowersOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+      required:
+        - identities
+    ListFriendsOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+        anchor:
+          type: string
+      required:
+        - identities
+    ListMutualFriendsOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommonsIdentityHandle'
+        anchor:
+          type: string
+      required:
+        - identities
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

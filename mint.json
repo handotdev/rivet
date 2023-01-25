@@ -1,220 +1,218 @@
 {
-  "name": "Rivet",
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "api": {
-    "baseUrl": "https://rivet.gg"
-  },
-  "favicon": "/favicon.png",
-  "colors": {
-    "primary": "#6862D3",
-    "light": "#B589ED",
-    "dark": "#7f56d9",
-    "anchors": {
-      "from": "#B589ED",
-      "to": "#6862D3"
+    "name": "Rivet",
+    "logo": {
+        "light": "/logo/light.svg",
+        "dark": "/logo/dark.svg"
+    },
+    "api": {
+        "auth": {
+            "method": "bearer"
+        }
+    },
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#6862D3",
+        "light": "#B589ED",
+        "dark": "#7f56d9",
+        "anchors": {
+            "from": "#B589ED",
+            "to": "#6862D3"
+        }
+    },
+    "topbarCtaButton": {
+        "name": "Dashboard",
+        "url": "https://rivet.gg/"
+    },
+    "topbarLinks": [
+        {
+            "name": "Libraries",
+            "url": "https://rivet.gg/"
+        },
+        {
+            "name": "Community",
+            "url": "https://rivet.gg/"
+        }
+    ],
+    "topAnchor": {
+        "name": "Overview",
+        "icon": "book-open"
+    },
+    "anchors": [
+        {
+            "name": "Matchmaker",
+            "icon": "chess-knight",
+            "url": "matchmaker"
+        },
+        {
+            "name": "Elastic Lobbies",
+            "icon": "server",
+            "url": "elastic-lobbies"
+        },
+        {
+            "name": "CDN",
+            "icon": "globe",
+            "url": "cdn"
+        },
+        {
+            "name": "KV",
+            "icon": "database",
+            "url": "kv"
+        },
+        {
+            "name": "Identity",
+            "icon": "key",
+            "url": "identity"
+        },
+        {
+            "name": "Party",
+            "icon": "party-horn",
+            "url": "party"
+        },
+        {
+            "name": "Chat",
+            "icon": "comment",
+            "url": "chat"
+        },
+        {
+            "name": "Group",
+            "icon": "user-group",
+            "url": "group"
+        },
+        {
+            "name": "Cloud",
+            "icon": "square-code",
+            "url": "cloud"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Guides",
+            "pages": [
+                "guides/introduction",
+                "guides/crash-course",
+                "guides/getting-started"
+            ]
+        },
+        {
+            "group": "Libraries",
+            "pages": [
+                "libs/libraries"
+            ]
+        },
+        {
+            "group": "Matchmaker",
+            "pages": [
+                "matchmaker/introduction"
+            ]
+        },
+        {
+            "group": "Concepts",
+            "pages": [
+                "matchmaker/concepts/glossary",
+                "matchmaker/concepts/components",
+                "matchmaker/concepts/lifecycle"
+            ]
+        },
+        {
+            "__apiTemplate": "matchmaker",
+            "group": "API",
+            "pages": [
+                "matchmaker/api/post-lobbies-find",
+                "matchmaker/api/post-lobbies-join",
+                "matchmaker/api/post-lobbies-ready",
+                "matchmaker/api/post-players-connected",
+                "matchmaker/api/post-players-disconnected",
+                "matchmaker/api/put-lobbies-closed",
+                "matchmaker/api/get-lobbies-list"
+            ]
+        },
+        {
+            "group": "Elastic Lobbies",
+            "pages": [
+                "elastic-lobbies/introduction"
+            ]
+        },
+        {
+            "group": "CDN",
+            "pages": [
+                "cdn/introduction"
+            ]
+        },
+        {
+            "group": "Concepts",
+            "pages": [
+                "cdn/concepts/rivet-game-domain"
+            ]
+        },
+        {
+            "group": "Guides",
+            "pages": [
+                "cdn/guides/private-namespaces"
+            ]
+        },
+        {
+            "group": "KV",
+            "pages": [
+                "kv/introduction"
+            ]
+        },
+        {
+            "group": "API",
+            "pages": [
+                "kv/api/get",
+                "kv/api/get-batch",
+                "kv/api/put",
+                "kv/api/put-batch",
+                "kv/api/delete",
+                "kv/api/delete-batch"
+            ]
+        },
+        {
+            "group": "Identity",
+            "pages": [
+                "identity/introduction"
+            ]
+        },
+        {
+            "__apiTemplate": "identity",
+            "group": "API",
+            "pages": [
+                "identity/api/post-game-links",
+                "identity/api/post-game-links-complete",
+                "identity/api/post-identities",
+                "identity/api/get-activities",
+                "identity/api/get-events-live",
+                "identity/api/get-game-links",
+                "identity/api/post-game-links-cancel",
+                "identity/api/post-identities-avatar-upload-prepare",
+                "identity/api/post-identities-avatar-upload-complete",
+                "identity/api/get-identities-batch-handle",
+                "identity/api/get-identities-batch-summary",
+                "identity/api/post-identities-identities-self-status",
+                "identity/api/get-identities-search",
+                "identity/api/delete-identities-self-activity",
+                "identity/api/post-identities-self-activity",
+                "identity/api/post-identities-self-beta-signup",
+                "identity/api/get-identities-self-friends",
+                "identity/api/get-identities-self-profile",
+                "identity/api/post-identities-self-profile",
+                "identity/api/post-identities-self-profile-validate",
+                "identity/api/delete-identities-follow",
+                "identity/api/post-identities-follow",
+                "identity/api/get-identities-followers",
+                "identity/api/get-identities-mutual-friends",
+                "identity/api/get-identities-profile",
+                "identity/api/post-identities-report",
+                "identity/api/get-regions"
+            ]
+        }
+    ],
+    "backgroundImage": "/images/background.png",
+    "footerSocials": {
+        "github": "https://github.com/rivet-gg",
+        "twitter": "https://twitter.com/rivet_gg",
+        "instagram": "https://www.instagram.com/rivet_gg",
+        "discord": "https://discord.com/invite/5SUXvP9A",
+        "website": "https://rivet.gg"
     }
-  },
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://rivet.gg/"
-  },
-  "topbarLinks": [
-    {
-      "name": "Libraries",
-      "url": "https://rivet.gg/"
-    },
-    {
-      "name": "Community",
-      "url": "https://rivet.gg/"
-    }
-  ],
-  "topAnchor": {
-    "name": "Overview",
-    "icon": "book-open"
-  },
-  "anchors": [
-    {
-      "name": "Matchmaker",
-      "icon": "chess-knight",
-      "url": "matchmaker"
-    },
-    {
-      "name": "Elastic Lobbies",
-      "icon": "server",
-      "url": "elastic-lobbies"
-    },
-    {
-      "name": "CDN",
-      "icon": "globe",
-      "url": "cdn"
-    },
-    {
-      "name": "KV",
-      "icon": "database",
-      "url": "kv"
-    },
-    {
-      "name": "Identity",
-      "icon": "key",
-      "url": "identity"
-    },
-    {
-      "name": "Party",
-      "icon": "party-horn",
-      "url": "party"
-    },
-    {
-      "name": "Chat",
-      "icon": "comment",
-      "url": "chat"
-    },
-    {
-      "name": "Group",
-      "icon": "user-group",
-      "url": "group"
-    },
-    {
-      "name": "Cloud",
-      "icon": "square-code",
-      "url": "cloud"
-    }
-  ],
-  "navigation": [
-    {
-      "group": "Guides",
-      "pages": [
-        "guides/introduction",
-        "guides/crash-course",
-        "guides/getting-started"
-      ]
-    },
-    {
-      "group": "Libraries",
-      "pages": [
-        "libs/libraries"
-      ]
-    },
-
-    {
-      "group": "Matchmaker",
-      "pages": [
-        "matchmaker/introduction"
-      ]
-    },
-    {
-      "group": "Concepts",
-      "pages": [
-        "matchmaker/concepts/glossary",
-        "matchmaker/concepts/components",
-        "matchmaker/concepts/lifecycle"
-      ]
-    },
-    {
-      "group": "API",
-      "pages": [
-        "matchmaker/api/find-lobby",
-        "matchmaker/api/join-lobby",
-        "matchmaker/api/list-lobbies",
-        "matchmaker/api/list-regions",
-        "matchmaker/api/lobby-ready",
-        "matchmaker/api/player-connected",
-        "matchmaker/api/player-disconnected",
-        "matchmaker/api/set-lobby-closed"
-      ]
-    },
-
-    {
-      "group": "Elastic Lobbies",
-      "pages": [
-        "elastic-lobbies/introduction"
-      ]
-    },
-
-    {
-      "group": "CDN",
-      "pages": [
-        "cdn/introduction"
-      ]
-    },
-    {
-      "group": "Concepts",
-      "pages": [
-        "cdn/concepts/rivet-game-domain"
-      ]
-    },
-    {
-      "group": "Guides",
-      "pages": [
-        "cdn/guides/private-namespaces"
-      ]
-    },
-
-    {
-      "group": "KV",
-      "pages": [
-        "kv/introduction"
-      ]
-    },
-    {
-      "group": "API",
-      "pages": [
-        "kv/api/get",
-        "kv/api/get-batch",
-        "kv/api/put",
-        "kv/api/put-batch",
-        "kv/api/delete",
-        "kv/api/delete-batch"
-      ]
-    },
-
-    {
-      "group": "Identity",
-      "pages": [
-        "identity/introduction"
-      ]
-    },
-    {
-      "group": "API",
-      "pages": [
-        "identity/api/cancel-game-link",
-        "identity/api/complete-game-link",
-        "identity/api/complete-identity-avatar-upload",
-        "identity/api/follow-identity",
-        "identity/api/get-game-link",
-        "identity/api/get-identity-handles",
-        "identity/api/get-identity-profile",
-        "identity/api/get-identity-self-profile",
-        "identity/api/get-identity-summaries",
-        "identity/api/list-activities",
-        "identity/api/list-followers",
-        "identity/api/list-following",
-        "identity/api/list-friends",
-        "identity/api/list-mututal-friends",
-        "identity/api/prepare-game-link",
-        "identity/api/prepare-identity-avatar-upload",
-        "identity/api/remove-identity-game-activity",
-        "identity/api/report-identity",
-        "identity/api/search-identities",
-        "identity/api/set-identity-game-activity",
-        "identity/api/setup-identity",
-        "identity/api/sign-up-for-beta",
-        "identity/api/unfollow-identity",
-        "identity/api/update-identity-profile",
-        "identity/api/update-identity-status",
-        "identity/api/validate-identity-profile",
-        "identity/api/watch-events"
-      ]
-    }
-  ],
-  "backgroundImage": "/images/background.png",
-  "footerSocials": {
-    "github": "https://github.com/rivet-gg",
-    "twitter": "https://twitter.com/rivet_gg",
-    "instagram": "https://www.instagram.com/rivet_gg",
-    "discord": "https://discord.com/invite/5SUXvP9A",
-    "website": "https://rivet.gg"
-  }
 }
