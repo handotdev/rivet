@@ -11,45 +11,75 @@
   "colors": {
     "primary": "#6862D3",
     "light": "#B589ED",
-    "dark": "#775EC4",
+    "dark": "#7f56d9",
     "anchors": {
       "from": "#B589ED",
       "to": "#6862D3"
     }
   },
   "topbarCtaButton": {
-    "name": "Open Rivet",
-    "url": "https://rivet.gg/home"
+    "name": "Dashboard",
+    "url": "https://rivet.gg/"
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "https://rivet.gg/support"
-    }
-  ],
-  "topAnchor": {
-    "name": "Guides"
-  },
-  "anchors": [
-    {
-      "name": "Concepts",
-      "icon": "lightbulb",
-      "url": "concepts"
-    },
-    {
-      "name": "API Reference",
-      "icon": "square-terminal",
-      "url": "reference"
-    },
-    {
       "name": "Libraries",
-      "icon": "books",
-      "url": "libs"
+      "url": "https://rivet.gg/"
     },
     {
       "name": "Community",
-      "icon": "discord",
-      "url": "https://discord.gg/5SUXvP9A"
+      "url": "https://rivet.gg/"
+    }
+  ],
+  "topAnchor": {
+    "name": "Overview",
+    "icon": "book-open"
+  },
+  "anchors": [
+    {
+      "name": "Matchmaker",
+      "icon": "chess-knight",
+      "url": "matchmaker"
+    },
+    {
+      "name": "Elastic Lobbies",
+      "icon": "server",
+      "url": "elastic-lobbies"
+    },
+    {
+      "name": "CDN",
+      "icon": "globe",
+      "url": "cdn"
+    },
+    {
+      "name": "KV",
+      "icon": "database",
+      "url": "kv"
+    },
+    {
+      "name": "Identity",
+      "icon": "key",
+      "url": "identity"
+    },
+    {
+      "name": "Party",
+      "icon": "party-horn",
+      "url": "party"
+    },
+    {
+      "name": "Chat",
+      "icon": "comment",
+      "url": "chat"
+    },
+    {
+      "name": "Group",
+      "icon": "user-group",
+      "url": "group"
+    },
+    {
+      "name": "Cloud",
+      "icon": "square-code",
+      "url": "cloud"
     }
   ],
   "navigation": [
@@ -58,234 +88,133 @@
       "pages": [
         "guides/introduction",
         "guides/crash-course",
-        "guides/getting-started-multiplayer",
-        "guides/getting-started-singleplayer"
-      ]
-    },
-    {
-      "group": "CDN",
-      "pages": ["guides/cdn/private-namespaces"]
-    },
-    {
-      "group": "Concepts",
-      "pages": [
-        "concepts/introduction",
-        "concepts/glossary",
-        {
-          "group": "General",
-          "pages": [
-            "concepts/general/tokens",
-            "concepts/general/realtime-blocking-requests",
-            "concepts/general/data-lod",
-            "concepts/general/captchas",
-            "concepts/general/bring-your-own-library"
-          ]
-        },
-        {
-          "group": "CDN",
-          "pages": [
-            "concepts/cdn/rivet-game-domain"
-          ]
-        },
-        "concepts/chat/introduction",
-        "concepts/groups/introduction",
-        "concepts/identity/introduction",
-        "concepts/kv/introduction",
-        {
-          "group": "Matchmaker",
-          "pages": [
-            "concepts/matchmaker/introduction",
-            "concepts/matchmaker/lifecycle"
-          ]
-        },
-        "concepts/party/introduction"
+        "guides/getting-started"
       ]
     },
     {
       "group": "Libraries",
-      "pages": ["libs/libraries"]
+      "pages": [
+        "libs/libraries"
+      ]
+    },
+
+    {
+      "group": "Matchmaker",
+      "pages": [
+        "matchmaker/introduction"
+      ]
     },
     {
-      "group": "API Reference",
+      "group": "Concepts",
       "pages": [
-        "reference/introduction",
-        {
-          "group": "Chat API",
-          "pages": [
-            "reference/chat/get-direct-thread",
-            "reference/chat/send-chat-message",
-            "reference/chat/get-thread-history",
-            "reference/chat/watch-thread",
-            "reference/chat/set-thread-read",
-            "reference/chat/get-thread-topic",
-            "reference/chat/set-typing-status"
-          ]
-        },
-        {
-          "group": "Cloud API",
-          "pages": [
-            "reference/cloud/inspect",
-            "reference/cloud/get-games",
-            "reference/cloud/create-game",
-            "reference/cloud/validate-game",
-            "reference/cloud/get-game-by-id",
-            "reference/cloud/list-game-custom-avatars",
-            "reference/cloud/game-banner-upload-prepare",
-            "reference/cloud/game-banner-upload-complete",
-            "reference/cloud/list-game-builds",
-            "reference/cloud/create-game-build",
-            "reference/cloud/list-game-cdn-sites",
-            "reference/cloud/create-game-cdn-site",
-            "reference/cloud/game-logo-upload-prepare",
-            "reference/cloud/game-logo-upload-complete",
-            "reference/cloud/export-matchmaker-lobby",
-            "reference/cloud/delete-matchmaker-lobby",
-            "reference/cloud/get-lobby-logs",
-            "reference/cloud/export-lobby-logs",
-            "reference/cloud/create-game-namespace",
-            "reference/cloud/validate-game-namespace",
-            "reference/cloud/get-game-namespace-by-id",
-            "reference/cloud/get-namespace-analytics",
-            "reference/cloud/",
-            "reference/cloud/",
-            "reference/cloud/",
-            "reference/cloud/update-namespace-cdn-auth",
-            "reference/cloud/remove-namespace-cdn",
-            "reference/cloud/set-namespace-cdn-auth-type",
-            "reference/cloud/toggle-namespace-domain",
-            "reference/cloud/update-namespace-domain",
-            "reference/cloud/remove-namespace-domain",
-            "reference/cloud/list-namespace-lobbies",
-            "reference/cloud/get-namespace-lobby",
-            "reference/cloud/update-game-namespace-matchmaker",
-            "reference/cloud/validate-game-namespace-matchmaker-dev-config",
-            "reference/cloud/create-game-namespace-token-development",
-            "reference/cloud/validate-game-namespace-matchmaker",
-            "reference/cloud/create-game-namespace-token",
-            "reference/cloud/update-game-namespace-version",
-            "reference/cloud/create-cloud-token",
-            "reference/cloud/create-game-version",
-            "reference/cloud/validate-game-version",
-            "reference/cloud/get-game-version-by-id",
-            "reference/cloud/validate-group",
-            "reference/cloud/get-group-billing",
-            "reference/cloud/get-group-invoices-list",
-            "reference/cloud/get-group-payments-list",
-            "reference/cloud/get-group-transfers-list",
-            "reference/cloud/group-billing-checkout",
-            "reference/cloud/convert-group",
-            "reference/cloud/get-region-tiers",
-            "reference/cloud/complete-upload",
-            "reference/cloud/prepare-custom-avatar",
-            "reference/cloud/complete-custom-avatar"
-          ]
-        },
-        {
-          "group": "Group API",
-          "pages": [
-            "reference/group/list-suggested-groups",
-            "reference/group/create-group",
-            "reference/group/prepare-group-avatar-upload",
-            "reference/group/validate-group-profile",
-            "reference/group/search-groups",
-            "reference/group/complete-group-avatar-upload",
-            "reference/group/create-group-invite",
-            "reference/group/join-group",
-            "reference/group/create-group-join-request",
-            "reference/group/resolve-group-join-request",
-            "reference/group/leave-group",
-            "reference/group/get-group-profile",
-            "reference/group/update-group-profile",
-            "reference/group/get-group-summary",
-            "reference/group/transfer-group-ownership",
-            "reference/group/get-group-invite",
-            "reference/group/consume-group-invite"
-          ]
-        },
-        {
-          "group": "Identity API",
-          "pages": [
-            "reference/identity/list-activities",
-            "reference/identity/watch-events",
-            "reference/identity/get-game-link",
-            "reference/identity/prepare-game-link",
-            "reference/identity/prepare-identity-avatar-upload",
-            "reference/identity/complete-identity-avatar-upload",
-            "reference/identity/get-identity-handles",
-            "reference/identity/get-identity-summaries",
-            "reference/identity/search-identities",
-            "reference/identity/remove-identity-game-activity",
-            "reference/identity/set-identity-game-activity",
-            "reference/identity/sign-up-for-beta",
-            "reference/identity/list-friends",
-            "reference/identity/get-identity-self-profile",
-            "reference/identity/update-identity-profile",
-            "reference/identity/validate-identity-profile",
-            "reference/identity/update-identity-status",
-            "reference/identity/unfollow-identity",
-            "reference/identity/follow-identity",
-            "reference/identity/list-followers",
-            "reference/identity/list-following",
-            "reference/identity/list-mutual-friends",
-            "reference/identity/get-identity-profile",
-            "reference/identity/report-identity",
-            "reference/identity/cancel-game-link",
-            "reference/identity/complete-game-link",
-            "reference/identity/setup-identity"
-          ]
-        },
-        {
-          "group": "KV API",
-          "pages": [
-            "reference/kv/delete",
-            "reference/kv/get",
-            "reference/kv/put",
-            "reference/kv/delete-batch",
-            "reference/kv/get-batch",
-            "reference/kv/put-batch"
-          ]
-        },
-        {
-          "group": "Matchmaker API",
-          "pages": [
-            "reference/matchmaker/set-lobby-closed",
-            "reference/matchmaker/find-lobby",
-            "reference/matchmaker/join-lobby",
-            "reference/matchmaker/list-lobbies",
-            "reference/matchmaker/list-regions",
-            "reference/matchmaker/lobby-ready",
-            "reference/matchmaker/player-connected",
-            "reference/matchmaker/player-disconnected"
-          ]
-        },
-        {
-          "group": "Party API",
-          "pages": [
-            "reference/party/get-party-from-invite",
-            "reference/party/create-party",
-            "reference/party/join-party",
-            "reference/party/create-party-invite",
-            "reference/party/revoke-party-invite",
-            "reference/party/leave-party",
-            "reference/party/kick-member",
-            "reference/party/transfer-party-ownership",
-            "reference/party/get-party-self-profile",
-            "reference/party/set-party-self-request",
-            "reference/party/get-party-self-summary",
-            "reference/party/send-join-request",
-            "reference/party/get-party-profile",
-            "reference/party/get-party-summary",
-            "reference/party/set-party-toldle",
-            "reference/party/find-matchmaker-lobby",
-            "reference/party/join-matchmaker-lobby",
-            "reference/party/request-matchmaker-player"
-          ]
-        }
+        "matchmaker/concepts/glossary",
+        "matchmaker/concepts/components",
+        "matchmaker/concepts/lifecycle"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "matchmaker/api/find-lobby",
+        "matchmaker/api/join-lobby",
+        "matchmaker/api/list-lobbies",
+        "matchmaker/api/list-regions",
+        "matchmaker/api/lobby-ready",
+        "matchmaker/api/player-connected",
+        "matchmaker/api/player-disconnected",
+        "matchmaker/api/set-lobby-closed"
+      ]
+    },
+
+    {
+      "group": "Elastic Lobbies",
+      "pages": [
+        "elastic-lobbies/introduction"
+      ]
+    },
+
+    {
+      "group": "CDN",
+      "pages": [
+        "cdn/introduction"
+      ]
+    },
+    {
+      "group": "Concepts",
+      "pages": [
+        "cdn/concepts/rivet-game-domain"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "cdn/guides/private-namespaces"
+      ]
+    },
+
+    {
+      "group": "KV",
+      "pages": [
+        "kv/introduction"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "kv/api/get",
+        "kv/api/get-batch",
+        "kv/api/put",
+        "kv/api/put-batch",
+        "kv/api/delete",
+        "kv/api/delete-batch"
+      ]
+    },
+
+    {
+      "group": "Identity",
+      "pages": [
+        "identity/introduction"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "identity/api/cancel-game-link",
+        "identity/api/complete-game-link",
+        "identity/api/complete-identity-avatar-upload",
+        "identity/api/follow-identity",
+        "identity/api/get-game-link",
+        "identity/api/get-identity-handles",
+        "identity/api/get-identity-profile",
+        "identity/api/get-identity-self-profile",
+        "identity/api/get-identity-summaries",
+        "identity/api/list-activities",
+        "identity/api/list-followers",
+        "identity/api/list-following",
+        "identity/api/list-friends",
+        "identity/api/list-mututal-friends",
+        "identity/api/prepare-game-link",
+        "identity/api/prepare-identity-avatar-upload",
+        "identity/api/remove-identity-game-activity",
+        "identity/api/report-identity",
+        "identity/api/search-identities",
+        "identity/api/set-identity-game-activity",
+        "identity/api/setup-identity",
+        "identity/api/sign-up-for-beta",
+        "identity/api/unfollow-identity",
+        "identity/api/update-identity-profile",
+        "identity/api/update-identity-status",
+        "identity/api/validate-identity-profile",
+        "identity/api/watch-events"
       ]
     }
   ],
+  "backgroundImage": "/images/background.png",
   "footerSocials": {
-    "twitter": "https://twitter.com/RivetOfficial",
-    "discord": "https://discord.com/invite/5SUXvP9A"
+    "github": "https://github.com/rivet-gg",
+    "twitter": "https://twitter.com/rivet_gg",
+    "instagram": "https://www.instagram.com/rivet_gg",
+    "discord": "https://discord.com/invite/5SUXvP9A",
+    "website": "https://rivet.gg"
   }
 }
