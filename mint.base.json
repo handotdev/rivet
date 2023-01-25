@@ -89,6 +89,7 @@
             ]
         },
         {
+            "__apiTemplate": "matchmaker",
             "group": "API",
             "pages": [
                 "matchmaker/api/post-lobbies-find",
@@ -131,6 +132,7 @@
             ]
         },
         {
+            "__apiTemplate": "identity",
             "group": "API",
             "pages": [
                 "identity/api/post-game-links",
