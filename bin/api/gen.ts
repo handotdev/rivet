@@ -6,7 +6,7 @@ import { emptyDir } from "https://deno.land/std/fs/mod.ts";
 await Deno.copyFile("../backend/openapi/openapi.yml", "openapi.yml");
 
 const spec = yaml.parse(await Deno.readTextFile("openapi.yml"));
-let mintJson = JSON.parse(await Deno.readTextFile("mint.json"));
+let mintJson = JSON.parse(await Deno.readTextFile("mint.base.json"));
 
 let importantEndpoints = {
 	"matchmaker": [
@@ -29,6 +29,7 @@ for (let navigation of mintJson.navigation) {
 	if (navigation.__apiTemplate) {
 		apiTemplates[navigation.__apiTemplate] = navigation;
 		navigation.pages = [];
+		delete navigation.__apiTemplate;
 	}
 }
 
