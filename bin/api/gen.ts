@@ -3,6 +3,8 @@
 import yaml from "npm:yaml";
 import { emptyDir } from "https://deno.land/std/fs/mod.ts";
 
+await Deno.copyFile("../backend/openapi/openapi.yml", "openapi.yml");
+
 const spec = yaml.parse(await Deno.readTextFile("openapi.yml"));
 let mintJson = JSON.parse(await Deno.readTextFile("mint.json"));
 
@@ -53,7 +55,7 @@ for (let pathName in spec.paths) {
 		let title = `${method.toUpperCase()} ${pathName}`;
 		if (isImportant) title = "⭐️ " + title;
 
-		let file = `---\ntitle: "${title}"\nopenapi: "${method.toUpperCase()} ${path}"\n---`;
+		let file = `---\ntitle: "${title}"\nopenapi: "${method.toUpperCase()} ${pathName}"\n---`;
 
 		let pathStripped = pathName.replace(/\/\{.*\}/g, "").replace(/\//g, "-");
 		let filePath = new String(`${product}/api/${method}${pathStripped}`);

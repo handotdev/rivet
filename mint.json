@@ -54,34 +54,9 @@
             "url": "cdn"
         },
         {
-            "name": "KV",
-            "icon": "database",
-            "url": "kv"
-        },
-        {
             "name": "Identity",
             "icon": "key",
             "url": "identity"
-        },
-        {
-            "name": "Party",
-            "icon": "party-horn",
-            "url": "party"
-        },
-        {
-            "name": "Chat",
-            "icon": "comment",
-            "url": "chat"
-        },
-        {
-            "name": "Group",
-            "icon": "user-group",
-            "url": "group"
-        },
-        {
-            "name": "Cloud",
-            "icon": "square-code",
-            "url": "cloud"
         }
     ],
     "navigation": [
@@ -148,23 +123,6 @@
             "group": "Guides",
             "pages": [
                 "cdn/guides/private-namespaces"
-            ]
-        },
-        {
-            "group": "KV",
-            "pages": [
-                "kv/introduction"
-            ]
-        },
-        {
-            "group": "API",
-            "pages": [
-                "kv/api/get",
-                "kv/api/get-batch",
-                "kv/api/put",
-                "kv/api/put-batch",
-                "kv/api/delete",
-                "kv/api/delete-batch"
             ]
         },
         {

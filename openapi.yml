@@ -2,8 +2,6 @@ openapi: 3.0.1
 info:
   title: Rivet API
   version: ''
-servers:
-  - url: https://blah.api.rivet.gg/v1
 paths:
   /activities:
     get:
@@ -24,6 +22,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IdentityListActivitiesOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: &ref_0
         - BearerAuth: []
   /events/live:
@@ -45,6 +45,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IdentityWatchEventsOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /game-links:
     post:
@@ -94,6 +96,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IdentityPrepareGameLinkOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
     get:
       description: >-
@@ -121,6 +125,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IdentityGetGameLinkOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /game-links/complete:
     post:
@@ -134,6 +140,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -158,6 +166,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -183,6 +193,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
   /lobbies/closed:
     put:
@@ -198,6 +210,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -232,6 +246,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MatchmakerFindLobbyOutput'
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -271,6 +287,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MatchmakerJoinLobbyOutput'
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -299,6 +317,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MatchmakerListLobbiesOutput'
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
   /players/connected:
     post:
@@ -386,6 +406,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -415,6 +437,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -448,6 +472,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MatchmakerListRegionsOutput'
+      servers:
+        - url: https://party.api.rivet.gg/v1
       security: *ref_0
   /identities:
     post:
@@ -488,6 +514,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetupIdentityOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/{identity_id}/profile:
     get:
@@ -514,6 +542,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetIdentityProfileOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/self/profile:
     get:
@@ -534,6 +564,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetIdentityProfileOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
     post:
       description: Updates profile of the current identity.
@@ -544,6 +576,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -577,6 +611,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetIdentityHandlesOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/batch/summary:
     get:
@@ -597,6 +633,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetIdentitySummariesOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/self/profile/validate:
     post:
@@ -610,6 +648,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -658,6 +698,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchIdentitiesOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/self/activity:
     post:
@@ -671,6 +713,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -692,6 +736,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/identities/self/status:
     post:
@@ -703,6 +749,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -733,6 +781,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
     delete:
       description: Unfollows the given identity.
@@ -749,6 +799,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/avatar-upload/prepare:
     post:
@@ -766,6 +818,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrepareIdentityAvatarUploadOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -806,6 +860,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/self/beta-signup:
     post:
@@ -817,6 +873,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -856,6 +914,8 @@ paths:
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -898,6 +958,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListFollowersOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/self/friends:
     get:
@@ -923,6 +985,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListFriendsOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
   /identities/{identity_id}/mutual-friends:
     get:
@@ -954,6 +1018,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListMutualFriendsOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
       security: *ref_0
 components:
   schemas:
