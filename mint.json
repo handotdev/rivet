@@ -170,5 +170,10 @@
         "instagram": "https://www.instagram.com/rivet_gg",
         "discord": "https://discord.com/invite/5SUXvP9A",
         "website": "https://rivet.gg"
+    },
+    "analytics": {
+        "posthog": {
+            "apiKey": "phc_6kfTNEAVw7rn1LA51cO3D69FefbKupSWFaM7OUgEpEo"
+        }
     }
 }
