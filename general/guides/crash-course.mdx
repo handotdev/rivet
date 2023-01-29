@@ -2,6 +2,12 @@
 title: "⏱️ 5 Minute Crash Course"
 ---
 
+<Note>
+	This guide requires access to the Rivet private beta.
+
+	Request access [here](TODO).
+</Note>
+
 ## Step 1: Setup project
 
 ### Create a game
@@ -10,31 +16,7 @@ TODO
 
 ### Install the [Rivet CLI](https://github.com/rivet-gg/cli)
 
-<Tabs>
-	<Tab title="macOS & Linux">
-		```bash
-		curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh
-		```
-	</Tab>
-	<Tab title="Windows">
-		Coming soon
-	</Tab>
-	<Tab title="Docker">
-		**macOS & Linux & Windows (PowerShell)**
-
-		```bash
-		docker run -v "$(pwd):/app" ghcr.io/rivet-gg/cli
-		```
-
-		**Windows (cmd)**
-
-		```bash
-		docker run -v "%cd%:/app" ghcr.io/rivet-gg/cli
-		```
-
-		<Info>Commands such as `rivet build push` will not work when running using Docker.</Info>
-	</Tab>
-</Tabs>
+Follow instructions [here](https://github.com/rivet-gg/cli#installing).
 
 ### Initialize the project
 
@@ -45,87 +27,117 @@ rivet init --recommended
 ```
 
 <Accordion title="What does this do?">
-	- Creates `rivet.version.toml` to configure your deployed game
-	- Creates a dev token added to your `.env` to tell Rivet to mock API endpoints in development
+	- Creates `rivet.version.toml` to configure your deployed game. Read more about the Rivet version config [here](/general/concepts/version-config).
+	- Creates a dev token added to your `.env` to tell Rivet to mock API endpoints in development. Read more about dev tokens [here](/general/concepts/dev-tokens).
 </Accordion>
 
 ---
 
 ## Step 2: Integrate Rivet Matchmaker
 
-### Step 2.1: Install `@rivet-gg/api`
+### Install the Rivet library
 
 <Tabs>
-	<Tab title="Yarn">
+	<Tab title="TypeScript & JavaScript">
+		**Yarn**
 		```bash
 		yarn add @rivet-gg/api
 		```
-	</Tab>
-	<Tab title="NPM">
+
+		**NPM**
 		```bash
-		npm add @rivet-gg/api
+		npm install --save @rivet-gg/api
 		```
+	</Tab>
+	<Tab title="C#">
+		Coming soon
+	</Tab>
+	<Tab title="Java">
+		Coming soon
+	</Tab>
+	<Tab title="C++">
+		Coming soon
+	</Tab>
+	<Tab title="Rust">
 	</Tab>
 </Tabs>
 
-### Step 2.2: Update your client
+### Update your client
 
-Add the following to the top of `client/Client.ts`:
+<Tabs>
+	<Tab title="TypeScript">
+		```typescript
+		import rivet from "@rivet-gg/api";
+		let res = await rivet.lobbies.find({ gameModes: ["default"] });
+		let ws = new WebSocket(`wss://${res.ports["default"]!.host}/?token=${res.player.token}`);
+		```
+	</Tab>
+	<Tab title="JavaScript">
+		TODO
+	</Tab>
+	<Tab title="C#">
+		Coming soon
+	</Tab>
+	<Tab title="Java">
+		Coming soon
+	</Tab>
+	<Tab title="C++">
+		Coming soon
+	</Tab>
+	<Tab title="Rust">
+		Coming soon
+	</Tab>
+</Tabs>
 
-````typescript
-import { MatchmakerService } from "@rivet-gg/matchmaker";
-export const MATCHMAKER = new MatchmakerService({});
-````
+### Update your server
 
-Find the `connect` function in `client/Client.ts` and replace it with the following:
+<Tabs>
+	<Tab title="TypeScript">
+		```typescript
+		import rivet from "@rivet-gg/api";
 
-```typescript
-async function connect(client: Client) {
-	let res = await MATCHMAKER.findLobby({ gameModes: ["default"] });
-	let port = res.lobby!.ports!["default"];
-	client.connection = new Connection(client, port.isTls!, port.host!, {
-		token: res.lobby!.player!.token!,
-	});
-}
-```
+		ws.on("connect", (socket) => {
+			let playerToken = socket.request.query.token;
+			await rivet.players.connected({ playerToken });
 
-Run `yarn start` again and validate the game still connects. Open the network inspector and reload to see a `POST` request to `https://matchmaker.api.rivet.gg/v1/lobbies/find`.
-
-### Step 2.3: Update your server
-
-Add the following to the top of `server/index.ts`:
-
-```typescript
-import { MatchmakerService } from "@rivet-gg/matchmaker";
-export const MATCHMAKER = new MatchmakerService({});
-// Tell the matchmaker that this lobby is ready to start accepting players
-MATCHMAKER.lobbyReady({});
-```
-
-Find the `setupConnection` function in `server/index.ts` and replace it with the following:
-
-```typescript
-async function setupConnection(socket: Socket) {
-    // Read the token passed to the socket query
-    let playerToken = socket.handshake.query.token as string;
-    // Validate the player token with the matchmaker
-    await MATCHMAKER.playerConnected({ playerToken });
-    // Remove the player when disconnected
-    socket.on("disconnect", () => MATCHMAKER.playerDisconnected({ playerToken }));
-    new Connection(game, socket);
-}
-```
+			socket.on("close", () => {
+				await rivet.players.disconnected({ playerToken });
+			});
+		});
+		```
+	</Tab>
+	<Tab title="JavaScript">
+		TODO
+	</Tab>
+	<Tab title="C#">
+		Coming soon
+	</Tab>
+	<Tab title="Java">
+		Coming soon
+	</Tab>
+	<Tab title="C++">
+		Coming soon
+	</Tab>
+	<Tab title="Rust">
+		Coming soon
+	</Tab>
+</Tabs>
 
 ## Step 3: Publish your game
 
 ```bash
+# Build the server
 docker build --tag my-game .
+
+# Build the client
 yarn run build:client
+
+# Publish the version
 rivet publish --build my-game --site ./dist
 ```
 
 
-To preview your game, run:
+To visit your game, run:
 
 ```bash
 rivet open

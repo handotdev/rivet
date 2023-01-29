@@ -64,20 +64,26 @@
         {
             "group": "Overview",
             "pages": [
-                "general/introduction"
+                "general/introduction",
+                "general/libraries"
             ]
         },
         {
             "group": "Guides",
             "pages": [
-                "general/guides/crash-course",
-                "general/guides/getting-started"
+                "general/guides/crash-course"
             ]
         },
         {
-            "group": "Libraries",
+            "group": "Concepts",
             "pages": [
-                "general/libraries"
+                "general/concepts/version-config",
+                "general/concepts/dev-tokens",
+                "general/concepts/data-lod",
+                "general/concepts/tokens",
+                "general/concepts/blocking-requests",
+                "general/concepts/captchas",
+                "general/concepts/byo-library"
             ]
         },
         {
