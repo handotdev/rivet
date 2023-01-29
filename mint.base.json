@@ -27,7 +27,7 @@
     "topbarLinks": [
         {
             "name": "Libraries",
-            "url": "https://rivet.gg/"
+            "url": "general/libraries"
         },
         {
             "name": "Community",
@@ -65,6 +65,8 @@
             "group": "Overview",
             "pages": [
                 "general/introduction",
+                "general/who-is-rivet-for",
+                "general/gui-cli-api",
                 "general/libraries"
             ]
         },
@@ -96,7 +98,6 @@
             "group": "Concepts",
             "pages": [
                 "matchmaker/concepts/glossary",
-                "matchmaker/concepts/components",
                 "matchmaker/concepts/lifecycle"
             ]
         },

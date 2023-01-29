@@ -27,7 +27,7 @@
     "topbarLinks": [
         {
             "name": "Libraries",
-            "url": "https://rivet.gg/"
+            "url": "general/libraries"
         },
         {
             "name": "Community",
@@ -65,6 +65,7 @@
             "group": "Overview",
             "pages": [
                 "general/introduction",
+                "general/gui-cli-api",
                 "general/libraries"
             ]
         },
@@ -79,8 +80,8 @@
             "pages": [
                 "general/concepts/version-config",
                 "general/concepts/dev-tokens",
-                "general/concepts/data-lod",
                 "general/concepts/tokens",
+                "general/concepts/data-lod",
                 "general/concepts/blocking-requests",
                 "general/concepts/captchas",
                 "general/concepts/byo-library"

@@ -18,6 +18,19 @@ TODO
 
 Follow instructions [here](https://github.com/rivet-gg/cli#installing).
 
+<AccordionGroup>
+	<Accordion title="Can I do this with just a GUI?">
+		Yes. Everything in Rivet is built to be able to be access three ways: GUI, CLI, and API.
+
+		We're working on publishing a tutorial for this soon.
+	</Accordion>
+	<Accordion title="Can I automate this with APIs?">
+		Rivet's Cloud API can be managed with your [cloud token](/general/concepts/tokens#cloud). This is the same API we use internally and [in the CLI](https://github.com/rivet-gg/cli/blob/7f91d180f64b755956d89a3a83bfb2e77a42d72d/cli/src/commands/version.rs#L368).
+
+		A dedicated library and specification will be published soon in order to build your own tooling.
+	</Accordion>
+</AccordionGroup>
+
 ### Initialize the project
 
 Open your project's directory in a terminal and run:
@@ -87,6 +100,19 @@ rivet init --recommended
 	<Tab title="Rust">
 		Coming soon
 	</Tab>
+	<Tab title="Raw HTTP">
+		**curl**
+
+		TODO
+
+		**HTTPie**
+
+		TOOD
+
+		**Postman**
+
+		TODO
+	</Tab>
 </Tabs>
 
 ### Update your server
@@ -121,6 +147,19 @@ rivet init --recommended
 	<Tab title="Rust">
 		Coming soon
 	</Tab>
+	<Tab title="Raw HTTP">
+		**curl**
+
+		TODO
+
+		**HTTPie**
+
+		TOOD
+
+		**Postman**
+
+		TODO
+	</Tab>
 </Tabs>
 
 ## Step 3: Publish your game
@@ -133,7 +172,7 @@ docker build --tag my-game .
 yarn run build:client
 
 # Publish the version
-rivet publish --build my-game --site ./dist
+rivet publish --namespace prod --build my-game --site ./dist
 ```
 
 
