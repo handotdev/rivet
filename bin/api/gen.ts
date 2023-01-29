@@ -51,7 +51,8 @@ for (let pathName in spec.paths) {
 		}
 
 		let indexableName = `${method.toUpperCase()} ${pathName}`;
-		let isImportant = importantEndpoints[product].indexOf(indexableName) != -1;
+		let importantIndex = importantEndpoints[product].indexOf(indexableName);
+		let isImportant = importantIndex != -1;
 
 		let title = `${method.toUpperCase()} ${pathName}`;
 		if (isImportant) title = "⭐️ " + title;
@@ -61,8 +62,8 @@ for (let pathName in spec.paths) {
 		let pathStripped = pathName.replace(/\/\{.*\}/g, "").replace(/\//g, "-");
 		let filePath = new String(`${product}/api/${method}${pathStripped}`);
 
-		// Sort by grouping similar endpoints together and move important endpionts first
-		filePath.sortingKey = `${isImportant ? "0" : "9"} ${pathName} ${method}`;  
+		// Sort by grouping similar endpoints together and move important endpoints first
+		filePath.sortingKey = `${isImportant ? "0" : `999 ${importantIndex}`} ${pathName} ${method}`;  
 
 		await Deno.writeTextFile(`${filePath}.mdx`, file);
 
@@ -77,3 +78,4 @@ for (let pathName in spec.paths) {
 }
 
 await Deno.writeTextFile("mint.json", JSON.stringify(mintJson, null, 4));
+

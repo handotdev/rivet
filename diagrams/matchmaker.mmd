@@ -1,0 +1,28 @@
+sequenceDiagram
+
+participant p as player
+participant m as matchmaker
+participant l as lobby
+
+p->>+m: POST /lobbies/find
+m-->>-p: Lobby addr & player token
+
+m->>+l: create lobby
+
+p->>+l: open socket
+p-->>l: send player token
+
+l->>+m: POST /players/connected
+m-->>-l: 
+
+
+Note over p, l: Some time later
+
+p->>l: Close socket
+deactivate l
+
+l->>+m: POST /players/disconnected
+m-->>-l: 
+
+deactivate l
+
