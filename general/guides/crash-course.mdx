@@ -1,4 +1,133 @@
 ---
-title: "5 Minute Crash Course"
+title: "⏱️ 5 Minute Crash Course"
 ---
+
+## Step 1: Setup project
+
+### Create a game
+
+TODO
+
+### Install the [Rivet CLI](https://github.com/rivet-gg/cli)
+
+<Tabs>
+	<Tab title="macOS & Linux">
+		```bash
+		curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh
+		```
+	</Tab>
+	<Tab title="Windows">
+		Coming soon
+	</Tab>
+	<Tab title="Docker">
+		**macOS & Linux & Windows (PowerShell)**
+
+		```bash
+		docker run -v "$(pwd):/app" ghcr.io/rivet-gg/cli
+		```
+
+		**Windows (cmd)**
+
+		```bash
+		docker run -v "%cd%:/app" ghcr.io/rivet-gg/cli
+		```
+
+		<Info>Commands such as `rivet build push` will not work when running using Docker.</Info>
+	</Tab>
+</Tabs>
+
+### Initialize the project
+
+Open your project's directory in a terminal and run:
+
+```bash
+rivet init --recommended
+```
+
+<Accordion title="What does this do?">
+	- Creates `rivet.version.toml` to configure your deployed game
+	- Creates a dev token added to your `.env` to tell Rivet to mock API endpoints in development
+</Accordion>
+
+---
+
+## Step 2: Integrate Rivet Matchmaker
+
+### Step 2.1: Install `@rivet-gg/api`
+
+<Tabs>
+	<Tab title="Yarn">
+		```bash
+		yarn add @rivet-gg/api
+		```
+	</Tab>
+	<Tab title="NPM">
+		```bash
+		npm add @rivet-gg/api
+		```
+	</Tab>
+</Tabs>
+
+### Step 2.2: Update your client
+
+Add the following to the top of `client/Client.ts`:
+
+````typescript
+import { MatchmakerService } from "@rivet-gg/matchmaker";
+export const MATCHMAKER = new MatchmakerService({});
+````
+
+Find the `connect` function in `client/Client.ts` and replace it with the following:
+
+```typescript
+async function connect(client: Client) {
+	let res = await MATCHMAKER.findLobby({ gameModes: ["default"] });
+	let port = res.lobby!.ports!["default"];
+	client.connection = new Connection(client, port.isTls!, port.host!, {
+		token: res.lobby!.player!.token!,
+	});
+}
+```
+
+Run `yarn start` again and validate the game still connects. Open the network inspector and reload to see a `POST` request to `https://matchmaker.api.rivet.gg/v1/lobbies/find`.
+
+### Step 2.3: Update your server
+
+Add the following to the top of `server/index.ts`:
+
+```typescript
+import { MatchmakerService } from "@rivet-gg/matchmaker";
+export const MATCHMAKER = new MatchmakerService({});
+// Tell the matchmaker that this lobby is ready to start accepting players
+MATCHMAKER.lobbyReady({});
+```
+
+Find the `setupConnection` function in `server/index.ts` and replace it with the following:
+
+```typescript
+async function setupConnection(socket: Socket) {
+    // Read the token passed to the socket query
+    let playerToken = socket.handshake.query.token as string;
+    // Validate the player token with the matchmaker
+    await MATCHMAKER.playerConnected({ playerToken });
+    // Remove the player when disconnected
+    socket.on("disconnect", () => MATCHMAKER.playerDisconnected({ playerToken }));
+    new Connection(game, socket);
+}
+```
+
+## Step 3: Publish your game
+
+```bash
+docker build --tag my-game .
+yarn run build:client
+rivet publish --build my-game --site ./dist
+```
+
+
+To preview your game, run:
+
+```bash
+rivet open
+```
 
