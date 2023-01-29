@@ -54,7 +54,7 @@ for (let pathName in spec.paths) {
 		let importantIndex = importantEndpoints[product].indexOf(indexableName);
 		let isImportant = importantIndex != -1;
 
-		let title = `${method.toUpperCase()} ${pathName}`;
+		let title = path.operationId.replace("Service.", ".");
 		if (isImportant) title = "⭐️ " + title;
 
 		let file = `---\ntitle: "${title}"\nopenapi: "${method.toUpperCase()} ${pathName}"\n---`;
