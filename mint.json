@@ -107,6 +107,12 @@
             ]
         },
         {
+            "group": "Concepts",
+            "pages": [
+                "elastic-lobbies/concepts/rivet-game-guardian.md"
+            ]
+        },
+        {
             "group": "CDN",
             "pages": [
                 "cdn/introduction"
@@ -170,6 +176,9 @@
         "instagram": "https://www.instagram.com/rivet_gg",
         "discord": "https://discord.com/invite/5SUXvP9A",
         "website": "https://rivet.gg"
+    },
+    "modeToggle": {
+        "default": "dark"
     },
     "analytics": {
         "posthog": {
