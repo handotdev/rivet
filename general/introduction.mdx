@@ -3,29 +3,73 @@ title: "Introduction"
 description: "The backbone of multiplayer experiences"
 ---
 
+Simple APIs for serverless lobbies, matchmaking, CDN, and other features managed directly within an easy to use dashboard. Launch your multiplayer game on any platform with the tools you already use.
+
+## Who is Rivet built for?
+
+We've spent years building 
+
+Rivet is built for anyone building multiplayer games.
+
+We want to support hobby developers just getting started to studios with large teams.
+
+If you're already running a multiplayer game, it's not hard to switch to Rivet.
+
+## Who is Rivet *not* for?
+
+### Single player game developers
+
+Rivet is primarily focused on enabling multiplayer developers to run their games.
+
+Rivet CDN, Rivet Identities, and Rivet KV can still be used for single player games. If you find these helpful, we'd love to hear from you!
+
+### Games already using Photon Engine
+
+Sadly, Photon Engine cannot be ran on top of Rivet (yet). If you're considering Photon Engine, try using [Mirror](https://mirror-networking.com/) so your game is not vendor locked to their servers.
+
 <CardGroup>
-  <Card
-    title="5 Minute Crash Course"
-    icon="graduation-cap"
-    iconType="duotone"
-    href="/guides/crash-course"
-  />
-  <Card
-    title="Getting Started (Multiplayer)"
-    icon="user"
-    iconType="duotone"
-    href="/guides/getting-started-multiplayer"
-  />
-  <Card
-    title="Gatting Started (Single Player)"
-    icon="users"
-    iconType="duotone"
-    href="/guides/getting-started-singleplayer"
-  />
-  <Card
-    title="CDN"
-    icon="globe"
-    iconType="duotone"
-    href="/guides/cdn/private-namespaces"
-  />
+	<Card
+		title="5 Minute Crash Course"
+		icon="graduation-cap"
+		iconType="duotone"
+		href="/general/guides/crash-course"
+	/>
+	<Card
+		title="Libraries"
+		icon="books"
+		iconType="duotone"
+		href="/general/libraries"
+	/>
+	<Card
+		title="Matchmaker"
+		icon="chess-knight"
+		iconType="duotone"
+		href="/matchmaker/introduction"
+	>
+		Flexible matchmaker for placing players in lobbies with no wait times.
+	</Card>
+	<Card
+		title="Serverless Lobbies"
+		icon="server"
+		iconType="duotone"
+		href="/serverless-lobbies/introduction"
+	>
+		Auto-scaling game lobbies boot up to meet demand.
+	</Card>
+	<Card
+		title="CDN"
+		icon="globe"
+		iconType="duotone"
+		href="/cdn/introduction"
+	>
+		Versioned CDN lets you host assets and webpages with a provided or custom domain and managed SSL.
+	</Card>
+	<Card
+		title="Identity"
+		icon="key"
+		iconType="duotone"
+		href="/identity/introduction"
+	>
+		Allow identities to authenticate and play with friends across multiple games.
+	</Card>
 </CardGroup>

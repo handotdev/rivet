@@ -66,8 +66,6 @@
             "pages": [
                 "general/introduction",
                 "general/who-is-rivet-for",
-                "general/services-manifesto",
-                "general/social-manifesto",
                 "general/gui-cli-api",
                 "general/libraries"
             ]
