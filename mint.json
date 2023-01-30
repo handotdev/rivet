@@ -65,6 +65,9 @@
             "group": "Overview",
             "pages": [
                 "general/introduction",
+                "general/who-is-rivet-for",
+                "general/services-manifesto",
+                "general/social-manifesto",
                 "general/gui-cli-api",
                 "general/libraries"
             ]
@@ -72,7 +75,12 @@
         {
             "group": "Guides",
             "pages": [
-                "general/guides/crash-course"
+                "general/guides/crash-course",
+                "general/guides/namespaces-and-versions",
+                "general/guides/deploying-with-gui",
+                "general/guides/deploying-with-cli",
+                "general/guides/deploying-with-api",
+                "general/guides/deploying-with-github-actions"
             ]
         },
         {
@@ -88,17 +96,41 @@
             ]
         },
         {
+            "group": "FAQ",
+            "pages": [
+                "general/faq/oss",
+                "general/faq/on-premise"
+            ]
+        },
+        {
             "group": "Overview",
             "pages": [
                 "matchmaker/introduction"
             ]
         },
         {
+            "group": "Guides",
+            "pages": [
+                "matchmaker/guides/captcha",
+                "matchmaker/guides/friends-online",
+                "matchmaker/guides/lobby-queue",
+                "matchmaker/guides/migrate",
+                "matchmaker/guides/lobby-list"
+            ]
+        },
+        {
             "group": "Concepts",
             "pages": [
                 "matchmaker/concepts/glossary",
-                "matchmaker/concepts/components",
-                "matchmaker/concepts/lifecycle"
+                "matchmaker/concepts/anti-botting",
+                "matchmaker/concepts/captchas",
+                "matchmaker/concepts/closed-lobbies",
+                "matchmaker/concepts/desync",
+                "matchmaker/concepts/idle-lobbies",
+                "matchmaker/concepts/lifecycle",
+                "matchmaker/concepts/lobby-caps",
+                "matchmaker/concepts/max-player-count",
+                "matchmaker/concepts/no-downtime-deploys"
             ]
         },
         {
@@ -134,7 +166,12 @@
         {
             "group": "Concepts",
             "pages": [
-                "cdn/concepts/rivet-game-domain"
+                "cdn/concepts/rivet-game-domain",
+                "cdn/concepts/custom-domains",
+                "cdn/concepts/custom-headers",
+                "cdn/concepts/password-authentication",
+                "cdn/concepts/ssl",
+                "cdn/concepts/billing"
             ]
         },
         {
@@ -147,6 +184,12 @@
             "group": "Identity",
             "pages": [
                 "identity/introduction"
+            ]
+        },
+        {
+            "group": "Concepts",
+            "pages": [
+                "identity/concepts/custom-usernames-avatars"
             ]
         },
         {

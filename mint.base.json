@@ -66,6 +66,8 @@
             "pages": [
                 "general/introduction",
                 "general/who-is-rivet-for",
+                "general/services-manifesto",
+                "general/social-manifesto",
                 "general/gui-cli-api",
                 "general/libraries"
             ]
@@ -73,7 +75,12 @@
         {
             "group": "Guides",
             "pages": [
-                "general/guides/crash-course"
+                "general/guides/crash-course",
+                "general/guides/namespaces-and-versions",
+                "general/guides/deploying-with-gui",
+                "general/guides/deploying-with-cli",
+                "general/guides/deploying-with-api",
+                "general/guides/deploying-with-github-actions"
             ]
         },
         {
@@ -89,30 +96,47 @@
             ]
         },
         {
+            "group": "FAQ",
+            "pages": [
+                "general/faq/oss",
+                "general/faq/on-premise"
+            ]
+        },
+        {
             "group": "Overview",
             "pages": [
-                "matchmaker/introduction"
+                "matchmaker/introduction",
+                "matchmaker/what-matchmaker-doesnt-do"
+            ]
+        },
+        {
+            "group": "Guides",
+            "pages": [
+                "matchmaker/guides/captcha",
+                "matchmaker/guides/friends-online",
+                "matchmaker/guides/lobby-queue",
+                "matchmaker/guides/migrate",
+                "matchmaker/guides/lobby-list"
             ]
         },
         {
             "group": "Concepts",
             "pages": [
                 "matchmaker/concepts/glossary",
-                "matchmaker/concepts/lifecycle"
+                "matchmaker/concepts/anti-botting",
+                "matchmaker/concepts/captchas",
+                "matchmaker/concepts/closed-lobbies",
+                "matchmaker/concepts/desync",
+                "matchmaker/concepts/idle-lobbies",
+                "matchmaker/concepts/lifecycle",
+                "matchmaker/concepts/lobby-caps",
+                "matchmaker/concepts/max-player-count",
+                "matchmaker/concepts/no-downtime-deploys"
             ]
         },
         {
             "__apiTemplate": "matchmaker",
-            "group": "API",
-            "pages": [
-                "matchmaker/api/post-lobbies-find",
-                "matchmaker/api/post-lobbies-join",
-                "matchmaker/api/post-lobbies-ready",
-                "matchmaker/api/post-players-connected",
-                "matchmaker/api/post-players-disconnected",
-                "matchmaker/api/put-lobbies-closed",
-                "matchmaker/api/get-lobbies-list"
-            ]
+            "group": "API"
         },
         {
             "group": "Overview",
@@ -135,7 +159,12 @@
         {
             "group": "Concepts",
             "pages": [
-                "cdn/concepts/rivet-game-domain"
+                "cdn/concepts/rivet-game-domain",
+                "cdn/concepts/custom-domains",
+                "cdn/concepts/custom-headers",
+                "cdn/concepts/password-authentication",
+                "cdn/concepts/ssl",
+                "cdn/concepts/billing"
             ]
         },
         {
@@ -151,37 +180,14 @@
             ]
         },
         {
-            "__apiTemplate": "identity",
-            "group": "API",
+            "group": "Concepts",
             "pages": [
-                "identity/api/post-game-links",
-                "identity/api/post-game-links-complete",
-                "identity/api/post-identities",
-                "identity/api/get-activities",
-                "identity/api/get-events-live",
-                "identity/api/get-game-links",
-                "identity/api/post-game-links-cancel",
-                "identity/api/post-identities-avatar-upload-prepare",
-                "identity/api/post-identities-avatar-upload-complete",
-                "identity/api/get-identities-batch-handle",
-                "identity/api/get-identities-batch-summary",
-                "identity/api/post-identities-identities-self-status",
-                "identity/api/get-identities-search",
-                "identity/api/delete-identities-self-activity",
-                "identity/api/post-identities-self-activity",
-                "identity/api/post-identities-self-beta-signup",
-                "identity/api/get-identities-self-friends",
-                "identity/api/get-identities-self-profile",
-                "identity/api/post-identities-self-profile",
-                "identity/api/post-identities-self-profile-validate",
-                "identity/api/delete-identities-follow",
-                "identity/api/post-identities-follow",
-                "identity/api/get-identities-followers",
-                "identity/api/get-identities-mutual-friends",
-                "identity/api/get-identities-profile",
-                "identity/api/post-identities-report",
-                "identity/api/get-regions"
+                "identity/concepts/custom-usernames-avatars"
             ]
+        },
+        {
+            "__apiTemplate": "identity",
+            "group": "API"
         }
     ],
     "backgroundImage": "/images/background.png",
