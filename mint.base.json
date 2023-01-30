@@ -236,7 +236,8 @@
     },
     "analytics": {
         "posthog": {
-            "apiKey": "phc_6kfTNEAVw7rn1LA51cO3D69FefbKupSWFaM7OUgEpEo"
+            "apiKey": "phc_6kfTNEAVw7rn1LA51cO3D69FefbKupSWFaM7OUgEpEo",
+            "apiHost": "https://ph.rivet.gg"
         }
     }
 }
