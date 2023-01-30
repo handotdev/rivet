@@ -105,7 +105,8 @@
         {
             "group": "Overview",
             "pages": [
-                "matchmaker/introduction"
+                "matchmaker/introduction",
+                "matchmaker/what-matchmaker-doesnt-do"
             ]
         },
         {
@@ -154,7 +155,27 @@
         {
             "group": "Concepts",
             "pages": [
-                "serverless-lobbies/concepts/rivet-game-guard"
+                {
+                    "group": "Protocols",
+                    "pages": [
+                        "serverless-lobbies/concepts/protocols/websocket",
+                        "serverless-lobbies/concepts/protocols/tcp",
+                        "serverless-lobbies/concepts/protocols/udp",
+                        "serverless-lobbies/concepts/protocols/webrtc"
+                    ]
+                },
+                "serverless-lobbies/concepts/architecture",
+                "serverless-lobbies/concepts/billing",
+                "serverless-lobbies/concepts/ddos",
+                "serverless-lobbies/concepts/host-bridge-networking",
+                "serverless-lobbies/concepts/instant-deploys",
+                "serverless-lobbies/concepts/lifecycle",
+                "serverless-lobbies/concepts/lobby-ready",
+                "serverless-lobbies/concepts/logging-metrics",
+                "serverless-lobbies/concepts/one-lobby-one-container",
+                "serverless-lobbies/concepts/resource-limits",
+                "serverless-lobbies/concepts/rivet-game-guard",
+                "serverless-lobbies/concepts/ssl"
             ]
         },
         {
@@ -181,7 +202,7 @@
             ]
         },
         {
-            "group": "Identity",
+            "group": "Overview",
             "pages": [
                 "identity/introduction"
             ]
