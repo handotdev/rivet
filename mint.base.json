@@ -87,6 +87,7 @@
                 "general/concepts/version-config",
                 "general/concepts/dev-tokens",
                 "general/concepts/tokens",
+                "general/concepts/domain-based-authentication",
                 "general/concepts/data-lod",
                 "general/concepts/blocking-requests",
                 "general/concepts/captchas",
@@ -227,8 +228,8 @@
     "footerSocials": {
         "github": "https://github.com/rivet-gg",
         "twitter": "https://twitter.com/rivet_gg",
-        "instagram": "https://www.instagram.com/rivet_gg",
-        "discord": "https://discord.com/invite/5SUXvP9A",
+        "instagram": "https://instagram.com/rivet_gg",
+        "discord": "https://discord.gg/BG2vqsJczH",
         "website": "https://rivet.gg"
     },
     "modeToggle": {
