@@ -30,8 +30,8 @@
             "url": "general/libraries"
         },
         {
-            "name": "Community",
-            "url": "https://rivet.gg/"
+            "name": "Discord",
+            "url": "https://discord.gg/BG2vqsJczH"
         }
     ],
     "topAnchor": {
@@ -251,7 +251,8 @@
         "twitter": "https://twitter.com/rivet_gg",
         "instagram": "https://instagram.com/rivet_gg",
         "discord": "https://discord.gg/BG2vqsJczH",
-        "website": "https://rivet.gg"
+        "website": "https://rivet.gg",
+        "linkedin": "https://www.linkedin.com/company/72072261"
     },
     "modeToggle": {
         "default": "dark"
