@@ -96,6 +96,8 @@
         {
             "group": "FAQ",
             "pages": [
+                "general/faq/who-is-rivet-built-for",
+                "general/faq/who-is-rivet-not-built-for",
                 "general/faq/oss",
                 "general/faq/on-premise"
             ]
