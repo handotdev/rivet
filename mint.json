@@ -121,6 +121,7 @@
             "group": "Concepts",
             "pages": [
                 "matchmaker/concepts/glossary",
+                "matchmaker/concepts/finding-lobby",
                 "matchmaker/concepts/anti-botting",
                 "matchmaker/concepts/captchas",
                 "matchmaker/concepts/closed-lobbies",
@@ -129,7 +130,8 @@
                 "matchmaker/concepts/lifecycle",
                 "matchmaker/concepts/lobby-caps",
                 "matchmaker/concepts/max-player-count",
-                "matchmaker/concepts/no-downtime-deploys"
+                "matchmaker/concepts/no-downtime-deploys",
+                "matchmaker/concepts/competitive-matchmaking"
             ]
         },
         {
