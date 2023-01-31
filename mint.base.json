@@ -65,7 +65,6 @@
             "group": "Overview",
             "pages": [
                 "general/introduction",
-                "general/who-is-rivet-for",
                 "general/gui-cli-api",
                 "general/libraries"
             ]
