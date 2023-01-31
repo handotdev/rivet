@@ -104,21 +104,159 @@
             "group": "Errors",
             "pages": [
                 {
-                    "group": "glob",
+                    "group": "token",
                     "pages": [
-                        "errors/glob/invalid"
+                        "errors/token/expired",
+                        "errors/token/revoked",
+                        "errors/token/exchange-failed",
+                        "errors/token/invalid",
+                        "errors/token/refresh-not-found"
                     ]
                 },
                 {
-                    "group": "uuid",
+                    "group": "mm",
                     "pages": [
-                        "errors/uuid/invalid"
+                        "errors/mm/region-not-enabled-for-game-mode",
+                        "errors/mm/player-not-in-lobby",
+                        "errors/mm/lobby-full",
+                        "errors/mm/no-available-lobbies",
+                        "errors/mm/lobby-stopped",
+                        "errors/mm/player-registration-expired",
+                        "errors/mm/player-not-found",
+                        "errors/mm/player-removed",
+                        "errors/mm/too-many-lobbies",
+                        "errors/mm/too-many-players-from-source",
+                        "errors/mm/game-mode-not-found",
+                        "errors/mm/lobby-closed",
+                        "errors/mm/lobby-not-found",
+                        "errors/mm/player-already-connected",
+                        "errors/mm/lobby-not-started"
                     ]
                 },
                 {
-                    "group": "game-user",
+                    "group": "upload",
                     "pages": [
-                        "errors/game-user/link-failed"
+                        "errors/upload/nsfw-content-detected"
+                    ]
+                },
+                {
+                    "group": "kv",
+                    "pages": [
+                        "errors/kv/entries-missing",
+                        "errors/kv/keys-missing",
+                        "errors/kv/key-validation-error"
+                    ]
+                },
+                {
+                    "group": "cloud",
+                    "pages": [
+                        "errors/cloud/hostname-taken",
+                        "errors/cloud/too-many-pending-hostnames-for-group"
+                    ]
+                },
+                {
+                    "group": "api",
+                    "pages": [
+                        {
+                            "group": "cors",
+                            "pages": [
+                                "errors/api/cors/method-not-allowed",
+                                "errors/api/cors/origin-not-allowed",
+                                "errors/api/cors/header-not-allowed"
+                            ]
+                        },
+                        "errors/api/missing-cookie",
+                        "errors/api/missing-header",
+                        "errors/api/invalid-ip",
+                        "errors/api/bad-cookie",
+                        "errors/api/forbidden",
+                        "errors/api/bad-body",
+                        "errors/api/unauthorized",
+                        "errors/api/bad-content-length",
+                        "errors/api/rate-limit",
+                        "errors/api/body-too-large",
+                        "errors/api/bad-query-parameter",
+                        "errors/api/bad-header",
+                        "errors/api/bad-headers",
+                        "errors/api/not-found",
+                        "errors/api/bad-query"
+                    ]
+                },
+                {
+                    "group": "captcha",
+                    "pages": [
+                        "errors/captcha/captcha-required",
+                        "errors/captcha/captcha-failed",
+                        "errors/captcha/captcha-invalid"
+                    ]
+                },
+                {
+                    "group": "cdn",
+                    "pages": [
+                        "errors/cdn/too-many-auth-users",
+                        "errors/cdn/too-many-domains",
+                        "errors/cdn/invalid-domain",
+                        "errors/cdn/invalid-auth-user-password"
+                    ]
+                },
+                {
+                    "group": "validation",
+                    "pages": [
+                        "errors/validation/error"
+                    ]
+                },
+                {
+                    "group": "claims",
+                    "pages": [
+                        "errors/claims/missing-entitlement",
+                        "errors/claims/entitlement-expired"
+                    ]
+                },
+                {
+                    "group": "identity",
+                    "pages": [
+                        "errors/identity/not-admin",
+                        "errors/identity/wrong-identity",
+                        "errors/identity/not-registered",
+                        "errors/identity/not-found"
+                    ]
+                },
+                {
+                    "group": "group",
+                    "pages": [
+                        {
+                            "group": "invite",
+                            "pages": [
+                                "errors/group/invite/code-revoked",
+                                "errors/group/invite/code-invalid",
+                                "errors/group/invite/code-expired",
+                                "errors/group/invite/code-already-used"
+                            ]
+                        },
+                        "errors/group/not-member",
+                        "errors/group/cannot-request-join",
+                        "errors/group/join-request-already-exists",
+                        "errors/group/member-banned",
+                        "errors/group/insufficient-permissions",
+                        "errors/group/not-joinable",
+                        "errors/group/already-member",
+                        "errors/group/failed-to-consume-invite",
+                        "errors/group/full",
+                        "errors/group/not-found"
+                    ]
+                },
+                {
+                    "group": "game",
+                    "pages": [
+                        "errors/game/game-not-found"
+                    ]
+                },
+                {
+                    "group": "chat",
+                    "pages": [
+                        "errors/chat/invalid-topic",
+                        "errors/chat/thread-not-found",
+                        "errors/chat/invalid-body"
                     ]
                 },
                 {
@@ -144,159 +282,21 @@
                     ]
                 },
                 {
-                    "group": "chat",
+                    "group": "game-user",
                     "pages": [
-                        "errors/chat/invalid-topic",
-                        "errors/chat/thread-not-found",
-                        "errors/chat/invalid-body"
+                        "errors/game-user/link-failed"
                     ]
                 },
                 {
-                    "group": "game",
+                    "group": "uuid",
                     "pages": [
-                        "errors/game/game-not-found"
+                        "errors/uuid/invalid"
                     ]
                 },
                 {
-                    "group": "group",
+                    "group": "glob",
                     "pages": [
-                        "errors/group/not-member",
-                        "errors/group/cannot-request-join",
-                        "errors/group/join-request-already-exists",
-                        {
-                            "group": "invite",
-                            "pages": [
-                                "errors/group/invite/code-revoked",
-                                "errors/group/invite/code-invalid",
-                                "errors/group/invite/code-expired",
-                                "errors/group/invite/code-already-used"
-                            ]
-                        },
-                        "errors/group/member-banned",
-                        "errors/group/insufficient-permissions",
-                        "errors/group/not-joinable",
-                        "errors/group/already-member",
-                        "errors/group/failed-to-consume-invite",
-                        "errors/group/full",
-                        "errors/group/not-found"
-                    ]
-                },
-                {
-                    "group": "identity",
-                    "pages": [
-                        "errors/identity/not-admin",
-                        "errors/identity/wrong-identity",
-                        "errors/identity/not-registered",
-                        "errors/identity/not-found"
-                    ]
-                },
-                {
-                    "group": "claims",
-                    "pages": [
-                        "errors/claims/missing-entitlement",
-                        "errors/claims/entitlement-expired"
-                    ]
-                },
-                {
-                    "group": "validation",
-                    "pages": [
-                        "errors/validation/error"
-                    ]
-                },
-                {
-                    "group": "cdn",
-                    "pages": [
-                        "errors/cdn/too-many-auth-users",
-                        "errors/cdn/too-many-domains",
-                        "errors/cdn/invalid-domain",
-                        "errors/cdn/invalid-auth-user-password"
-                    ]
-                },
-                {
-                    "group": "captcha",
-                    "pages": [
-                        "errors/captcha/captcha-required",
-                        "errors/captcha/captcha-failed",
-                        "errors/captcha/captcha-invalid"
-                    ]
-                },
-                {
-                    "group": "api",
-                    "pages": [
-                        "errors/api/missing-cookie",
-                        {
-                            "group": "cors",
-                            "pages": [
-                                "errors/api/cors/method-not-allowed",
-                                "errors/api/cors/origin-not-allowed",
-                                "errors/api/cors/header-not-allowed"
-                            ]
-                        },
-                        "errors/api/missing-header",
-                        "errors/api/invalid-ip",
-                        "errors/api/bad-cookie",
-                        "errors/api/forbidden",
-                        "errors/api/bad-body",
-                        "errors/api/unauthorized",
-                        "errors/api/bad-content-length",
-                        "errors/api/rate-limit",
-                        "errors/api/body-too-large",
-                        "errors/api/bad-query-parameter",
-                        "errors/api/bad-header",
-                        "errors/api/bad-headers",
-                        "errors/api/not-found",
-                        "errors/api/bad-query"
-                    ]
-                },
-                {
-                    "group": "cloud",
-                    "pages": [
-                        "errors/cloud/hostname-taken",
-                        "errors/cloud/too-many-pending-hostnames-for-group"
-                    ]
-                },
-                {
-                    "group": "kv",
-                    "pages": [
-                        "errors/kv/entries-missing",
-                        "errors/kv/keys-missing",
-                        "errors/kv/key-validation-error"
-                    ]
-                },
-                {
-                    "group": "upload",
-                    "pages": [
-                        "errors/upload/nsfw-content-detected"
-                    ]
-                },
-                {
-                    "group": "mm",
-                    "pages": [
-                        "errors/mm/region-not-enabled-for-game-mode",
-                        "errors/mm/player-not-in-lobby",
-                        "errors/mm/lobby-full",
-                        "errors/mm/no-available-lobbies",
-                        "errors/mm/lobby-stopped",
-                        "errors/mm/player-registration-expired",
-                        "errors/mm/player-not-found",
-                        "errors/mm/player-removed",
-                        "errors/mm/too-many-lobbies",
-                        "errors/mm/too-many-players-from-source",
-                        "errors/mm/game-mode-not-found",
-                        "errors/mm/lobby-closed",
-                        "errors/mm/lobby-not-found",
-                        "errors/mm/player-already-connected",
-                        "errors/mm/lobby-not-started"
-                    ]
-                },
-                {
-                    "group": "token",
-                    "pages": [
-                        "errors/token/expired",
-                        "errors/token/revoked",
-                        "errors/token/exchange-failed",
-                        "errors/token/invalid",
-                        "errors/token/refresh-not-found"
+                        "errors/glob/invalid"
                     ]
                 }
             ]

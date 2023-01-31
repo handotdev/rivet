@@ -47,7 +47,7 @@ async function processErrorDir(inputPath, outputPath, pages) {
 			let subPages = [];
 			await processErrorDir(inputPathEntry, outputPathEntry, subPages);
 			if (subPages.length > 0) {
-				pages.push({
+				pages.unshift({
 					group: dirEntry.name,
 					pages: subPages,
 				});
