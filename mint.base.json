@@ -100,6 +100,10 @@
                 "general/faq/on-premise"
             ]
         },
+        {
+            "__errorsTemplate": true,
+            "group": "Errors"
+        },
 
 
 

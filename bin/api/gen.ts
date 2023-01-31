@@ -3,10 +3,58 @@
 import yaml from "npm:yaml";
 import { emptyDir } from "https://deno.land/std/fs/mod.ts";
 
-await Deno.copyFile("../backend/openapi/openapi.yml", "openapi.yml");
+let backendPath = "../backend";
+
+await Deno.copyFile(`${backendPath}/openapi/openapi.yml`, "openapi.yml");
 
 const spec = yaml.parse(await Deno.readTextFile("openapi.yml"));
 let mintJson = JSON.parse(await Deno.readTextFile("mint.base.json"));
+
+let errorPages = [];
+await Deno.remove("errors", { recursive: true }).catch(() => {});
+await processErrorDir(`${backendPath}/error-registry`, "errors", errorPages);
+
+async function processErrorDir(inputPath, outputPath, pages) {
+	console.log(`Processing dir ${inputPath} -> ${outputPath}`);
+	await Deno.mkdir(outputPath, { recursive: true });
+
+	for await (const dirEntry of Deno.readDir(inputPath)) {
+		let inputPathEntry = `${inputPath}/${dirEntry.name}`;
+		let outputPathEntry = `${outputPath}/${dirEntry.name}`;
+
+		if (dirEntry.isFile && dirEntry.name.endsWith(".md")) {
+			console.log(`Copying file ${inputPath} -> ${outputPath}`);
+
+			let errorDoc = await Deno.readTextFile(inputPathEntry);
+
+			// Read metadata
+			let title = errorDoc.match(/^#\s+(.*)$/m)[1];
+			if (!title) throw `Missing title: ${inputPathEntry}`;
+			let name = errorDoc.match(/^name\s*=\s*"([\w_]+)"\s*$/m)[1];
+			if (!name) throw `Missing name: ${inputPathEntry}`;
+			let httpStatus = parseInt(errorDoc.match(/^http_status\s*=\s*(\d+)\s*$/m)[1]);
+			if (httpStatus >= 500 && httpStatus < 600) {
+				continue;
+			}
+
+			// Strip error doc
+			errorDoc = errorDoc.replace(/---.*---\s+#[^\n]+\s+/gs, "");
+			errorDoc = `---\ntitle: "${title}"\ndescription: "${name}"\n---\n\n${errorDoc}`;
+			await Deno.writeTextFile(outputPathEntry.replace(".md", ".mdx"), errorDoc);
+
+			pages.push(outputPathEntry.replace(".md", ""));
+		} else if (dirEntry.isDirectory) {
+			let subPages = [];
+			await processErrorDir(inputPathEntry, outputPathEntry, subPages);
+			if (subPages.length > 0) {
+				pages.push({
+					group: dirEntry.name,
+					pages: subPages,
+				});
+			}
+		}
+	}
+}
 
 let importantEndpoints = {
 	"matchmaker": [
@@ -30,6 +78,9 @@ for (let navigation of mintJson.navigation) {
 		apiTemplates[navigation.__apiTemplate] = navigation;
 		navigation.pages = [];
 		delete navigation.__apiTemplate;
+	} else if (navigation.__errorsTemplate) {
+		navigation.pages = errorPages;
+		delete navigation.__errorsTemplate;
 	}
 }
 
