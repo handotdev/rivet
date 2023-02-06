@@ -7,7 +7,7 @@ let backendPath = "../backend";
 
 await Deno.copyFile(`${backendPath}/openapi/openapi.yml`, "openapi.yml");
 
-const spec = yaml.parse(await Deno.readTextFile("openapi.yml"));
+const spec = yaml.parse(await Deno.readTextFile("openapi.yml"), { maxAliasCount: -1 });
 let mintJson = JSON.parse(await Deno.readTextFile("mint.base.json"));
 
 let errorPages = [];
@@ -70,6 +70,9 @@ let importantEndpoints = {
 		"POST /game-links/complete",
 		"GET /game-links/complete",
 	],
+	"cloud": [
+		"POST /games/{}/version",
+	],
 };
 
 let apiTemplates = {};
@@ -86,6 +89,7 @@ for (let navigation of mintJson.navigation) {
 
 await emptyDir("matchmaker/api");
 await emptyDir("identity/api");
+await emptyDir("cloud/api");
 
 for (let pathName in spec.paths) {
 	for (let method in spec.paths[pathName]) {
@@ -94,12 +98,7 @@ for (let pathName in spec.paths) {
 		console.log('Registering', method, pathName);
 
 		// TODO: Hack
-		let product;
-		if (pathName.startsWith("/lobbies") || pathName.startsWith("/players")) {
-			product = "matchmaker";
-		} else {
-			product = "identity";
-		}
+		let product = path.servers[0].url.replace("https://", "").replace(".api.rivet.gg/v1", "");
 
 		let indexableName = `${method.toUpperCase()} ${pathName}`;
 		let importantIndex = importantEndpoints[product].indexOf(indexableName);

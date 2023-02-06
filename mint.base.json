@@ -58,6 +58,11 @@
             "name": "Identity",
             "icon": "key",
             "url": "identity"
+        },
+        {
+            "name": "Cloud",
+            "icon": "cloud",
+            "url": "cloud"
         }
     ],
     "navigation": [
@@ -239,6 +244,17 @@
         },
         {
             "__apiTemplate": "identity",
+            "group": "API"
+        },
+
+        {
+            "group": "Cloud",
+            "pages": [
+                "cloud/introduction"
+            ]
+        },
+        {
+            "__apiTemplate": "cloud",
             "group": "API"
         }
     ],
