@@ -71,7 +71,7 @@ let importantEndpoints = {
 		"GET /game-links/complete",
 	],
 	"cloud": [
-		"POST /games/{}/version",
+		"POST /games/{game_id}/versions",
 	],
 };
 
