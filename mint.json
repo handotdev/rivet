@@ -355,7 +355,16 @@
         },
         {
             "group": "API",
-            "pages": []
+            "pages": [
+                "matchmaker/api/post-lobbies-find",
+                "matchmaker/api/post-lobbies-join",
+                "matchmaker/api/post-lobbies-ready",
+                "matchmaker/api/post-players-connected",
+                "matchmaker/api/post-players-disconnected",
+                "matchmaker/api/put-lobbies-closed",
+                "matchmaker/api/get-lobbies-list",
+                "matchmaker/api/get-regions"
+            ]
         },
         {
             "group": "Overview",

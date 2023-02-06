@@ -2096,7 +2096,7 @@ paths:
         '204':
           description: ''
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
   /lobbies/closed:
     put:
@@ -2113,7 +2113,7 @@ paths:
         '204':
           description: ''
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -2149,7 +2149,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MatchmakerFindLobbyOutput'
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -2190,7 +2190,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MatchmakerJoinLobbyOutput'
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -2220,7 +2220,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MatchmakerListLobbiesOutput'
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
   /players/connected:
     post:
@@ -2299,7 +2299,7 @@ paths:
         '204':
           description: ''
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -2326,7 +2326,7 @@ paths:
         '204':
           description: ''
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
       requestBody:
         required: true
@@ -2360,7 +2360,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MatchmakerListRegionsOutput'
       servers:
-        - url: https://party.api.rivet.gg/v1
+        - url: https://matchmaker.api.rivet.gg/v1
       security: *ref_0
   /parties/self/activity/matchmaker/lobbies/find:
     post:
@@ -8555,14 +8555,14 @@ components:
         site:
           type: string
           description: A universally unique identifier.
-        site_id:
-          type: string
-          description: '**Deprecated**'
         routes:
           type: array
           items:
             $ref: '#/components/schemas/CloudVersionCdnRoute'
           description: Multiple CDN version routes.
+        site_id:
+          type: string
+          description: '**Deprecated**'
     CloudVersionCdnRoute:
       type: object
       properties:
