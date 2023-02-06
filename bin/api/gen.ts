@@ -99,12 +99,15 @@ for (let pathName in spec.paths) {
 
 		// TODO: Hack
 		let product = path.servers[0].url.replace("https://", "").replace(".api.rivet.gg/v1", "");
+		if (product == "auth" || product == "portal" || product == "job") continue;  // Internal
+		if (product == "party" || product == "kv") continue;  // Unreleased
+		if (product == "chat" || product == "group") product = "identity";  // Merge in to identity
 
 		let indexableName = `${method.toUpperCase()} ${pathName}`;
-		let importantIndex = importantEndpoints[product].indexOf(indexableName);
+		let importantIndex = (importantEndpoints[product] ?? []).indexOf(indexableName);
 		let isImportant = importantIndex != -1;
 
-		let title = path.operationId.replace("Service.", ".");
+		let title = path.operationId.replace(/_/g, ".");
 		if (isImportant) title = "⭐️ " + title;
 
 		let file = `---\ntitle: "${title}"\nopenapi: "${method.toUpperCase()} ${pathName}"\n---`;
