@@ -72,6 +72,8 @@ let importantEndpoints = {
 	],
 	"cloud": [
 		"POST /games/{game_id}/versions",
+		"PUT /games/{game_id}/namespaces/{namespace_id}/version",
+		"POST /games/{game_id}/namespaces",
 	],
 };
 

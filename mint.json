@@ -493,6 +493,8 @@
         {
             "group": "API",
             "pages": [
+                "cloud/api/post-games-namespaces",
+                "cloud/api/put-games-version",
                 "cloud/api/post-games-versions",
                 "cloud/api/get-auth-inspect",
                 "cloud/api/get-games",
@@ -513,7 +515,6 @@
                 "cloud/api/delete-games",
                 "cloud/api/get-games-logs",
                 "cloud/api/post-games-logs-export",
-                "cloud/api/post-games-namespaces",
                 "cloud/api/post-games-namespaces-validate",
                 "cloud/api/get-games",
                 "cloud/api/get-games-analytics-matchmaker-live",
@@ -530,7 +531,6 @@
                 "cloud/api/post-games-tokens-development",
                 "cloud/api/post-games-tokens-development-validate",
                 "cloud/api/post-games-tokens-public",
-                "cloud/api/put-games-version",
                 "cloud/api/post-games-prepare",
                 "cloud/api/post-games-tokens-cloud",
                 "cloud/api/post-games-versions-validate",
