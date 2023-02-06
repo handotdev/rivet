@@ -74,16 +74,27 @@
             "pages": [
                 "general/guides/crash-course",
                 "general/guides/namespaces-and-versions",
-                "general/guides/deploying-with-gui",
-                "general/guides/deploying-with-cli",
-                "general/guides/deploying-with-api",
-                "general/guides/deploying-with-github-actions"
+                {
+                    "group": "Deploying with...",
+                    "pages": [
+                        "general/guides/deploying-with-gui",
+                        "general/guides/deploying-with-cli",
+                        "general/guides/deploying-with-api",
+                        "general/guides/deploying-with-github-actions"
+                    ]
+                }
             ]
         },
         {
             "group": "Concepts",
             "pages": [
-                "general/concepts/version-config",
+                {
+                    "group": "CLI",
+                    "pages": [
+                        "general/concepts/rivet-version-config",
+                        "general/concepts/dot-rivet-directory"
+                    ]
+                },
                 "general/concepts/dev-tokens",
                 "general/concepts/tokens",
                 "general/concepts/domain-based-authentication",
