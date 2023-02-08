@@ -113,6 +113,72 @@ paths:
       servers:
         - url: https://cloud.api.rivet.gg/v1
       security: *ref_0
+  /devices/links:
+    post:
+      operationId: cloud_devices_links_prepare
+      tags:
+        - CloudDevicesLinks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudDevicesPrepareDeviceLinkOutput'
+      servers:
+        - url: https://cloud.api.rivet.gg/v1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudDevicesPrepareDeviceLinkInput'
+    get:
+      operationId: cloud_devices_links_get
+      tags:
+        - CloudDevicesLinks
+      parameters:
+        - name: device_link_token
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Jwt'
+        - name: watch_index
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/WatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudDevicesGetDeviceLinkOutput'
+      servers:
+        - url: https://cloud.api.rivet.gg/v1
+  /devices/links/complete:
+    post:
+      operationId: cloud_devices_links_complete
+      tags:
+        - CloudDevicesLinks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudDevicesCompleteDeviceLinkOutput'
+      servers:
+        - url: https://cloud.api.rivet.gg/v1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudDevicesCompleteDeviceLinkInput'
   /games/{game_id}/avatars:
     get:
       description: Lists custom avatars for the given game.
@@ -5267,6 +5333,42 @@ components:
           description: A user name.
       required:
         - user
+    CloudDevicesPrepareDeviceLinkInput:
+      type: object
+      properties: {}
+    CloudDevicesPrepareDeviceLinkOutput:
+      type: object
+      properties:
+        device_link_token:
+          type: string
+        expire_ts:
+          $ref: '#/components/schemas/Timestamp'
+      required:
+        - device_link_token
+        - expire_ts
+    CloudDevicesGetDeviceLinkOutput:
+      type: object
+      properties:
+        cloud_token:
+          type: string
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - watch
+    CloudDevicesCompleteDeviceLinkInput:
+      type: object
+      properties:
+        device_link_token:
+          $ref: '#/components/schemas/Jwt'
+        game_id:
+          type: string
+          format: uuid
+      required:
+        - device_link_token
+        - game_id
+    CloudDevicesCompleteDeviceLinkOutput:
+      type: object
+      properties: {}
     CloudGamesListGameCustomAvatarsOutput:
       type: object
       properties:
@@ -5859,9 +5961,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CloudVersionIdentityCustomAvatar'
-      required:
-        - custom_display_names
-        - custom_avatars
     CloudVersionIdentityCustomDisplayName:
       type: object
       properties:

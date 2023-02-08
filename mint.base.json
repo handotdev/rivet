@@ -100,6 +100,7 @@
                         "general/concepts/dot-rivet-directory"
                     ]
                 },
+                "general/concepts/alpha-beta-stable",
                 "general/concepts/dev-tokens",
                 "general/concepts/tokens",
                 "general/concepts/domain-based-authentication",
@@ -186,6 +187,9 @@
                     ]
                 },
                 "serverless-lobbies/concepts/architecture",
+                "serverless-lobbies/concepts/available-regions",
+                "serverless-lobbies/concepts/available-tiers",
+                "serverless-lobbies/concepts/ports",
                 "serverless-lobbies/concepts/billing",
                 "serverless-lobbies/concepts/ddos",
                 "serverless-lobbies/concepts/host-bridge-networking",
