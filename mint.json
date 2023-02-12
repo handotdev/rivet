@@ -170,6 +170,7 @@
                     "group": "cloud",
                     "pages": [
                         "errors/cloud/hostname-taken",
+                        "errors/cloud/device-link-already-complete",
                         "errors/cloud/too-many-pending-hostnames-for-group"
                     ]
                 },
@@ -256,9 +257,11 @@
                         "errors/group/cannot-request-join",
                         "errors/group/join-request-already-exists",
                         "errors/group/member-banned",
+                        "errors/group/group-not-developer-group",
                         "errors/group/insufficient-permissions",
                         "errors/group/not-joinable",
                         "errors/group/already-member",
+                        "errors/group/group-invalid-developer-status",
                         "errors/group/failed-to-consume-invite",
                         "errors/group/full",
                         "errors/group/not-found"
@@ -441,12 +444,9 @@
             "group": "API",
             "pages": [
                 "identity/api/post-game-links",
-                "identity/api/post-game-links-complete",
                 "identity/api/post-identities",
-                "identity/api/get-activities",
                 "identity/api/get-events-live",
                 "identity/api/get-game-links",
-                "identity/api/post-game-links-cancel",
                 "identity/api/get-groups",
                 "identity/api/post-groups",
                 "identity/api/post-groups-avatar-upload-prepare",
@@ -475,7 +475,6 @@
                 "identity/api/get-identities-search",
                 "identity/api/delete-identities-self-activity",
                 "identity/api/post-identities-self-activity",
-                "identity/api/post-identities-self-beta-signup",
                 "identity/api/get-identities-self-friends",
                 "identity/api/get-identities-self-profile",
                 "identity/api/post-identities-self-profile",
@@ -512,7 +511,6 @@
                 "cloud/api/get-auth-inspect",
                 "cloud/api/get-devices-links",
                 "cloud/api/post-devices-links",
-                "cloud/api/post-devices-links-complete",
                 "cloud/api/get-games",
                 "cloud/api/post-games",
                 "cloud/api/post-games-validate",

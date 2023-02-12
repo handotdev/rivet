@@ -3,76 +3,6 @@ info:
   title: Rivet API
   version: ''
 paths:
-  /identity/email/complete-verification:
-    post:
-      description: Completes the email verification process.
-      operationId: auth_identity_completeEmailVerification
-      tags:
-        - AuthIdentity
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthCompleteEmailVerificationOutput'
-      servers:
-        - url: https://auth.api.rivet.gg/v1
-      security: &ref_0
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthCompleteEmailVerificationInput'
-  /identity/email/start-verification:
-    post:
-      description: Starts the verification process for linking an email to your identity.
-      operationId: auth_identity_startEmailVerification
-      tags:
-        - AuthIdentity
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthStartEmailVerificationOutput'
-      servers:
-        - url: https://auth.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthStartEmailVerificationInput'
-  /tokens/identity:
-    post:
-      description: Refreshes the current identity's token and sets authentication headers.
-      operationId: auth_tokens_refreshIdentityToken
-      tags:
-        - AuthTokens
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthRefreshIdentityTokenOutput'
-      servers:
-        - url: https://auth.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuthRefreshIdentityTokenInput'
   /identities/{identity_id}/thread:
     get:
       description: Returns a thread ID with a given identity.
@@ -95,7 +25,8 @@ paths:
                 $ref: '#/components/schemas/ChatGetDirectThreadOutput'
       servers:
         - url: https://chat.api.rivet.gg/v1
-      security: *ref_0
+      security: &ref_0
+        - BearerAuth: []
   /auth/inspect:
     get:
       description: Returns information about the current authenticated agent.
@@ -128,12 +59,6 @@ paths:
                 $ref: '#/components/schemas/CloudDevicesPrepareDeviceLinkOutput'
       servers:
         - url: https://cloud.api.rivet.gg/v1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CloudDevicesPrepareDeviceLinkInput'
     get:
       operationId: cloud_devices_links_get
       tags:
@@ -146,7 +71,7 @@ paths:
             $ref: '#/components/schemas/Jwt'
         - name: watch_index
           in: query
-          required: true
+          required: false
           schema:
             $ref: '#/components/schemas/WatchQuery'
       responses:
@@ -158,27 +83,6 @@ paths:
                 $ref: '#/components/schemas/CloudDevicesGetDeviceLinkOutput'
       servers:
         - url: https://cloud.api.rivet.gg/v1
-  /devices/links/complete:
-    post:
-      operationId: cloud_devices_links_complete
-      tags:
-        - CloudDevicesLinks
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CloudDevicesCompleteDeviceLinkOutput'
-      servers:
-        - url: https://cloud.api.rivet.gg/v1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CloudDevicesCompleteDeviceLinkInput'
   /games/{game_id}/avatars:
     get:
       description: Lists custom avatars for the given game.
@@ -1179,510 +1083,11 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        '204':
           description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CloudUploadCompleteOutput'
       servers:
         - url: https://cloud.api.rivet.gg/v1
       security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CloudUploadCompleteInput'
-  /groups:
-    get:
-      description: Returns a list of suggested groups.
-      operationId: group_groups_listSuggested
-      tags:
-        - GroupGroups
-      parameters:
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupListSuggestedOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-    post:
-      description: Creates a new group.
-      operationId: group_groups_create
-      tags:
-        - GroupGroups
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupCreateOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupCreateInput'
-  /groups/avatar-upload/prepare:
-    post:
-      description: |-
-        Prepares an avatar image upload.
-        Complete upload with `rivet.api.group#CompleteAvatarUpload`.
-      operationId: group_groups_prepareAvatarUpload
-      tags:
-        - GroupGroups
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupPrepareAvatarUploadOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupPrepareAvatarUploadInput'
-  /groups/profile/validate:
-    post:
-      description: >-
-        Validate contents of group profile. Use to provide immediate feedback on
-        profile changes before committing them.
-      operationId: group_groups_validateProfile
-      tags:
-        - GroupGroups
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupValidateProfileOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupValidateProfileInput'
-  /groups/search:
-    get:
-      description: Fuzzy search for groups.
-      operationId: group_groups_search
-      tags:
-        - GroupGroups
-      parameters:
-        - name: query
-          in: query
-          description: The query to match group display names against.
-          required: true
-          schema:
-            type: string
-        - name: anchor
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: Unsigned 32 bit integer.
-          required: false
-          schema:
-            type: number
-            format: double
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupSearchOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/avatar-upload/{upload_id}/complete:
-    post:
-      description: |-
-        Completes an avatar image upload. Must be called after the file upload
-        process completes.
-        Call `rivet.api.group#PrepareAvatarUpload` first.
-      operationId: group_groups_completeAvatarUpload
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: upload_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/bans:
-    get:
-      description: Returns a group's bans. Must have valid permissions to view.
-      operationId: group_groups_getBans
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: anchor
-          in: query
-          description: >-
-            The pagination anchor. Set to the returned anchor of this endpoint
-            to receive the next set of items.
-          required: false
-          schema:
-            type: string
-        - name: count
-          in: query
-          description: Amount of bans to return.
-          required: false
-          schema:
-            type: number
-            format: double
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupGetBansOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/bans/{identity_id}:
-    post:
-      description: >-
-        Bans an identity from a group. Must be the owner of the group to perform
-        this action. The banned identity will no longer be able to create a join
-        request or use a group invite.
-      operationId: group_groups_banIdentity
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: identity_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-    delete:
-      description: >-
-        Unbans an identity from a group. Must be the owner of the group to
-        perform this action.
-      operationId: group_groups_unbanIdentity
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: identity_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/join-requests:
-    get:
-      description: Returns a group's join requests. Must have valid permissions to view.
-      operationId: group_groups_getJoinRequests
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: anchor
-          in: query
-          description: >-
-            The pagination anchor. Set to the returned anchor of this endpoint
-            to receive the next set of items.
-          required: false
-          schema:
-            type: string
-        - name: count
-          in: query
-          description: Amount of join requests to return.
-          required: false
-          schema:
-            type: number
-            format: double
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupGetJoinRequestsOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/kick/{identity_id}:
-    post:
-      description: >-
-        Kicks an identity from a group. Must be the owner of the group to
-        perform this action.
-      operationId: group_groups_kickMember
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: identity_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/leave:
-    post:
-      description: Leaves a group.
-      operationId: group_groups_leave
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/members:
-    get:
-      description: Returns a group's members.
-      operationId: group_groups_getMembers
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: anchor
-          in: query
-          description: >-
-            The pagination anchor. Set to the returned anchor of this endpoint
-            to receive the next set of items.
-          required: false
-          schema:
-            type: string
-        - name: count
-          in: query
-          description: Amount of members to return.
-          required: false
-          schema:
-            type: number
-            format: double
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupGetMembersOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/profile:
-    get:
-      description: Returns a group profile.
-      operationId: group_groups_getProfile
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupGetProfileOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-    post:
-      operationId: group_groups_updateProfile
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupUpdateProfileInput'
-  /groups/{group_id}/summary:
-    get:
-      operationId: group_groups_getSummary
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GroupGetSummaryOutput'
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-  /groups/{group_id}/transfer-owner:
-    post:
-      description: Transfers ownership of a group to another identity.
-      operationId: group_groups_transferOwnership
-      tags:
-        - GroupGroups
-      parameters:
-        - name: group_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://group.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GroupTransferOwnershipInput'
   /invites/{group_invite_code}:
     get:
       description: >-
@@ -1812,28 +1217,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GroupResolveJoinRequestInput'
-  /activities:
-    get:
-      description: Returns an overview of all players currently online or in game.
-      operationId: identity_activities_list
-      tags:
-        - IdentityActivities
-      parameters:
-        - name: watch_index
-          in: query
-          required: false
-          schema:
-            $ref: '#/components/schemas/WatchQuery'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IdentityListActivitiesOutput'
-      servers:
-        - url: https://identity.api.rivet.gg/v1
-      security: *ref_0
   /events/live:
     get:
       description: Returns all events relative to the current identity.
@@ -1917,7 +1300,7 @@ paths:
             $ref: '#/components/schemas/Jwt'
         - name: watch_index
           in: query
-          required: true
+          required: false
           schema:
             $ref: '#/components/schemas/WatchQuery'
       responses:
@@ -1930,76 +1313,12 @@ paths:
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
-  /game-links/complete:
-    post:
-      description: >-
-        Completes a game link process and returns whether or not the link is
-        valid.
-      operationId: identity_links_complete
-      tags:
-        - IdentityLinks
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://identity.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identity_link_token:
-                  $ref: '#/components/schemas/Jwt'
-              required:
-                - identity_link_token
-  /game-links/cancel:
-    post:
-      description: >-
-        Cancels a game link. It can no longer be used to link after
-        cancellation.
-      operationId: identity_links_cancel
-      tags:
-        - IdentityLinks
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://identity.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identity_link_token:
-                  $ref: '#/components/schemas/Jwt'
-              required:
-                - identity_link_token
-  /runs/cleanup:
-    post:
-      operationId: job_run_cleanup
-      tags:
-        - JobRun
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://job.api.rivet.gg/v1
-      security: *ref_0
   /entries/batch:
     get:
       description: Gets multiple key-value entries by key(s).
-      operationId: kv_batchOperations_getBatch
+      operationId: kv_batch_getBatch
       tags:
-        - KvBatchOperations
+        - KvBatch
       parameters:
         - name: watch_index
           in: query
@@ -2025,9 +1344,9 @@ paths:
       security: *ref_0
     put:
       description: Puts (sets or overwrites) multiple key-value entries by key(s).
-      operationId: kv_batchOperations_putBatch
+      operationId: kv_batch_putBatch
       tags:
-        - KvBatchOperations
+        - KvBatch
       parameters: []
       responses:
         '204':
@@ -2043,99 +1362,10 @@ paths:
               $ref: '#/components/schemas/KvPutBatchInput'
     delete:
       description: Deletes multiple key-value entries by key(s).
-      operationId: kv_batchOperations_deleteBatch
+      operationId: kv_batch_deleteBatch
       tags:
-        - KvBatchOperations
+        - KvBatch
       parameters:
-        - name: namespace_id
-          in: query
-          description: A universally unique identifier.
-          required: false
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://kv.api.rivet.gg/v1
-      security: *ref_0
-  /entries:
-    get:
-      description: Returns a specific key-value entry by key.
-      operationId: kv_operations_get
-      tags:
-        - KvOperations
-      parameters:
-        - name: key
-          in: query
-          description: >-
-            A string reprenting a key in the key-value database. Key path
-            components are split by a slash (e.g. `a/b/c` has the path
-            components `["a", "b", "c"]`). Slashes can be escaped by using a
-            forward slash (e.g. `a/b\/c/d` has the path components `["a", "b/c",
-            "d"]`). See `rivet.api.kv.common#KeyComponents` for the structure of
-            a `rivet.api.kv.common#Key` split by `/`.
-          required: true
-          schema:
-            type: string
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-        - name: namespace_id
-          in: query
-          description: A universally unique identifier.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KvGetOutput'
-      servers:
-        - url: https://kv.api.rivet.gg/v1
-      security: *ref_0
-    put:
-      description: Puts (sets or overwrites) a key-value entry by key.
-      operationId: kv_operations_put
-      tags:
-        - KvOperations
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://kv.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KvPutInput'
-    delete:
-      description: Deletes a key-value entry by key.
-      operationId: kv_operations_delete
-      tags:
-        - KvOperations
-      parameters:
-        - name: key
-          in: query
-          description: >-
-            A string reprenting a key in the key-value database. Key path
-            components are split by a slash (e.g. `a/b/c` has the path
-            components `["a", "b", "c"]`). Slashes can be escaped by using a
-            forward slash (e.g. `a/b\/c/d` has the path components `["a", "b/c",
-            "d"]`). See `rivet.api.kv.common#KeyComponents` for the structure of
-            a `rivet.api.kv.common#Key` split by `/`.
-          required: true
-          schema:
-            type: string
         - name: namespace_id
           in: query
           description: A universally unique identifier.
@@ -2817,101 +2047,6 @@ paths:
       servers:
         - url: https://party.api.rivet.gg/v1
       security: *ref_0
-  /beta-join-request/{identity_id}:
-    post:
-      description: Resolves a beta join request for a given identity.
-      operationId: portal_admin_resolveBetaJoinRequest
-      tags:
-        - PortalAdmin
-      parameters:
-        - name: identity_id
-          in: path
-          description: A universally unique identifier.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://portal.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PortalResolveBetaJoinRequestInput'
-  /games/{game_name_id}/profile:
-    get:
-      description: Returns a game profile.
-      operationId: portal_games_getGameProfile
-      tags:
-        - PortalGames
-      parameters:
-        - name: game_name_id
-          in: path
-          description: >-
-            A human readable short identifier used to references resources.
-            Different than a `rivet.common#Uuid` because this is intended to be
-            human readable. Different than `rivet.common#DisplayName` because
-            this should not include special characters and be short.
-          required: true
-          schema:
-            type: string
-        - name: watch_index
-          in: query
-          description: A query parameter denoting the requests watch index.
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PortalGetGameProfileOutput'
-      servers:
-        - url: https://portal.api.rivet.gg/v1
-      security: *ref_0
-  /notifications/register:
-    post:
-      description: Registers push notifications for the current identity.
-      operationId: portal_notifications_registerNotifications
-      tags:
-        - PortalNotifications
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://portal.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PortalRegisterNotificationsInput'
-    delete:
-      description: Unregister push notification for the current identity.
-      operationId: portal_notifications_unregisterNotifications
-      tags:
-        - PortalNotifications
-      parameters:
-        - name: service
-          in: query
-          description: Represents a value for which notification service to unregister.
-          required: true
-          schema:
-            $ref: '#/components/schemas/PortalNotificationUnregisterService'
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://portal.api.rivet.gg/v1
-      security: *ref_0
   /messages:
     post:
       description: Sends a chat message to a given topic.
@@ -3582,6 +2717,495 @@ paths:
             schema:
               $ref: >-
                 #/components/schemas/CloudGamesNamespacesUpdateGameNamespaceVersionInput
+  /groups:
+    get:
+      description: Returns a list of suggested groups.
+      operationId: group_listSuggested
+      tags:
+        - Group
+      parameters:
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupListSuggestedOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+    post:
+      description: Creates a new group.
+      operationId: group_create
+      tags:
+        - Group
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupCreateOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreateInput'
+  /groups/avatar-upload/prepare:
+    post:
+      description: |-
+        Prepares an avatar image upload.
+        Complete upload with `rivet.api.group#CompleteAvatarUpload`.
+      operationId: group_prepareAvatarUpload
+      tags:
+        - Group
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupPrepareAvatarUploadOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupPrepareAvatarUploadInput'
+  /groups/profile/validate:
+    post:
+      description: >-
+        Validate contents of group profile. Use to provide immediate feedback on
+        profile changes before committing them.
+      operationId: group_validateProfile
+      tags:
+        - Group
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupValidateProfileOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupValidateProfileInput'
+  /groups/search:
+    get:
+      description: Fuzzy search for groups.
+      operationId: group_search
+      tags:
+        - Group
+      parameters:
+        - name: query
+          in: query
+          description: The query to match group display names against.
+          required: true
+          schema:
+            type: string
+        - name: anchor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Unsigned 32 bit integer.
+          required: false
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSearchOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/avatar-upload/{upload_id}/complete:
+    post:
+      description: |-
+        Completes an avatar image upload. Must be called after the file upload
+        process completes.
+        Call `rivet.api.group#PrepareAvatarUpload` first.
+      operationId: group_completeAvatarUpload
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: upload_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/bans:
+    get:
+      description: Returns a group's bans. Must have valid permissions to view.
+      operationId: group_getBans
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: anchor
+          in: query
+          description: >-
+            The pagination anchor. Set to the returned anchor of this endpoint
+            to receive the next set of items.
+          required: false
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: Amount of bans to return.
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupGetBansOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/bans/{identity_id}:
+    post:
+      description: >-
+        Bans an identity from a group. Must be the owner of the group to perform
+        this action. The banned identity will no longer be able to create a join
+        request or use a group invite.
+      operationId: group_banIdentity
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: identity_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+    delete:
+      description: >-
+        Unbans an identity from a group. Must be the owner of the group to
+        perform this action.
+      operationId: group_unbanIdentity
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: identity_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/join-requests:
+    get:
+      description: Returns a group's join requests. Must have valid permissions to view.
+      operationId: group_getJoinRequests
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: anchor
+          in: query
+          description: >-
+            The pagination anchor. Set to the returned anchor of this endpoint
+            to receive the next set of items.
+          required: false
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: Amount of join requests to return.
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupGetJoinRequestsOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/kick/{identity_id}:
+    post:
+      description: >-
+        Kicks an identity from a group. Must be the owner of the group to
+        perform this action.
+      operationId: group_kickMember
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: identity_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/leave:
+    post:
+      description: Leaves a group.
+      operationId: group_leave
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/members:
+    get:
+      description: Returns a group's members.
+      operationId: group_getMembers
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: anchor
+          in: query
+          description: >-
+            The pagination anchor. Set to the returned anchor of this endpoint
+            to receive the next set of items.
+          required: false
+          schema:
+            type: string
+        - name: count
+          in: query
+          description: Amount of members to return.
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupGetMembersOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/profile:
+    get:
+      description: Returns a group profile.
+      operationId: group_getProfile
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupGetProfileOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+    post:
+      operationId: group_updateProfile
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupUpdateProfileInput'
+  /groups/{group_id}/summary:
+    get:
+      operationId: group_getSummary
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupGetSummaryOutput'
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+  /groups/{group_id}/transfer-owner:
+    post:
+      description: Transfers ownership of a group to another identity.
+      operationId: group_transferOwnership
+      tags:
+        - Group
+      parameters:
+        - name: group_id
+          in: path
+          description: A universally unique identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://group.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupTransferOwnershipInput'
   /identities:
     post:
       description: >-
@@ -3970,41 +3594,6 @@ paths:
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
-  /identities/self/beta-signup:
-    post:
-      description: Submits a beta signup form.
-      operationId: identity_signupForBeta
-      tags:
-        - Identity
-      parameters: []
-      responses:
-        '204':
-          description: ''
-      servers:
-        - url: https://identity.api.rivet.gg/v1
-      security: *ref_0
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                company_name:
-                  type: string
-                company_size:
-                  type: string
-                preferred_tools:
-                  type: string
-                goals:
-                  type: string
-              required:
-                - name
-                - company_size
-                - preferred_tools
-                - goals
   /identities/{identity_id}/report:
     post:
       description: Creates an abuse report for an identity.
@@ -4128,6 +3717,95 @@ paths:
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
+  /entries:
+    get:
+      description: Returns a specific key-value entry by key.
+      operationId: kv_get
+      tags:
+        - Kv
+      parameters:
+        - name: key
+          in: query
+          description: >-
+            A string representing a key in the key-value database. Key path
+            components are split by a slash (e.g. `a/b/c` has the path
+            components `["a", "b", "c"]`). Slashes can be escaped by using a
+            forward slash (e.g. `a/b\/c/d` has the path components `["a", "b/c",
+            "d"]`). See `rivet.api.kv.common#KeyComponents` for the structure of
+            a `rivet.api.kv.common#Key` split by `/`.
+          required: true
+          schema:
+            type: string
+        - name: watch_index
+          in: query
+          description: A query parameter denoting the requests watch index.
+          required: false
+          schema:
+            type: string
+        - name: namespace_id
+          in: query
+          description: A universally unique identifier.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KvGetOutput'
+      servers:
+        - url: https://kv.api.rivet.gg/v1
+      security: *ref_0
+    put:
+      description: Puts (sets or overwrites) a key-value entry by key.
+      operationId: kv_put
+      tags:
+        - Kv
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://kv.api.rivet.gg/v1
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KvPutInput'
+    delete:
+      description: Deletes a key-value entry by key.
+      operationId: kv_delete
+      tags:
+        - Kv
+      parameters:
+        - name: key
+          in: query
+          description: >-
+            A string representing a key in the key-value database. Key path
+            components are split by a slash (e.g. `a/b/c` has the path
+            components `["a", "b", "c"]`). Slashes can be escaped by using a
+            forward slash (e.g. `a/b\/c/d` has the path components `["a", "b/c",
+            "d"]`). See `rivet.api.kv.common#KeyComponents` for the structure of
+            a `rivet.api.kv.common#Key` split by `/`.
+          required: true
+          schema:
+            type: string
+        - name: namespace_id
+          in: query
+          description: A universally unique identifier.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://kv.api.rivet.gg/v1
+      security: *ref_0
   /parties/self/activity:
     delete:
       description: |-
@@ -4145,93 +3823,23 @@ paths:
       security: *ref_0
 components:
   schemas:
-    AuthCompleteStatus:
-      type: string
-      enum:
-        - switch_identity
-        - linked_account_added
-        - already_complete
-        - expired
-        - too_many_attempts
-        - incorrect
-      description: Represents the state of an external account linking process.
-    AuthCompleteEmailVerificationInput:
-      type: object
-      properties:
-        verification_id:
-          type: string
-          description: A universally unique identifier.
-        code:
-          type: string
-          description: The code sent to the requestee's email.
-      required:
-        - verification_id
-        - code
-    AuthCompleteEmailVerificationOutput:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/AuthCompleteStatus'
-      required:
-        - status
-    AuthStartEmailVerificationInput:
-      type: object
-      properties:
-        email:
-          type: string
-        captcha:
-          $ref: '#/components/schemas/CaptchaConfig'
-        game_id:
-          type: string
-          description: A universally unique identifier.
-      required:
-        - email
-        - captcha
-    AuthStartEmailVerificationOutput:
-      type: object
-      properties:
-        verification_id:
-          type: string
-          description: A universally unique identifier.
-      required:
-        - verification_id
-    AuthRefreshIdentityTokenInput:
-      type: object
-      properties:
-        logout:
-          type: boolean
-          description: >-
-            When `true`, the current identity for the provided cookie will be
-            logged out and a new identity will be returned.
-    AuthRefreshIdentityTokenOutput:
-      type: object
-      properties:
-        token:
-          type: string
-          description: >-
-            A JSON Web Token.
-
-            Slightly modified to include a description prefix and use Protobufs
-            of
-
-            JSON.
-        exp:
-          type: string
-          description: Token expiration time (in milliseconds).
-        identity_id:
-          type: string
-          description: A universally unique identifier.
-      required:
-        - token
-        - exp
-        - identity_id
     CaptchaConfig:
       type: object
       description: Methods to verify a captcha
       properties:
         hcaptcha:
           $ref: '#/components/schemas/CaptchaConfigHcaptcha'
+        turnstile:
+          $ref: '#/components/schemas/CaptchaConfigTurnstile'
     CaptchaConfigHcaptcha:
+      type: object
+      description: Captcha configuration.
+      properties:
+        client_response:
+          type: string
+      required:
+        - client_response
+    CaptchaConfigTurnstile:
       type: object
       description: Captcha configuration.
       properties:
@@ -4685,23 +4293,6 @@ components:
         - cpu
         - memory
         - memory_max
-    CloudUploadPrepareFile:
-      type: object
-      description: A file being prepared to upload.
-      properties:
-        path:
-          type: string
-          description: The path/filename of the file.
-        content_type:
-          type: string
-          description: The MIME type of the file.
-        content_length:
-          type: integer
-          format: int64
-          description: Unsigned 64 bit integer.
-      required:
-        - path
-        - content_length
     CloudAuthAgent:
       type: object
       description: The current authenticated agent.
@@ -5333,19 +4924,31 @@ components:
           description: A user name.
       required:
         - user
-    CloudDevicesPrepareDeviceLinkInput:
+    CloudMatchmakerDevelopmentPort:
       type: object
-      properties: {}
+      description: A port configuration used to create development tokens.
+      properties:
+        port:
+          type: integer
+        protocol:
+          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+      required:
+        - port
+        - protocol
     CloudDevicesPrepareDeviceLinkOutput:
       type: object
       properties:
+        device_link_id:
+          type: string
+          format: uuid
         device_link_token:
           type: string
-        expire_ts:
-          $ref: '#/components/schemas/Timestamp'
+        device_link_url:
+          type: string
       required:
+        - device_link_id
         - device_link_token
-        - expire_ts
+        - device_link_url
     CloudDevicesGetDeviceLinkOutput:
       type: object
       properties:
@@ -5355,20 +4958,6 @@ components:
           $ref: '#/components/schemas/WatchResponse'
       required:
         - watch
-    CloudDevicesCompleteDeviceLinkInput:
-      type: object
-      properties:
-        device_link_token:
-          $ref: '#/components/schemas/Jwt'
-        game_id:
-          type: string
-          format: uuid
-      required:
-        - device_link_token
-        - game_id
-    CloudDevicesCompleteDeviceLinkOutput:
-      type: object
-      properties: {}
     CloudGamesListGameCustomAvatarsOutput:
       type: object
       properties:
@@ -5943,24 +5532,29 @@ components:
           description: A list of region server tiers.
       required:
         - tiers
-    CloudUploadCompleteInput:
-      type: object
-      properties: {}
-    CloudUploadCompleteOutput:
-      type: object
-      properties: {}
     CloudVersionIdentityConfig:
       type: object
       description: Identity configuration for a given version.
       properties:
+        display_names:
+          type: array
+          items:
+            type: string
+        avatars:
+          type: array
+          items:
+            type: string
+            format: uuid
         custom_display_names:
           type: array
           items:
             $ref: '#/components/schemas/CloudVersionIdentityCustomDisplayName'
+          description: '**Deprecated**'
         custom_avatars:
           type: array
           items:
             $ref: '#/components/schemas/CloudVersionIdentityCustomAvatar'
+          description: '**Deprecated**'
     CloudVersionIdentityCustomDisplayName:
       type: object
       properties:
@@ -6079,7 +5673,7 @@ components:
           type: array
           items:
             type: string
-        env_vars:
+        env:
           type: object
           additionalProperties:
             type: string
@@ -6090,17 +5684,6 @@ components:
           additionalProperties:
             $ref: >-
               #/components/schemas/CloudVersionMatchmakerGameModeRuntimeDockerPort
-    CloudVersionMatchmakerGameModeRuntimeDockerEnvVar:
-      type: object
-      description: A docker environment variable.
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-      required:
-        - key
-        - value
     CloudVersionMatchmakerGameModeRuntimeDockerPort:
       type: object
       description: A docker port.
@@ -6110,8 +5693,14 @@ components:
           description: The port number to connect to.
         port_range:
           $ref: '#/components/schemas/CloudVersionMatchmakerPortRange'
-        proxy_protocol:
+        protocol:
           $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+        dev_port:
+          type: integer
+          description: Client-side configuration
+        dev_protocol:
+          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+          description: Client-side configuration
     CloudVersionMatchmakerGameModeIdleLobbiesConfig:
       type: object
       description: Configuration for how many idle lobbies a game version should have.
@@ -6302,30 +5891,6 @@ components:
     Timestamp:
       type: string
       description: RFC3339 timestamp
-    GlobalEventNotification:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        thumbnail_url:
-          type: string
-        url:
-          type: string
-      required:
-        - title
-        - description
-        - thumbnail_url
-        - url
-    GlobalEventChatThreadRemove:
-      type: object
-      properties:
-        thread_id:
-          type: string
-          format: uuid
-      required:
-        - thread_id
     ValidationError:
       type: object
       description: An error given by failed content validation.
@@ -6360,122 +5925,6 @@ components:
         - display_name
         - logo_url
         - banner_url
-    GameSummary:
-      type: object
-      properties:
-        game_id:
-          type: string
-          format: uuid
-        name_id:
-          $ref: '#/components/schemas/Identifier'
-        display_name:
-          $ref: '#/components/schemas/DisplayName'
-        logo_url:
-          type: string
-          description: The URL of this game's logo image.
-        banner_url:
-          type: string
-          description: The URL of this game's banner image.
-        url:
-          type: string
-        developer:
-          $ref: '#/components/schemas/GroupHandle'
-      required:
-        - game_id
-        - name_id
-        - display_name
-        - url
-        - developer
-    GameProfile:
-      type: object
-      description: A game profile.
-      properties:
-        game_id:
-          type: string
-          description: A universally unique identifier.
-        name_id:
-          type: string
-          description: >-
-            A human readable short identifier used to references resources.
-            Different than a `rivet.common#Uuid` because this is intended to be
-            human readable. Different than `rivet.common#DisplayName` because
-            this should not include special characters and be short.
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-        logo_url:
-          type: string
-          description: The URL of this game's logo image.
-        banner_url:
-          type: string
-          description: The URL of this game's banner image.
-        url:
-          type: string
-          description: The URL to this game's website.
-        developer:
-          $ref: '#/components/schemas/GroupSummary'
-        tags:
-          type: array
-          items:
-            type: string
-          description: A list of game tags.
-        description:
-          type: string
-          description: A description of the given game.
-        platforms:
-          type: array
-          items:
-            $ref: '#/components/schemas/GamePlatformLink'
-          description: A list of platform links.
-        recommended_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupSummary'
-          description: A list of group summaries.
-        identity_leaderboard_categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/GameLeaderboardCategory'
-          description: A list of game leaderboard categories.
-        group_leaderboard_categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/GameLeaderboardCategory'
-          description: A list of game leaderboard categories.
-      required:
-        - game_id
-        - name_id
-        - display_name
-        - url
-        - developer
-        - tags
-        - description
-        - platforms
-        - recommended_groups
-        - identity_leaderboard_categories
-        - group_leaderboard_categories
-    GamePlatformLink:
-      type: object
-      description: A platform link denoting a supported platform.
-      properties:
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-        url:
-          type: string
-          description: The URL to the given game's method of distribution on this platform.
-      required:
-        - display_name
-        - url
-    GameLeaderboardCategory:
-      type: object
-      description: A game leaderboard category.
-      properties:
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-      required:
-        - display_name
     GameStatSummary:
       type: object
       description: A game statistic summary.
@@ -6661,7 +6110,6 @@ components:
       required:
         - group_id
         - display_name
-        - avatar_url
         - external
     GroupExternalLinks:
       type: object
@@ -6769,181 +6217,6 @@ components:
       required:
         - identity
         - ban_ts
-    GroupListSuggestedOutput:
-      type: object
-      properties:
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupSummary'
-          description: A list of group summaries.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - groups
-        - watch
-    GroupCreateInput:
-      type: object
-      properties:
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-      required:
-        - display_name
-    GroupCreateOutput:
-      type: object
-      properties:
-        group_id:
-          type: string
-          description: A universally unique identifier.
-      required:
-        - group_id
-    GroupPrepareAvatarUploadInput:
-      type: object
-      properties:
-        path:
-          type: string
-          description: The path/filename of the group avatar.
-        mime:
-          type: string
-          description: The MIME type of the group avatar.
-        content_length:
-          type: integer
-          format: int64
-          description: Unsigned 64 bit integer.
-      required:
-        - path
-        - content_length
-    GroupPrepareAvatarUploadOutput:
-      type: object
-      properties:
-        upload_id:
-          type: string
-          description: A universally unique identifier.
-        presigned_request:
-          $ref: '#/components/schemas/UploadPresignedRequest'
-      required:
-        - upload_id
-        - presigned_request
-    GroupValidateProfileInput:
-      type: object
-      properties:
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-        bio:
-          type: string
-          description: Detailed information about a profile.
-        publicity:
-          $ref: '#/components/schemas/GroupPublicity'
-    GroupValidateProfileOutput:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          description: A list of validation errors.
-      required:
-        - errors
-    GroupSearchOutput:
-      type: object
-      properties:
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupHandle'
-          description: A list of group handles.
-        anchor:
-          type: string
-      required:
-        - groups
-    GroupGetBansOutput:
-      type: object
-      properties:
-        banned_identities:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupBannedIdentity'
-          description: A list of banned group members.
-        anchor:
-          type: string
-          description: The pagination anchor.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - banned_identities
-        - watch
-    GroupGetJoinRequestsOutput:
-      type: object
-      properties:
-        join_requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupJoinRequest'
-          description: A list of group join requests.
-        anchor:
-          type: string
-          description: The pagination anchor.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - join_requests
-        - watch
-    GroupGetMembersOutput:
-      type: object
-      properties:
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupMember'
-          description: A list of group members.
-        anchor:
-          type: string
-          description: The pagination anchor.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - members
-        - watch
-    GroupGetProfileOutput:
-      type: object
-      properties:
-        group:
-          $ref: '#/components/schemas/GroupProfile'
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - group
-        - watch
-    GroupUpdateProfileInput:
-      type: object
-      properties:
-        display_name:
-          type: string
-          description: Represent a resource's readable display name.
-        bio:
-          type: string
-          description: Detailed information about a profile.
-        publicity:
-          $ref: '#/components/schemas/GroupPublicity'
-    GroupGetSummaryOutput:
-      type: object
-      properties:
-        group:
-          $ref: '#/components/schemas/GroupSummary'
-      required:
-        - group
-    GroupTransferOwnershipInput:
-      type: object
-      properties:
-        new_owner_identity_id:
-          type: string
-          description: |-
-            Identity to transfer the group to.
-            Must be a member of the group.
-      required:
-        - new_owner_identity_id
     GroupGetInviteOutput:
       type: object
       properties:
@@ -6983,38 +6256,6 @@ components:
       properties:
         resolution:
           type: boolean
-    IdentityListActivitiesOutput:
-      type: object
-      properties:
-        identities:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentityHandle'
-        games:
-          type: array
-          items:
-            $ref: '#/components/schemas/GameSummary'
-        parties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PartySummary'
-        suggested_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupSummary'
-        suggested_players:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentityHandle'
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - identities
-        - games
-        - parties
-        - suggested_groups
-        - suggested_players
-        - watch
     IdentityGlobalEvent:
       type: object
       description: An event relevant to the current identity.
@@ -7139,9 +6380,17 @@ components:
       type: object
       properties:
         lobby:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfo'
+          $ref: '#/components/schemas/MatchmakerJoinLobby'
+        ports:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchmakerJoinPort'
+        player:
+          $ref: '#/components/schemas/MatchmakerJoinPlayer'
       required:
         - lobby
+        - ports
+        - player
     IdentityGlobalEventChatThreadRemove:
       type: object
       description: >
@@ -7525,35 +6774,12 @@ components:
         key:
           type: string
           description: >-
-            A string reprenting a key in the key-value database. Key path
+            A string representing a key in the key-value database. Key path
             components are split by a slash (e.g. `a/b/c` has the path
             components `["a", "b", "c"]`). Slashes can be escaped by using a
             forward slash (e.g. `a/b\/c/d` has the path components `["a", "b/c",
             "d"]`). See `rivet.api.kv.common#KeyComponents` for the structure of
             a `rivet.api.kv.common#Key` split by `/`.
-      required:
-        - key
-    KvGetOutput:
-      type: object
-      properties:
-        deleted:
-          type: boolean
-          description: >-
-            Whether or not the entry has been deleted. Only set when watching
-            this endpoint.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - watch
-    KvPutInput:
-      type: object
-      properties:
-        namespace_id:
-          type: string
-          description: A universally unique identifier.
-        key:
-          type: string
-          description: Any JSON value to set the key to.
       required:
         - key
     MatchmakerLobbyInfo:
@@ -7599,10 +6825,8 @@ components:
           $ref: '#/components/schemas/Identifier'
         provider_display_name:
           type: string
-          format: uuid
         region_display_name:
           type: string
-          format: uuid
         datacenter_coord:
           $ref: '#/components/schemas/GeoCoord'
         datacenter_distance_from_client:
@@ -7613,7 +6837,7 @@ components:
         - region_display_name
         - datacenter_coord
         - datacenter_distance_from_client
-    MatchmakerLobbyJoinInfo:
+    MatchmakerJoinLobby:
       type: object
       description: A matchmaker lobby.
       properties:
@@ -7621,19 +6845,21 @@ components:
           type: string
           format: uuid
         region:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfoRegion'
+          $ref: '#/components/schemas/MatchmakerJoinRegion'
         ports:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/MatchmakerLobbyJoinInfoPort'
+            $ref: '#/components/schemas/MatchmakerJoinPort'
+          description: '**Deprecated**'
         player:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfoPlayer'
+          $ref: '#/components/schemas/MatchmakerJoinPlayer'
+          description: '**Deprecated**'
       required:
         - lobby_id
         - region
         - ports
         - player
-    MatchmakerLobbyJoinInfoRegion:
+    MatchmakerJoinRegion:
       type: object
       description: A matchmaker lobby region.
       properties:
@@ -7644,7 +6870,7 @@ components:
       required:
         - region_id
         - display_name
-    MatchmakerLobbyJoinInfoPort:
+    MatchmakerJoinPort:
       type: object
       properties:
         host:
@@ -7658,7 +6884,7 @@ components:
           description: |
             The port number for this lobby. Will be null if using a port range.
         port_range:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfoPortRange'
+          $ref: '#/components/schemas/MatchmakerJoinPortRange'
           description: >
             Whether or not this lobby port uses TLS. You cannot mix a non-TLS
             and TLS ports.
@@ -7666,9 +6892,8 @@ components:
           type: boolean
       required:
         - hostname
-        - port_range
         - is_tls
-    MatchmakerLobbyJoinInfoPortRange:
+    MatchmakerJoinPortRange:
       type: object
       description: Inclusive range of ports that can be connected to.
       properties:
@@ -7681,7 +6906,7 @@ components:
       required:
         - min
         - max
-    MatchmakerLobbyJoinInfoPlayer:
+    MatchmakerJoinPlayer:
       type: object
       description: A matchmaker lobby player.
       properties:
@@ -7696,16 +6921,32 @@ components:
       type: object
       properties:
         lobby:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfo'
+          $ref: '#/components/schemas/MatchmakerJoinLobby'
+        ports:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchmakerJoinPort'
+        player:
+          $ref: '#/components/schemas/MatchmakerJoinPlayer'
       required:
         - lobby
+        - ports
+        - player
     MatchmakerJoinLobbyOutput:
       type: object
       properties:
         lobby:
-          $ref: '#/components/schemas/MatchmakerLobbyJoinInfo'
+          $ref: '#/components/schemas/MatchmakerJoinLobby'
+        ports:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchmakerJoinPort'
+        player:
+          $ref: '#/components/schemas/MatchmakerJoinPlayer'
       required:
         - lobby
+        - ports
+        - player
     MatchmakerListLobbiesOutput:
       type: object
       properties:
@@ -8214,58 +7455,6 @@ components:
       required:
         - party
         - watch
-    PortalResolveBetaJoinRequestInput:
-      type: object
-      properties:
-        resolution:
-          type: boolean
-          description: Whether or not to accept the beta join request.
-    PortalNotificationRegisterService:
-      type: object
-      properties:
-        firebase:
-          $ref: '#/components/schemas/PortalNotificationRegisterFirebaseService'
-    PortalNotificationRegisterFirebaseService:
-      type: object
-      properties:
-        access_key:
-          type: string
-      required:
-        - access_key
-    PortalNotificationUnregisterService:
-      type: string
-      enum:
-        - firebase
-    PortalGetSuggestedGamesOutput:
-      type: object
-      properties:
-        games:
-          type: array
-          items:
-            $ref: '#/components/schemas/GameSummary'
-          description: A list of game summaries.
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - games
-        - watch
-    PortalGetGameProfileOutput:
-      type: object
-      properties:
-        game:
-          $ref: '#/components/schemas/GameProfile'
-        watch:
-          $ref: '#/components/schemas/WatchResponse'
-      required:
-        - game
-        - watch
-    PortalRegisterNotificationsInput:
-      type: object
-      properties:
-        service:
-          $ref: '#/components/schemas/PortalNotificationRegisterService'
-      required:
-        - service
     UploadPresignedRequest:
       type: object
       description: >
@@ -8376,13 +7565,6 @@ components:
           $ref: '#/components/schemas/ChatTypingStatus'
       required:
         - status
-    CloudGamesNamespacesInspectOutput:
-      type: object
-      properties:
-        agent:
-          $ref: '#/components/schemas/CloudAuthAgent'
-      required:
-        - agent
     CloudGamesNamespacesCreateGameNamespaceInput:
       type: object
       properties:
@@ -8521,15 +7703,20 @@ components:
         hostname:
           type: string
           description: The hostname used for the token.
+        ports:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CloudMatchmakerDevelopmentPort'
         lobby_ports:
           type: array
           items:
             $ref: >-
               #/components/schemas/CloudVersionMatchmakerLobbyGroupRuntimeDockerPort
-          description: A list of docker ports.
+          description: |-
+            **Deprecated**
+            A list of docker ports.
       required:
         - hostname
-        - lobby_ports
     CloudGamesNamespacesCreateGameNamespaceTokenDevelopmentOutput:
       type: object
       properties:
@@ -8725,6 +7912,9 @@ components:
           description: A list of game modes.
         captcha:
           $ref: '#/components/schemas/CloudVersionMatchmakerCaptcha'
+        dev_hostname:
+          type: string
+          description: Client-side configuration
         regions:
           type: object
           additionalProperties:
@@ -8748,6 +7938,181 @@ components:
           description: |-
             **Deprecated: use `game_modes` instead**
             A list of game modes.
+    GroupListSuggestedOutput:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupSummary'
+          description: A list of group summaries.
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - groups
+        - watch
+    GroupCreateInput:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: Represent a resource's readable display name.
+      required:
+        - display_name
+    GroupCreateOutput:
+      type: object
+      properties:
+        group_id:
+          type: string
+          description: A universally unique identifier.
+      required:
+        - group_id
+    GroupPrepareAvatarUploadInput:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The path/filename of the group avatar.
+        mime:
+          type: string
+          description: The MIME type of the group avatar.
+        content_length:
+          type: integer
+          format: int64
+          description: Unsigned 64 bit integer.
+      required:
+        - path
+        - content_length
+    GroupPrepareAvatarUploadOutput:
+      type: object
+      properties:
+        upload_id:
+          type: string
+          description: A universally unique identifier.
+        presigned_request:
+          $ref: '#/components/schemas/UploadPresignedRequest'
+      required:
+        - upload_id
+        - presigned_request
+    GroupValidateProfileInput:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: Represent a resource's readable display name.
+        bio:
+          type: string
+          description: Detailed information about a profile.
+        publicity:
+          $ref: '#/components/schemas/GroupPublicity'
+    GroupValidateProfileOutput:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          description: A list of validation errors.
+      required:
+        - errors
+    GroupSearchOutput:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupHandle'
+          description: A list of group handles.
+        anchor:
+          type: string
+      required:
+        - groups
+    GroupGetBansOutput:
+      type: object
+      properties:
+        banned_identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupBannedIdentity'
+          description: A list of banned group members.
+        anchor:
+          type: string
+          description: The pagination anchor.
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - banned_identities
+        - watch
+    GroupGetJoinRequestsOutput:
+      type: object
+      properties:
+        join_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupJoinRequest'
+          description: A list of group join requests.
+        anchor:
+          type: string
+          description: The pagination anchor.
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - join_requests
+        - watch
+    GroupGetMembersOutput:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+          description: A list of group members.
+        anchor:
+          type: string
+          description: The pagination anchor.
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - members
+        - watch
+    GroupGetProfileOutput:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/GroupProfile'
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - group
+        - watch
+    GroupUpdateProfileInput:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: Represent a resource's readable display name.
+        bio:
+          type: string
+          description: Detailed information about a profile.
+        publicity:
+          $ref: '#/components/schemas/GroupPublicity'
+    GroupGetSummaryOutput:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/GroupSummary'
+      required:
+        - group
+    GroupTransferOwnershipInput:
+      type: object
+      properties:
+        new_owner_identity_id:
+          type: string
+          description: |-
+            Identity to transfer the group to.
+            Must be a member of the group.
+      required:
+        - new_owner_identity_id
     IdentitySetupOutput:
       type: object
       properties:
@@ -8818,15 +8183,6 @@ components:
             $ref: '#/components/schemas/IdentitySummary'
       required:
         - identities
-    IdentityValidateProfileOutput:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      required:
-        - errors
     IdentitySearchOutput:
       type: object
       properties:
@@ -8883,6 +8239,29 @@ components:
           type: string
       required:
         - identities
+    KvGetOutput:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          description: >-
+            Whether or not the entry has been deleted. Only set when watching
+            this endpoint.
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - watch
+    KvPutInput:
+      type: object
+      properties:
+        namespace_id:
+          type: string
+          description: A universally unique identifier.
+        key:
+          type: string
+          description: Any JSON value to set the key to.
+      required:
+        - key
   securitySchemes:
     BearerAuth:
       type: http
