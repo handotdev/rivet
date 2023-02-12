@@ -5,7 +5,7 @@ import { emptyDir } from "https://deno.land/std/fs/mod.ts";
 
 let backendPath = "../backend";
 
-await Deno.copyFile(`${backendPath}/openapi/openapi.yml`, "openapi.yml");
+await Deno.copyFile(`${backendPath}/gen/openapi/external/spec/openapi.yml`, "openapi.yml");
 
 const spec = yaml.parse(await Deno.readTextFile("openapi.yml"), { maxAliasCount: -1 });
 let mintJson = JSON.parse(await Deno.readTextFile("mint.base.json"));
