@@ -145,7 +145,7 @@ You'll need a `Dockerfile` to build and run your game server.
 			// the player token is already used or invalid.
 			await rivet.matchmaker.players.connected({ playerToken });
 
-			socket.on("close", () => {
+			socket.on("close", async () => {
 				// Notify the matchmaker that the player disconnected.
 				await rivet.matchmaker.players.disconnected({ playerToken });
 			});
