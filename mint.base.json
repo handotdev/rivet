@@ -107,6 +107,7 @@
                     ]
                 },
                 "general/concepts/alpha-beta-stable",
+                "general/concepts/handling-tokens",
                 "general/concepts/dev-tokens",
                 "general/concepts/tokens",
                 "general/concepts/domain-based-authentication",

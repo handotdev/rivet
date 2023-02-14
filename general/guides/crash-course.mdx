@@ -2,17 +2,13 @@
 title: "⏱️ 5 Minute Crash Course"
 ---
 
-<Note>
-	This guide requires access to the Rivet private beta.
-
-	Request access [here](https://b8v8449klvp.typeform.com/rivet).
-</Note>
+<Snippet file="beta-signup.mdx" />
 
 ## Step 1: Setup project
 
-### Create a game
+### Create a game on the Rivet Dashboard
 
-Coming soon
+Visit the [Rivet Dashboard](https://hub.rivet.gg/developer/dashboard) to create a new game.
 
 ### Install the [Rivet CLI](https://github.com/rivet-gg/cli)
 
@@ -36,12 +32,25 @@ Follow instructions [here](https://github.com/rivet-gg/cli#installing).
 Open your project's directory in a terminal and run:
 
 ```bash
-rivet init --recommended
+rivet init --recommend
 ```
 
+This will guide you through setting up your project with Rivet.
+
 <Accordion title="What does this do?">
+    - Linked your project to Rivet
 	- Creates `rivet.version.toml` to configure your deployed game. Read more about the Rivet version config [here](/general/concepts/version-config).
 	- Creates a dev token added to your `.env` to tell Rivet to mock API endpoints in development. Read more about dev tokens [here](/general/concepts/dev-tokens).
+</Accordion>
+
+### Write a `Dockerfile` for your server
+
+You'll need a `Dockerfile` to build and run your game server.
+
+<Accordion title="Unfamiliar with Dockerfiles?">
+	- [Boilerplate `Dockerfiles`](https://github.com/gauthamp10/dockerfile-boilerplates) has one already written for you
+	- [Dockerfile Crash Course](https://docker-curriculum.com/#dockerfile) will teach you how to write your own `Dockerfile` quickly
+	- Join our [Discord](https://discord.gg/BG2vqsJczH) and we'll write your `Dockerfile` for you!
 </Accordion>
 
 ---
@@ -51,7 +60,7 @@ rivet init --recommended
 ### Install the Rivet library
 
 <Tabs>
-	<Tab title="TypeScript & JavaScript">
+	<Tab title="TypeScript">
 		**Yarn**
 		```bash
 		yarn add @rivet-gg/api
@@ -65,10 +74,10 @@ rivet init --recommended
 	<Tab title="C#">
 		Coming soon
 	</Tab>
-	<Tab title="Java">
+	<Tab title="C++">
 		Coming soon
 	</Tab>
-	<Tab title="C++">
+	<Tab title="Java">
 		Coming soon
 	</Tab>
 	<Tab title="Rust">
@@ -80,21 +89,26 @@ rivet init --recommended
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
-		import rivet from "@rivet-gg/api";
-		let res = await rivet.lobbies.find({ gameModes: ["default"] });
-		let ws = new WebSocket(`wss://${res.ports["default"]!.host}/?token=${res.player.token}`);
+		// Create the Rivet client
+		import { RivetClient } from "@rivet-gg/api";
+		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
+
+		// Find a lobby (a new lobby will automatically be created on demand if needed)
+		let res = await rivet.matchmaker.lobbies.find({ gameModes: ["default"] });
+
+		// Connect to the lobby (Rivet automatically manages your SSL)
+		let ws = new WebSocket(`wss://${res.ports["default"].host}/?token=${res.player.token}`);
 		```
-	</Tab>
-	<Tab title="JavaScript">
-		Coming soon
+
+		<Warning>Read more about handling Rivet tokens [here](/concepts/general/handling-tokens).</Warning>
 	</Tab>
 	<Tab title="C#">
 		Coming soon
 	</Tab>
-	<Tab title="Java">
+	<Tab title="C++">
 		Coming soon
 	</Tab>
-	<Tab title="C++">
+	<Tab title="Java">
 		Coming soon
 	</Tab>
 	<Tab title="Rust">
@@ -120,28 +134,26 @@ rivet init --recommended
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
-		import rivet from "@rivet-gg/api";
+		import { RivetClient } from "@rivet-gg/api";
+		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
 
 		ws.on("connect", (socket) => {
 			let playerToken = socket.request.query.token;
-			await rivet.players.connected({ playerToken });
+			await rivet.matchmaker.players.connected({ playerToken });
 
 			socket.on("close", () => {
-				await rivet.players.disconnected({ playerToken });
+				await rivet.matchmaker.players.disconnected({ playerToken });
 			});
 		});
 		```
 	</Tab>
-	<Tab title="JavaScript">
-		Coming soon
-	</Tab>
 	<Tab title="C#">
 		Coming soon
 	</Tab>
-	<Tab title="Java">
+	<Tab title="C++">
 		Coming soon
 	</Tab>
-	<Tab title="C++">
+	<Tab title="Java">
 		Coming soon
 	</Tab>
 	<Tab title="Rust">
@@ -165,20 +177,7 @@ rivet init --recommended
 ## Step 3: Publish your game
 
 ```bash
-# Build the server
-docker build --tag my-game .
-
-# Build the client
-yarn run build:client
-
-# Publish the version
-rivet publish --namespace prod --build my-game --site ./dist
+rivet deploy --namespace prod
 ```
 
-
-To visit your game, run:
-
-```bash
-rivet open
-```
-
+This will print a URL ending in `rivet.game`. If you are hosting your game on Rivet CDN, visit that URL to play your game.
