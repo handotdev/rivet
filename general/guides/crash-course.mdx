@@ -139,9 +139,14 @@ You'll need a `Dockerfile` to build and run your game server.
 
 		ws.on("connect", (socket) => {
 			let playerToken = socket.request.query.token;
+			
+			// Notify the matchmaker that the player connected. This can be
+			// called only once per player token. This will throw an error if
+			// the player token is already used or invalid.
 			await rivet.matchmaker.players.connected({ playerToken });
 
 			socket.on("close", () => {
+				// Notify the matchmaker that the player disconnected.
 				await rivet.matchmaker.players.disconnected({ playerToken });
 			});
 		});
