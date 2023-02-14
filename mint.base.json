@@ -106,11 +106,16 @@
                         "general/concepts/dot-rivet-directory"
                     ]
                 },
+                {
+                    "group": "Tokens",
+                    "pages": [
+                        "general/concepts/handling-game-tokens",
+                        "general/concepts/dev-tokens",
+                        "general/concepts/tokenless-authentication-web",
+                        "general/concepts/token-types"
+                    ]
+                },
                 "general/concepts/alpha-beta-stable",
-                "general/concepts/handling-tokens",
-                "general/concepts/dev-tokens",
-                "general/concepts/tokens",
-                "general/concepts/domain-based-authentication",
                 "general/concepts/data-lod",
                 "general/concepts/blocking-requests",
                 "general/concepts/captchas",

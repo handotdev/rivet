@@ -21,7 +21,7 @@ Follow instructions [here](https://github.com/rivet-gg/cli#installing).
 		We're working on publishing a tutorial for this soon.
 	</Accordion>
 	<Accordion title="Can I automate this with APIs?">
-		Rivet's Cloud API can be managed with your [cloud token](/general/concepts/tokens#cloud). This is the same API we use internally and [in the CLI](https://github.com/rivet-gg/cli/blob/7f91d180f64b755956d89a3a83bfb2e77a42d72d/cli/src/commands/version.rs#L368).
+		Rivet's Cloud API can be managed with your [cloud token](/general/concepts/token-types#cloud). This is the same API we use internally and [in the CLI](https://github.com/rivet-gg/cli/blob/7f91d180f64b755956d89a3a83bfb2e77a42d72d/cli/src/commands/version.rs#L368).
 
 		A dedicated library and specification will be published soon in order to build your own tooling.
 	</Accordion>
@@ -100,7 +100,7 @@ You'll need a `Dockerfile` to build and run your game server.
 		let ws = new WebSocket(`wss://${res.ports["default"].host}/?token=${res.player.token}`);
 		```
 
-		<Warning>Read more about handling Rivet tokens [here](/concepts/general/handling-tokens).</Warning>
+		<Warning>Read more about handling Rivet tokens [here](/concepts/general/handling-game-tokens).</Warning>
 	</Tab>
 	<Tab title="C#">
 		Coming soon
