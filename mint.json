@@ -91,6 +91,17 @@
             ]
         },
         {
+            "group": "Example Projects",
+            "pages": [
+                {
+                    "group": "HTML5",
+                    "pages": [
+                        "general/examples/tanks-typescript-canvas-socketio"
+                    ]
+                }
+            ]
+        },
+        {
             "group": "Concepts",
             "pages": [
                 {

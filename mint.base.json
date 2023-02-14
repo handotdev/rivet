@@ -80,6 +80,12 @@
                 "general/guides/crash-course",
                 "general/guides/namespaces-and-versions",
                 {
+                    "group": "Example Projects",
+                    "pages": [
+                        "general/examples/tanks-typescript-canvas-socketio"
+                    ]
+                },
+                {
                     "group": "Deploying with...",
                     "pages": [
                         "general/guides/deploying-with-gui",
