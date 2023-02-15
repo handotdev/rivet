@@ -137,7 +137,7 @@ You'll need a `Dockerfile` to build and run your game server.
 		import { RivetClient } from "@rivet-gg/api";
 		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
 
-		ws.on("connect", (socket) => {
+		ws.on("connect", await (socket) => {
 			let playerToken = socket.request.query.token;
 			
 			// Notify the matchmaker that the player connected. This can be
