@@ -141,6 +141,10 @@ Copy the following pseudocode into the appropriate places in your source:
 		import { RivetClient } from "@rivet-gg/api";
 		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
 
+		// Tell Rivet your server is ready. This gives you time to load maps and
+		// other data before accepting players.
+		rivet.matchmaker.lobbies.ready().catch(() => process.exit(1));
+
 		myGameServer.on("connect", await (socket) => {
 			let playerToken = socket.request.query.token;
 			
