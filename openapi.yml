@@ -3659,7 +3659,7 @@ paths:
       security: *ref_0
   /identities/self/recent-followers:
     get:
-      operationId: identity_recentFollowers
+      operationId: identity_listRecentFollowers
       tags:
         - Identity
       parameters:
@@ -3680,6 +3680,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IdentityListRecentFollowersOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
+      security: *ref_0
+  /identities/self/recent-followers/{identity_id}/ignore:
+    post:
+      operationId: identity_ignoreRecentFollower
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
