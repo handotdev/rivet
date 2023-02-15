@@ -3657,6 +3657,32 @@ paths:
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
+  /identities/self/recent-followers:
+    get:
+      operationId: identity_recentFollowers
+      tags:
+        - Identity
+      parameters:
+        - name: count
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/WatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityListRecentFollowersOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
+      security: *ref_0
   /identities/self/friends:
     get:
       operationId: identity_listFriends
@@ -8217,6 +8243,18 @@ components:
             $ref: '#/components/schemas/IdentityHandle'
       required:
         - identities
+    IdentityListRecentFollowersOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityHandle'
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - identities
+        - watch
     IdentityListFriendsOutput:
       type: object
       properties:
