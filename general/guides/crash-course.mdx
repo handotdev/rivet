@@ -86,6 +86,8 @@ You'll need a `Dockerfile` to build and run your game server.
 
 ### Update your client
 
+Copy the following pseudocode into the appropriate places in your source:
+
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
@@ -131,19 +133,21 @@ You'll need a `Dockerfile` to build and run your game server.
 
 ### Update your server
 
+Copy the following pseudocode into the appropriate places in your source:
+
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
 		import { RivetClient } from "@rivet-gg/api";
 		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
 
-		ws.on("connect", await (socket) => {
+		myGameServer.on("connect", await (socket) => {
 			let playerToken = socket.request.query.token;
 			
 			// Notify the matchmaker that the player connected. This can be
-			// called only once per player token. This will throw an error if
-			// the player token is already used or invalid.
-			await rivet.matchmaker.players.connected({ playerToken });
+			// called only once per player token. This will throw an error and
+			// close the socket if the player token is already used or invalid.
+			await rivet.matchmaker.players.connected({ playerToken }).catch(err => socket.close());
 
 			socket.on("close", async () => {
 				// Notify the matchmaker that the player disconnected.
