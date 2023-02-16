@@ -165,7 +165,7 @@
                 // "matchmaker/concepts/closed-lobbies",
                 // "matchmaker/concepts/desync",
                 // "matchmaker/concepts/idle-lobbies",
-                "matchmaker/concepts/lifecycle",
+                // "matchmaker/concepts/lifecycle",
                 // "matchmaker/concepts/lobby-caps",
                 // "matchmaker/concepts/max-player-count",
                 // "matchmaker/concepts/no-downtime-deploys",
@@ -198,7 +198,7 @@
                         "serverless-lobbies/concepts/protocols/webrtc"
                     ]
                 },
-                "serverless-lobbies/concepts/architecture",
+                // "serverless-lobbies/concepts/architecture",
                 "serverless-lobbies/concepts/available-regions",
                 "serverless-lobbies/concepts/available-tiers",
                 // "serverless-lobbies/concepts/ports",
@@ -225,23 +225,23 @@
                 "cdn/introduction"
             ]
         },
-        {
-            "group": "Concepts",
-            "pages": [
-                // "cdn/concepts/rivet-game-domain",
-                // "cdn/concepts/custom-domains",
-                // "cdn/concepts/custom-headers",
-                // "cdn/concepts/password-authentication",
-                // "cdn/concepts/ssl",
-                // "cdn/concepts/billing"
-            ]
-        },
-        {
-            "group": "Guides",
-            "pages": [
-                // "cdn/guides/private-namespaces"
-            ]
-        },
+        // {
+        //     "group": "Concepts",
+        //     "pages": [
+        //         "cdn/concepts/rivet-game-domain",
+        //         "cdn/concepts/custom-domains",
+        //         "cdn/concepts/custom-headers",
+        //         "cdn/concepts/password-authentication",
+        //         "cdn/concepts/ssl",
+        //         "cdn/concepts/billing"
+        //     ]
+        // },
+        // {
+        //     "group": "Guides",
+        //     "pages": [
+        //         "cdn/guides/private-namespaces"
+        //     ]
+        // },
 
 
 
@@ -252,12 +252,12 @@
                 "identity/introduction"
             ]
         },
-        {
-            "group": "Concepts",
-            "pages": [
-                // "identity/concepts/custom-usernames-avatars"
-            ]
-        },
+        // {
+        //     "group": "Concepts",
+        //     "pages": [
+        //         "identity/concepts/custom-usernames-avatars"
+        //     ]
+        // },
         {
             "__apiTemplate": "identity",
             "group": "API"
