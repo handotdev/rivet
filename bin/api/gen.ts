@@ -1,6 +1,7 @@
 #!/usr/bin/env -S deno run --allow-env --allow-read --allow-write
 
 import yaml from "npm:yaml";
+import JSON5 from "https://deno.land/x/json5/mod.ts";
 import { emptyDir } from "https://deno.land/std/fs/mod.ts";
 
 let backendPath = "../backend";
@@ -8,7 +9,7 @@ let backendPath = "../backend";
 await Deno.copyFile(`${backendPath}/gen/openapi/external/spec/openapi.yml`, "openapi.yml");
 
 const spec = yaml.parse(await Deno.readTextFile("openapi.yml"), { maxAliasCount: -1 });
-let mintJson = JSON.parse(await Deno.readTextFile("mint.base.json"));
+let mintJson = JSON5.parse(await Deno.readTextFile("mint.base.json5"));
 
 let errorPages = [];
 await Deno.remove("errors", { recursive: true }).catch(() => {});

@@ -78,34 +78,34 @@
             "group": "Guides",
             "pages": [
                 "general/guides/crash-course",
-                "general/guides/namespaces-and-versions",
+                // "general/guides/namespaces-and-versions",
                 {
                     "group": "Example Projects",
                     "pages": [
                         "general/examples/tanks-typescript-canvas-socketio"
                     ]
                 },
-                {
-                    "group": "Deploying with...",
-                    "pages": [
-                        "general/guides/deploying-with-gui",
-                        "general/guides/deploying-with-cli",
-                        "general/guides/deploying-with-api",
-                        "general/guides/deploying-with-github-actions"
-                    ]
-                }
+                // {
+                //     "group": "Deploying with...",
+                //     "pages": [
+                //         "general/guides/deploying-with-gui",
+                //         "general/guides/deploying-with-cli",
+                //         "general/guides/deploying-with-api",
+                //         "general/guides/deploying-with-github-actions"
+                //     ]
+                // }
             ]
         },
         {
             "group": "Concepts",
             "pages": [
-                {
-                    "group": "CLI",
-                    "pages": [
-                        "general/concepts/rivet-version-config",
-                        "general/concepts/dot-rivet-directory"
-                    ]
-                },
+                // {
+                //     "group": "CLI",
+                //     "pages": [
+                //         "general/concepts/rivet-version-config",
+                //         "general/concepts/dot-rivet-directory"
+                //     ]
+                // },
                 {
                     "group": "Tokens",
                     "pages": [
@@ -115,11 +115,11 @@
                         "general/concepts/token-types"
                     ]
                 },
-                "general/concepts/alpha-beta-stable",
-                "general/concepts/data-lod",
-                "general/concepts/blocking-requests",
-                "general/concepts/captchas",
-                "general/concepts/byo-library"
+                // "general/concepts/alpha-beta-stable",
+                // "general/concepts/data-lod",
+                // "general/concepts/blocking-requests",
+                // "general/concepts/captchas",
+                // "general/concepts/byo-library"
             ]
         },
         {
@@ -127,8 +127,8 @@
             "pages": [
                 "general/faq/who-is-rivet-built-for",
                 "general/faq/who-is-rivet-not-built-for",
-                "general/faq/oss",
-                "general/faq/on-premise"
+                // "general/faq/oss",
+                // "general/faq/on-premise"
             ]
         },
         {
@@ -142,33 +142,33 @@
             "group": "Overview",
             "pages": [
                 "matchmaker/introduction",
-                "matchmaker/what-matchmaker-doesnt-do"
+                // "matchmaker/what-matchmaker-doesnt-do"
             ]
         },
-        {
-            "group": "Guides",
-            "pages": [
-                "matchmaker/guides/captcha",
-                "matchmaker/guides/friends-online",
-                "matchmaker/guides/lobby-queue",
-                "matchmaker/guides/migrate",
-                "matchmaker/guides/lobby-list"
-            ]
-        },
+        // {
+        //     "group": "Guides",
+        //     "pages": [
+        //         "matchmaker/guides/captcha",
+        //         "matchmaker/guides/friends-online",
+        //         "matchmaker/guides/lobby-queue",
+        //         "matchmaker/guides/migrate",
+        //         "matchmaker/guides/lobby-list"
+        //     ]
+        // },
         {
             "group": "Concepts",
             "pages": [
-                "matchmaker/concepts/glossary",
+                // "matchmaker/concepts/glossary",
                 "matchmaker/concepts/finding-lobby",
-                "matchmaker/concepts/anti-botting",
-                "matchmaker/concepts/captchas",
-                "matchmaker/concepts/closed-lobbies",
-                "matchmaker/concepts/desync",
-                "matchmaker/concepts/idle-lobbies",
+                // "matchmaker/concepts/anti-botting",
+                // "matchmaker/concepts/captchas",
+                // "matchmaker/concepts/closed-lobbies",
+                // "matchmaker/concepts/desync",
+                // "matchmaker/concepts/idle-lobbies",
                 "matchmaker/concepts/lifecycle",
-                "matchmaker/concepts/lobby-caps",
-                "matchmaker/concepts/max-player-count",
-                "matchmaker/concepts/no-downtime-deploys",
+                // "matchmaker/concepts/lobby-caps",
+                // "matchmaker/concepts/max-player-count",
+                // "matchmaker/concepts/no-downtime-deploys",
                 "matchmaker/concepts/competitive-matchmaking"
             ]
         },
@@ -201,18 +201,18 @@
                 "serverless-lobbies/concepts/architecture",
                 "serverless-lobbies/concepts/available-regions",
                 "serverless-lobbies/concepts/available-tiers",
-                "serverless-lobbies/concepts/ports",
-                "serverless-lobbies/concepts/billing",
-                "serverless-lobbies/concepts/ddos",
-                "serverless-lobbies/concepts/host-bridge-networking",
-                "serverless-lobbies/concepts/instant-deploys",
-                "serverless-lobbies/concepts/lifecycle",
-                "serverless-lobbies/concepts/lobby-ready",
-                "serverless-lobbies/concepts/logging-metrics",
-                "serverless-lobbies/concepts/one-lobby-one-container",
-                "serverless-lobbies/concepts/resource-limits",
-                "serverless-lobbies/concepts/rivet-game-guard",
-                "serverless-lobbies/concepts/ssl"
+                // "serverless-lobbies/concepts/ports",
+                // "serverless-lobbies/concepts/billing",
+                // "serverless-lobbies/concepts/ddos",
+                // "serverless-lobbies/concepts/host-bridge-networking",
+                // "serverless-lobbies/concepts/instant-deploys",
+                // "serverless-lobbies/concepts/lifecycle",
+                // "serverless-lobbies/concepts/lobby-ready",
+                // "serverless-lobbies/concepts/logging-metrics",
+                // "serverless-lobbies/concepts/one-lobby-one-container",
+                // "serverless-lobbies/concepts/resource-limits",
+                // "serverless-lobbies/concepts/rivet-game-guard",
+                // "serverless-lobbies/concepts/ssl"
             ]
         },
 
@@ -228,18 +228,18 @@
         {
             "group": "Concepts",
             "pages": [
-                "cdn/concepts/rivet-game-domain",
-                "cdn/concepts/custom-domains",
-                "cdn/concepts/custom-headers",
-                "cdn/concepts/password-authentication",
-                "cdn/concepts/ssl",
-                "cdn/concepts/billing"
+                // "cdn/concepts/rivet-game-domain",
+                // "cdn/concepts/custom-domains",
+                // "cdn/concepts/custom-headers",
+                // "cdn/concepts/password-authentication",
+                // "cdn/concepts/ssl",
+                // "cdn/concepts/billing"
             ]
         },
         {
             "group": "Guides",
             "pages": [
-                "cdn/guides/private-namespaces"
+                // "cdn/guides/private-namespaces"
             ]
         },
 
@@ -255,7 +255,7 @@
         {
             "group": "Concepts",
             "pages": [
-                "identity/concepts/custom-usernames-avatars"
+                // "identity/concepts/custom-usernames-avatars"
             ]
         },
         {
