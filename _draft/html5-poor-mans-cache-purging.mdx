@@ -1,0 +1,10 @@
+---
+title: "Poor man's cache purging for HTML%"
+---
+
+```bash
+rm -rf public-dist/
+cp public/ public-dist/
+timestamp=$(date +%s)
+sed -i "s/\.js\"/\.js\?$timestamp\"/g" index.html
+```

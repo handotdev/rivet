@@ -373,6 +373,13 @@
             ]
         },
         {
+            "group": "Concepts",
+            "pages": [
+                "identity/concepts/follow-mechanics",
+                "identity/concepts/friend-discovery"
+            ]
+        },
+        {
             "group": "API",
             "pages": [
                 "identity/api/post-game-links",

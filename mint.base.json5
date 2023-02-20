@@ -252,12 +252,14 @@
                 "identity/introduction"
             ]
         },
-        // {
-        //     "group": "Concepts",
-        //     "pages": [
-        //         "identity/concepts/custom-usernames-avatars"
-        //     ]
-        // },
+        {
+            "group": "Concepts",
+            "pages": [
+                "identity/concepts/follow-mechanics",
+                "identity/concepts/friend-discovery"
+                // "identity/concepts/custom-usernames-avatars"
+            ]
+        },
         {
             "__apiTemplate": "identity",
             "group": "API"
