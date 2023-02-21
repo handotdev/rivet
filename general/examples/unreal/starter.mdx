@@ -8,6 +8,21 @@ This guide was written using Unreal Engine 5.1.1. This process is similar if usi
 
 ---
 
+## Overview
+
+Unreal Engine provides fantastic multiplayer capabilities out of the box. We'll be using Unreal's built-in networking to build a server-authoritative multiplayer game on top of Rivet.
+
+Running an Unreal game on Rivet requires building a standalone client and a dedicated server.
+
+<Info>
+    **How does Rivet compare to Epic Online Services and Steam Sockets?**
+
+    Rivet is intended to help run authoritative multiplayer servers. We do not support peer-to-peer networking yet.
+
+
+    If you want high-performance networking, mobile games, large lobbies, or to prevent cheating, peer-to-peer networking is not a good choice. Read more [here](/general/concepts/p2p-vs-authoritative).
+</Info>
+
 ## Step 1: Prepare Unreal Engine
 
 ### Download the Unreal Engine cross-compilation toolchain
@@ -17,16 +32,20 @@ This guide was written using Unreal Engine 5.1.1. This process is similar if usi
 - Make sure you download the version corresponding to your Unreal version
 - You may have to restart
 
+### Install Visual Studio prerequisites
+
+[See official guide](https://docs.unrealengine.com/5.1/en-US/setting-up-visual-studio-development-environment-for-cplusplus-projects-in-unreal-engine/)
+
 ### Download the Unreal Engine source code
 
-https://docs.unrealengine.com/5.1/en-US/downloading-unreal-engine-source-code/
+[See official guide](https://docs.unrealengine.com/5.1/en-US/downloading-unreal-engine-source-code/)
 
 - Join GitHub team
 - Clone UnrealEngine repo
 
 ### Build the Unreal Engine editor
 
-https://docs.unrealengine.com/5.1/en-US/setting-up-dedicated-servers-in-unreal-engine/
+[See official guide](https://docs.unrealengine.com/5.1/en-US/building-unreal-engine-from-source/)
 
 1. `.\Setup.bat`
 1. `.\GenerateProjectFiles.bat`
@@ -61,9 +80,12 @@ Use the C++ version. While Rivet also works with Blueprints, we haven't put toge
 1. Run the project
 1. Check that you can see your players running around
 
-### Configure server solution
-
 ### Build Linux server
+
+[See official guide](https://docs.unrealengine.com/5.1/en-US/setting-up-dedicated-servers-in-unreal-engine/)
+
+- You may need to restart Unreal after building the client and server to show new targets
+- May need to run *Tools > Refresh Visual Studio Project* after  building client and server
 
 ---
 
@@ -87,6 +109,10 @@ Use the C++ version. While Rivet also works with Blueprints, we haven't put toge
 
 ### Test locally
 
+### Configure testing
+
+- Level Editor > Play
+
 ---
 
 ## Step 5: Publish
@@ -99,4 +125,45 @@ Use the C++ version. While Rivet also works with Blueprints, we haven't put toge
 - Install WSL server
 - Build server
 	- https://docs.unrealengine.com/5.1/en-US/setting-up-dedicated-servers-in-unreal-engine/
-	- Double check you’re not using the Unreal Editor downloaded from the Epic Games Launcher
+	- Double check you're not using the Unreal Editor downloaded from the Epic Games Launcher
+
+## Gotchas
+
+### Development workflow
+
+    - When to recompile the server
+    - When to recompile the client
+    - When to cook & restart the server
+    - When to cook & restart the client
+    - When to run the client PIE
+
+### When to use which net mode
+
+Net modes can be changed to help test multiple clients at once.
+
+![Unreal net mode](/images/unreal-net-mode.png)
+
+<AccordionGroup>
+	<Accordion title="Play Standalone">
+        Runs clients without an associated server.
+
+        This is useful if you are:
+        - Testing your game client against Rivet's servers
+        - Running a development server locally
+        - Running a development server on your LAN you want to test with
+	</Accordion>
+	<Accordion title="Play as Listen Server">
+		Runs your editor's client as both the server and the client (i.e. *Listen Server*) and boots secondary clients as *Standalone*. This simulates a peer-to-peer networking setup.
+
+        You *can* use this mode, but it will not match the same scenario as a game running on Rivet. 
+	</Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+### No lighting when running with 2+ clients in PIE
+
+This issue can be mitigated by running multiple processes when testing your game:
+
+1. Navigate to *Editor Settings > Play*
+1. Set *Run Under One Process* to *false*

@@ -160,6 +160,7 @@
             "pages": [
                 // "matchmaker/concepts/glossary",
                 "matchmaker/concepts/finding-lobby",
+                "matchmaker/concepts/lobby-env",
                 // "matchmaker/concepts/anti-botting",
                 // "matchmaker/concepts/captchas",
                 // "matchmaker/concepts/closed-lobbies",
