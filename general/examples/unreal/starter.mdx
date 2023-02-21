@@ -28,15 +28,19 @@ https://docs.unrealengine.com/5.1/en-US/downloading-unreal-engine-source-code/
 
 https://docs.unrealengine.com/5.1/en-US/setting-up-dedicated-servers-in-unreal-engine/
 
+1. Install Visual Studio prerequisites
+    - TODO: See Setting Up Visual Studio > C++ Tools
 1. `.\Setup.bat`
 1. `.\GenerateProjectFiles.bat`
     - You'll see a warning: `Some Platforms were skipped due to invalid SDK setup:`
     - Make sure that `Linux` is not listed here. If so, then step 1 was not done correctly.
 1. Open UE5.sln
+1. Wait for *Indexing folder UnrealEngine* to finish
+    - You can see this by clicking the messae tab in the bottom left
 1. Set *Solution Configuration* to *Development Editor*
 1. Set *Solution Platform* to *Win64*
 1. Right click *UE5* target in right sidebar and click *Build*
-    - Takes ~5 hours depending on your hardware
+    - Takes 10-40 minutes depending on your hardware
 1. Right click on *UE5* in the sidebar and click *Debug > Start New Instance*
 1. Unreal Engine is built to at `UnrealEngine\Engine\Binaries\Win64\UnrealEditor`
     - Create a shortcut somewhere for quick access in the future
