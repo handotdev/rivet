@@ -115,6 +115,7 @@
                         "general/concepts/token-types"
                     ]
                 },
+                "general/concepts/authoritative-vs-p2p",
                 // "general/concepts/alpha-beta-stable",
                 // "general/concepts/data-lod",
                 // "general/concepts/blocking-requests",
