@@ -93,10 +93,8 @@ Copy the following pseudocode into the appropriate places in your source:
 		```typescript
 		// Create the Rivet client.
 		//
-		// `RIVET_DEV_TOKEN` will not be defined in production, so the game will
-		// use tokenless authentication.
-		//
-		// `RIVET_DEV_TOKEN` is generated on `rivet init`. See docs for more details.
+		// `RIVET_DEV_TOKEN` is generated with `rivet init`. This will use
+		// tokenless authentication in production.
 		import { RivetClient } from "@rivet-gg/api";
 		let rivet = new RivetClient({ token: process.env.RIVET_DEV_TOKEN });
 
@@ -107,9 +105,12 @@ Copy the following pseudocode into the appropriate places in your source:
 		let ws = new WebSocket(`wss://${res.ports["default"].host}/?token=${res.player.token}`);
 		```
 
-		Read more about [development tokens](/general/concepts/dev-tokens) and [tokenless authentication](/general/concepts/tokenless-authentication-web).
 
-		<Warning>Read more about handling Rivet tokens [here](/general/concepts/handling-game-tokens).</Warning>
+		<Warning>
+			Read more about Rivet tokens [here](/general/concepts/handling-game-tokens).
+
+			Read more about development tokens [here](/general/concepts/dev-tokens).
+		</Warning>
 	</Tab>
 	<Tab title="C#">
 		Coming soon

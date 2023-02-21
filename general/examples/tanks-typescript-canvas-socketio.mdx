@@ -76,11 +76,17 @@ npm install --save @rivet-gg/api
 Add the following to the top of `client/Client.ts`:
 
 ````typescript client/Client.ts
+// `RIVET_DEV_TOKEN` was generated while running `rivet init`. This will use
+// tokenless authentication in production.
 import { RivetClient } from "@rivet-gg/api";
 export const RIVET = new RivetClient({ token: process.env.RIVET_DEV_TOKEN });
 ````
 
-In production, `RIVET_DEV_TOKEN` will not be defined and [tokenless player authentication](/general/concepts/tokenless-authentication-web).
+<Info>
+    In production, `RIVET_DEV_TOKEN` will be `undefined` and instead will use [tokenless authentication](/general/concepts/tokenless-authentication-web).
+
+    Read more about Rivet tokens [here](/general/concepts/handling-game-tokens). Read more about development tokens [here](/general/concepts/dev-tokens).
+</Info>
 
 Find the `connect` function in `client/Client.ts` and replace it with the following:
 
@@ -108,6 +114,7 @@ Open the network inspector and reload to see a `POST` request to `https://matchm
 Add the following to the top of `server/index.ts`:
 
 ```typescript server/index.ts
+// RIVET_LOBBY_TOKEN is automatically added to the environment by Rivet.
 import { RivetClient } from "@rivet-gg/api";
 export const RIVET = new RivetClient({ token: process.env.RIVET_LOBBY_TOKEN });
 
