@@ -115,6 +115,7 @@
                         "general/concepts/token-types"
                     ]
                 },
+                "general/concepts/authoritative-vs-p2p",
                 // "general/concepts/alpha-beta-stable",
                 // "general/concepts/data-lod",
                 // "general/concepts/blocking-requests",
@@ -160,6 +161,7 @@
             "pages": [
                 // "matchmaker/concepts/glossary",
                 "matchmaker/concepts/finding-lobby",
+                "matchmaker/concepts/lobby-env",
                 // "matchmaker/concepts/anti-botting",
                 // "matchmaker/concepts/captchas",
                 // "matchmaker/concepts/closed-lobbies",

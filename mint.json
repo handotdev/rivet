@@ -97,7 +97,8 @@
                         "general/concepts/tokenless-authentication-web",
                         "general/concepts/token-types"
                     ]
-                }
+                },
+                "general/concepts/authoritative-vs-p2p"
             ]
         },
         {
