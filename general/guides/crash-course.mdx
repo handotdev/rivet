@@ -91,9 +91,14 @@ Copy the following pseudocode into the appropriate places in your source:
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
-		// Create the Rivet client
+		// Create the Rivet client.
+		//
+		// `RIVET_DEV_TOKEN` will not be defined in production, so the game will
+		// use tokenless authentication.
+		//
+		// `RIVET_DEV_TOKEN` is generated on `rivet init`. See docs for more details.
 		import { RivetClient } from "@rivet-gg/api";
-		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
+		let rivet = new RivetClient({ token: process.env.RIVET_DEV_TOKEN });
 
 		// Find a lobby (a new lobby will automatically be created on demand if needed)
 		let res = await rivet.matchmaker.lobbies.find({ gameModes: ["default"] });
@@ -101,6 +106,8 @@ Copy the following pseudocode into the appropriate places in your source:
 		// Connect to the lobby (Rivet automatically manages your SSL)
 		let ws = new WebSocket(`wss://${res.ports["default"].host}/?token=${res.player.token}`);
 		```
+
+		Read more about [development tokens](/general/concepts/dev-tokens) and [tokenless authentication](/general/concepts/tokenless-authentication-web).
 
 		<Warning>Read more about handling Rivet tokens [here](/general/concepts/handling-game-tokens).</Warning>
 	</Tab>
@@ -138,8 +145,9 @@ Copy the following pseudocode into the appropriate places in your source:
 <Tabs>
 	<Tab title="TypeScript">
 		```typescript
+		// RIVET_LOBBY_TOKEN is automatically added to the environment by Rivet.
 		import { RivetClient } from "@rivet-gg/api";
-		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
+		let rivet = new RivetClient({ token: process.env.RIVET_LOBBY_TOKEN });
 
 		// Tell Rivet your server is ready. This gives you time to load maps and
 		// other data before accepting players.

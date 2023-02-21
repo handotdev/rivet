@@ -323,6 +323,7 @@
             "group": "Concepts",
             "pages": [
                 "matchmaker/concepts/finding-lobby",
+                "matchmaker/concepts/lobby-env",
                 "matchmaker/concepts/competitive-matchmaking"
             ]
         },

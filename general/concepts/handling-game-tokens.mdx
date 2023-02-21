@@ -12,7 +12,7 @@ For example:
 <Tabs>
 	<Tab title="TypeScript">
         ```typescript
-		let rivet = new RivetClient({ token: process.env.RIVET_TOKEN });
+		let rivet = new RivetClient({ token: process.env.RIVET_PUBLIC_TOKEN });
         ```
 	</Tab>
 	<Tab title="C#">
@@ -33,7 +33,7 @@ This document will talk about handling [public](/general/concepts/token-types#na
 
 ## Server-side lobby tokens
 
-All lobby servers running on Rivet are automatically provided a unique [lobby token](/general/concepts/token-types#matchmaker-lobby) in the `RIVET_TOKEN` environment variable. No extra work is required.
+All lobby servers running on Rivet are automatically provided a unique [lobby token](/general/concepts/token-types#matchmaker-lobby) in the `RIVET_LOBBY_TOKEN` environment variable. No extra work is required.
 
 <Warning>Make sure that your lobby token is never leaked. It has permission to perform sensitive actions.</Warning>
 
