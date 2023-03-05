@@ -3657,6 +3657,50 @@ paths:
       servers:
         - url: https://identity.api.rivet.gg/v1
       security: *ref_0
+  /identities/self/recent-followers:
+    get:
+      operationId: identity_listRecentFollowers
+      tags:
+        - Identity
+      parameters:
+        - name: count
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: watch_index
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/WatchQuery'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityListRecentFollowersOutput'
+      servers:
+        - url: https://identity.api.rivet.gg/v1
+      security: *ref_0
+  /identities/self/recent-followers/{identity_id}/ignore:
+    post:
+      operationId: identity_ignoreRecentFollower
+      tags:
+        - Identity
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://identity.api.rivet.gg/v1
+      security: *ref_0
   /identities/self/friends:
     get:
       operationId: identity_listFriends
@@ -4930,10 +4974,11 @@ components:
       properties:
         port:
           type: integer
+        port_range:
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortRange'
         protocol:
-          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortProtocol'
       required:
-        - port
         - protocol
     CloudDevicesPrepareDeviceLinkOutput:
       type: object
@@ -5583,13 +5628,20 @@ components:
       required:
         - min
         - max
-    CloudVersionMatchmakerProxyProtocol:
+    CloudVersionMatchmakerPortProtocol:
       type: string
       enum:
         - http
         - https
+        - tcp
+        - tcp_tls
         - udp
-      description: A proxy protocol.
+      description: A port protocol.
+    CloudVersionMatchmakerProxyKind:
+      type: string
+      enum:
+        - none
+        - game_guard
     CloudVersionMatchmakerCaptcha:
       type: object
       description: Matchmaker captcha configuration.
@@ -5694,12 +5746,18 @@ components:
         port_range:
           $ref: '#/components/schemas/CloudVersionMatchmakerPortRange'
         protocol:
-          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortProtocol'
+        proxy:
+          $ref: '#/components/schemas/CloudVersionMatchmakerProxyKind'
+          description: How this port should be proxied. Defaults to 'game-guard`.
         dev_port:
           type: integer
           description: Client-side configuration
+        dev_port_range:
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortRange'
+          description: Client-side configuration
         dev_protocol:
-          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortProtocol'
           description: Client-side configuration
     CloudVersionMatchmakerGameModeIdleLobbiesConfig:
       type: object
@@ -5835,7 +5893,7 @@ components:
         port_range:
           $ref: '#/components/schemas/CloudVersionMatchmakerPortRange'
         proxy_protocol:
-          $ref: '#/components/schemas/CloudVersionMatchmakerProxyProtocol'
+          $ref: '#/components/schemas/CloudVersionMatchmakerPortProtocol'
       required:
         - label
         - proxy_protocol
@@ -7840,6 +7898,7 @@ components:
           description: Client-side configuration
         site:
           type: string
+          format: uuid
           description: A universally unique identifier.
         routes:
           type: array
@@ -8217,6 +8276,18 @@ components:
             $ref: '#/components/schemas/IdentityHandle'
       required:
         - identities
+    IdentityListRecentFollowersOutput:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityHandle'
+        watch:
+          $ref: '#/components/schemas/WatchResponse'
+      required:
+        - identities
+        - watch
     IdentityListFriendsOutput:
       type: object
       properties:

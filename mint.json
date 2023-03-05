@@ -359,7 +359,8 @@
                     ]
                 },
                 "serverless-lobbies/concepts/available-regions",
-                "serverless-lobbies/concepts/available-tiers"
+                "serverless-lobbies/concepts/available-tiers",
+                "serverless-lobbies/concepts/ports"
             ]
         },
         {
@@ -420,6 +421,8 @@
                 "identity/api/get-identities-self-profile",
                 "identity/api/post-identities-self-profile",
                 "identity/api/post-identities-self-profile-validate",
+                "identity/api/get-identities-self-recent-followers",
+                "identity/api/post-identities-self-recent-followers-ignore",
                 "identity/api/delete-identities-follow",
                 "identity/api/post-identities-follow",
                 "identity/api/get-identities-followers",

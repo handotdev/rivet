@@ -203,7 +203,7 @@
                 // "serverless-lobbies/concepts/architecture",
                 "serverless-lobbies/concepts/available-regions",
                 "serverless-lobbies/concepts/available-tiers",
-                // "serverless-lobbies/concepts/ports",
+                "serverless-lobbies/concepts/ports",
                 // "serverless-lobbies/concepts/billing",
                 // "serverless-lobbies/concepts/ddos",
                 // "serverless-lobbies/concepts/host-bridge-networking",
