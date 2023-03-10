@@ -99,10 +99,6 @@ Use the C++ version. While Rivet also works with Blueprints, we haven't put toge
 
 ### Install Rivet CLI
 
-### Write server Dockerfile
-
-### Create a download page
-
 ### Initiate project
 
 ---
@@ -129,7 +125,14 @@ public class MyProject : ModuleRules
 
 ### Copy Rivet module
 
+### Add token to config
+
 ### Build connection UI
+
+- Create menu scene
+- Set menu scene game mode to GameModeBase
+
+![Set game mode base](/images/unreal-set-game-mode-base.png)
 
 ### Build connection code
 
@@ -142,6 +145,14 @@ public class MyProject : ModuleRules
 ---
 
 ## Step 5: Publish
+
+### Write server Dockerfile
+
+### Build server
+
+### Build client
+
+### Deploy
 
 ---
 
@@ -217,6 +228,8 @@ public class MyProject : ModuleRules
 	However, there's a bug in Unreal Engine that causes the spawned standalone clients to use the *Server Map Name Override*, which makes this useless.
 
 	Read more [here](https://www.reddit.com/r/unrealengine/comments/pnquou/question_main_menu_multiplayer/).
+
+	See also [this trouble shooting section](#standalone-client-automatically-goes-to-the-wrong-map).
 </Accordion>
 
 ### Useful commands
@@ -263,12 +276,23 @@ TODO
 ### Multiplayer overview
 
 - [Multiplayer replication overview](https://www.youtube.com/watch?v=JOJP0CvpB8w)
+- [eXi Network Compendium](https://cedric-neukirchen.net/Downloads/Compendium/UE4_Network_Compendium_by_Cedric_eXi_Neukirchen.pdf)
 - [Networking overview](https://docs.unrealengine.com/5.0/en-US/networking-overview-for-unreal-engine/)
 - [Multiplayer programming quickstart](https://docs.unrealengine.com/5.0/en-US/multiplayer-programming-quick-start-for-unreal-engine/)
 
 ---
 
 ## Troubleshooting
+
+### Port 7777 already taken for development
+
+```
+netstat -aon | findstr "7777"
+```
+
+```
+taskkill /F /PID MY_PID_HERE
+```
 
 ### Empty level/no lighting when running with 2+ clients in PIE
 
@@ -277,7 +301,7 @@ This issue can be mitigated by running separate processes when testing your game
 1. Navigate to _Editor Settings > Play_
 1. Set _Multiplayer Options > Run Under One Process_ to _false_
 
-### Standalone client automatically goes to the wrong Map
+### Standalone client automatically goes to the wrong map
 
 1. Navigate to _Editor Settings > Play_
 1. Clear the field _Server > Server Map Name Override_
