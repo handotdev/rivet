@@ -82,7 +82,8 @@
                 {
                     "group": "Example Projects",
                     "pages": [
-                        "general/examples/tanks-typescript-canvas-socketio"
+                        "general/examples/tanks-typescript-canvas-socketio",
+                        "general/examples/unreal/starter",
                     ]
                 },
                 // {
