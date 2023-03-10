@@ -192,18 +192,16 @@
             "group": "Concepts",
             "pages": [
                 {
-                    "group": "Protocols",
+                    "group": "Networking",
                     "pages": [
-                        "serverless-lobbies/concepts/protocols/websocket",
-                        "serverless-lobbies/concepts/protocols/tcp",
-                        "serverless-lobbies/concepts/protocols/udp",
-                        "serverless-lobbies/concepts/protocols/webrtc"
+                        "serverless-lobbies/concepts/game-guard",
+                        "serverless-lobbies/concepts/protocols",
+                        "serverless-lobbies/concepts/ports",
                     ]
                 },
                 // "serverless-lobbies/concepts/architecture",
                 "serverless-lobbies/concepts/available-regions",
                 "serverless-lobbies/concepts/available-tiers",
-                "serverless-lobbies/concepts/ports",
                 // "serverless-lobbies/concepts/billing",
                 // "serverless-lobbies/concepts/ddos",
                 // "serverless-lobbies/concepts/host-bridge-networking",
@@ -213,7 +211,6 @@
                 // "serverless-lobbies/concepts/logging-metrics",
                 // "serverless-lobbies/concepts/one-lobby-one-container",
                 // "serverless-lobbies/concepts/resource-limits",
-                // "serverless-lobbies/concepts/rivet-game-guard",
                 // "serverless-lobbies/concepts/ssl"
             ]
         },
