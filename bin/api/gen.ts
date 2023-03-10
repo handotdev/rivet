@@ -68,8 +68,7 @@ let importantEndpoints = {
 	"identity": [
 		"POST /identities",
 		"POST /game-links",
-		"POST /game-links/complete",
-		"GET /game-links/complete",
+		"GET /events/live",
 	],
 	"cloud": [
 		"POST /games/{game_id}/versions",

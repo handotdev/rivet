@@ -383,9 +383,9 @@
         {
             "group": "API",
             "pages": [
+                "identity/api/get-events-live",
                 "identity/api/post-game-links",
                 "identity/api/post-identities",
-                "identity/api/get-events-live",
                 "identity/api/get-game-links",
                 "identity/api/get-groups",
                 "identity/api/post-groups",
