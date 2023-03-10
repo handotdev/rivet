@@ -1,0 +1,85 @@
+[Setting up server maps](https://www.youtube.com/watch?v=lIMrUF8mMpU)
+
+Relevant issue with black screen: https://forums.unrealengine.com/t/server-not-initializing-clients-properly-black-screen-on-map-load/250448
+
+PlayFab reference: https://learn.microsoft.com/en-us/gaming/playfab/sdks/unreal/quickstart
+
+[Official guide](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/ModuleQuickStart/)
+
+- Copy Rivet API directory to `Source\Rivet`
+- Click _Tools > Refresh Visual Studio Project_
+- Add the module under `Modules` in `MyProject.uproject`
+
+**MultiplayerTest1.uproject**
+
+```json
+{
+  "FileVersion": 3,
+  "EngineAssociation": "{8DB54E79-4DF0-44DC-12FF-C2BBF5161BB7}",
+  "Category": "",
+  "Description": "",
+  "Modules": [
+    {
+      "Name": "MultiplayerTest1",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "Rivet",
+      "Type": "Runtime"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "ModelingToolsEditorMode",
+      "Enabled": true,
+      "TargetAllowList": ["Editor"]
+    }
+  ]
+}
+```
+
+- Update `Source\MyProject\MyProject.Build.cs` to add `"Rivet"` to `PublicDependencyModuleNames`
+
+```csharp
+using UnrealBuildTool;
+
+public class MultiplayerTest1 : ModuleRules
+{
+	public MultiplayerTest1(ReadOnlyTargetRules Target) : base(Target)
+	{
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "EnhancedInput", "Rivet" });
+	}
+}
+```
+
+- Add the header
+
+```cpp
+#include "Rivet/Public/OpenAPIMatchmakerLobbiesApi.h"
+#include "Rivet/Public/OpenAPIMatchmakerLobbiesApiOperations.h"
+```
+
+- Add the code
+
+```cpp
+// This code is incomplete
+
+Rivet::OpenAPIMatchmakerLobbiesApi::MatchmakerLobbiesFindRequest Request;
+Request.OpenAPIMatchmakerLobbiesFindRequest.GameModes.Add("default");
+/*
+Request.SetTitleId(TEXT("YOUR_TITLE_ID"));
+Request.SetQueueName(TEXT("YOUR_QUEUE_NAME"));
+Request.SetArchetype(TEXT("YOUR_ARCHETYPE"));
+Request.SetRegion(TEXT("YOUR_REGION"));
+*/
+
+FMatchmakerLobbiesFindDelegate MyDelegate;
+MyDelegate.BindLambda([](const Rivet::OpenAPIMatchmakerLobbiesApi::MatchmakerLobbiesFindResponse& Response) {
+    UE_LOG(LogTemp, Log, TEXT("Matchmaking found lobby %s"), Result.Content.Lobby.LobbyId);
+});
+
+FHttpRequestPtr HttpRequest = Rivet::OpenAPIMatchmakerLobbiesApi::OpenAPIMatchmakerLobbiesApi().MatchmakerLobbiesFind(Request, MyDelegate);
+```
