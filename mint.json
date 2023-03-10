@@ -21,17 +21,17 @@
         }
     },
     "topbarCtaButton": {
-        "name": "Dashboard",
-        "url": "https://rivet.gg/"
+        "name": "Sign Up for Beta",
+        "url": "https://b8v8449klvp.typeform.com/rivet"
     },
     "topbarLinks": [
         {
-            "name": "Libraries",
-            "url": "general/libraries"
-        },
-        {
             "name": "Discord",
             "url": "https://discord.gg/BG2vqsJczH"
+        },
+        {
+            "name": "Dashboard",
+            "url": "https://hub.rivet.gg/developer/dashboard"
         }
     ],
     "topAnchor": {
