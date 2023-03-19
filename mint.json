@@ -325,6 +325,7 @@
             "pages": [
                 "matchmaker/concepts/finding-lobby",
                 "matchmaker/concepts/lobby-env",
+                "matchmaker/concepts/auto-region-selection",
                 "matchmaker/concepts/competitive-matchmaking"
             ]
         },

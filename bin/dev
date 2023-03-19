@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euf -o pipefail
 
-npx mintlify dev --port 5081
+npm install -g mintlify
+mintlify dev --port 5081
 

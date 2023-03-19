@@ -3,6 +3,8 @@ title: "Identity"
 description: "Allow identities to authenticate and play with friends across multiple games."
 ---
 
+Rivet Identities are used to uniquely identity users. Rivet Identities can work as an entire account system, but are built to work with existing account systems.
+
 Rivet Identities include the following features:
 
 - Presence
@@ -13,6 +15,12 @@ Rivet Identities include the following features:
 - Parties
 - Fuzzy search
 
+To integrate Rivet Identities, 
+- **[identity.setup](/identity/api/post-identities)**: creates a new identity and returns a token used for future API requests; this token can be stored in your existing account database
+- **[identity.events.watch](/identity/api/get-events-live)** (optional): returns realtime updates for the identity such as party updates, chat messages, and more
+- **[identity.links.prepare](/identity/api/post-game-links)** (optional): starts the linking process for connecting the Rivet Identity to the Rivet Hub
+
+When integrating Rivet Identities, we provide an identity token. You can use that token to integrate with existing account systems.
 <CardGroup>
 	<Card
 		title="Friend discovery mechanisms"
@@ -27,15 +35,15 @@ Rivet Identities include the following features:
 		href="/identity/api/post-identities"
 	/>
 	<Card
-		title="identity.links.prepare"
-		icon="code"
-		iconType="duotone"
-		href="/identity/api/post-game-links"
-	/>
-	<Card
 		title="identity.events.watch"
 		icon="code"
 		iconType="duotone"
 		href="/identity/api/get-events-live"
+	/>
+	<Card
+		title="identity.links.prepare"
+		icon="code"
+		iconType="duotone"
+		href="/identity/api/post-game-links"
 	/>
 </CardGroup>
