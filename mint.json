@@ -113,96 +113,9 @@
             "group": "Errors",
             "pages": [
                 {
-                    "group": "claims",
-                    "pages": [
-                        "errors/claims/missing-entitlement",
-                        "errors/claims/entitlement-expired"
-                    ]
-                },
-                {
-                    "group": "upload",
-                    "pages": [
-                        "errors/upload/nsfw-content-detected"
-                    ]
-                },
-                {
-                    "group": "validation",
-                    "pages": [
-                        "errors/validation/error"
-                    ]
-                },
-                {
-                    "group": "uuid",
-                    "pages": [
-                        "errors/uuid/invalid"
-                    ]
-                },
-                {
-                    "group": "glob",
-                    "pages": [
-                        "errors/glob/invalid"
-                    ]
-                },
-                {
                     "group": "game-user",
                     "pages": [
                         "errors/game-user/link-failed"
-                    ]
-                },
-                {
-                    "group": "api",
-                    "pages": [
-                        {
-                            "group": "cors",
-                            "pages": [
-                                "errors/api/cors/origin-not-allowed",
-                                "errors/api/cors/header-not-allowed",
-                                "errors/api/cors/method-not-allowed"
-                            ]
-                        },
-                        "errors/api/bad-query-parameter",
-                        "errors/api/bad-header",
-                        "errors/api/unauthorized",
-                        "errors/api/body-too-large",
-                        "errors/api/missing-header",
-                        "errors/api/bad-query",
-                        "errors/api/invalid-ip",
-                        "errors/api/bad-headers",
-                        "errors/api/forbidden",
-                        "errors/api/bad-content-length",
-                        "errors/api/not-found",
-                        "errors/api/rate-limit",
-                        "errors/api/bad-body",
-                        "errors/api/bad-cookie",
-                        "errors/api/missing-cookie"
-                    ]
-                },
-                {
-                    "group": "mm",
-                    "pages": [
-                        "errors/mm/game-mode-not-found",
-                        "errors/mm/lobby-stopped",
-                        "errors/mm/lobby-not-found",
-                        "errors/mm/player-not-in-lobby",
-                        "errors/mm/player-already-connected",
-                        "errors/mm/too-many-lobbies",
-                        "errors/mm/player-removed",
-                        "errors/mm/lobby-closed",
-                        "errors/mm/player-not-found",
-                        "errors/mm/region-not-enabled-for-game-mode",
-                        "errors/mm/too-many-players-from-source",
-                        "errors/mm/lobby-not-started",
-                        "errors/mm/lobby-full",
-                        "errors/mm/player-registration-expired",
-                        "errors/mm/no-available-lobbies"
-                    ]
-                },
-                {
-                    "group": "cloud",
-                    "pages": [
-                        "errors/cloud/device-link-already-complete",
-                        "errors/cloud/hostname-taken",
-                        "errors/cloud/too-many-pending-hostnames-for-group"
                     ]
                 },
                 {
@@ -215,83 +128,14 @@
                     ]
                 },
                 {
-                    "group": "captcha",
+                    "group": "token",
                     "pages": [
-                        "errors/captcha/captcha-failed",
-                        "errors/captcha/captcha-invalid",
-                        "errors/captcha/captcha-required"
-                    ]
-                },
-                {
-                    "group": "game",
-                    "pages": [
-                        "errors/game/game-not-found"
-                    ]
-                },
-                {
-                    "group": "group",
-                    "pages": [
-                        {
-                            "group": "invite",
-                            "pages": [
-                                "errors/group/invite/code-already-used",
-                                "errors/group/invite/code-revoked",
-                                "errors/group/invite/code-invalid",
-                                "errors/group/invite/code-expired"
-                            ]
-                        },
-                        "errors/group/join-request-already-exists",
-                        "errors/group/full",
-                        "errors/group/member-banned",
-                        "errors/group/group-not-developer-group",
-                        "errors/group/group-invalid-developer-status",
-                        "errors/group/failed-to-consume-invite",
-                        "errors/group/not-joinable",
-                        "errors/group/not-member",
-                        "errors/group/insufficient-permissions",
-                        "errors/group/not-found",
-                        "errors/group/already-member",
-                        "errors/group/group-enterprise-restriction",
-                        "errors/group/cannot-request-join"
-                    ]
-                },
-                {
-                    "group": "party",
-                    "pages": [
-                        "errors/party/party-full",
-                        "errors/party/party-not-found",
-                        "errors/party/cannot-set-party-leader-to-self",
-                        "errors/party/cannot-kick-self",
-                        "errors/party/unexpected-invite-alias",
-                        "errors/party/already-in-party",
-                        "errors/party/party-not-in-game",
-                        "errors/party/identity-not-party-leader",
-                        "errors/party/invite-not-found",
-                        "errors/party/invite-alias-not-unique",
-                        "errors/party/bad-invite-alias-length",
-                        "errors/party/leader-not-in-same-party",
-                        "errors/party/too-many-invites",
-                        "errors/party/invite-alias-not-found",
-                        "errors/party/party-not-joinable",
-                        "errors/party/bad-size",
-                        "errors/party/identity-not-in-any-party"
-                    ]
-                },
-                {
-                    "group": "chat",
-                    "pages": [
-                        "errors/chat/invalid-topic",
-                        "errors/chat/thread-not-found",
-                        "errors/chat/invalid-body"
-                    ]
-                },
-                {
-                    "group": "identity",
-                    "pages": [
-                        "errors/identity/not-registered",
-                        "errors/identity/not-found",
-                        "errors/identity/not-admin",
-                        "errors/identity/wrong-identity"
+                        "errors/token/invalid",
+                        "errors/token/revoked",
+                        "errors/token/exchange-failed",
+                        "errors/token/generic-error",
+                        "errors/token/refresh-not-found",
+                        "errors/token/expired"
                     ]
                 },
                 {
@@ -303,13 +147,171 @@
                     ]
                 },
                 {
-                    "group": "token",
+                    "group": "party",
                     "pages": [
-                        "errors/token/revoked",
-                        "errors/token/exchange-failed",
-                        "errors/token/expired",
-                        "errors/token/refresh-not-found",
-                        "errors/token/invalid"
+                        "errors/party/party-not-found",
+                        "errors/party/invite-alias-not-found",
+                        "errors/party/bad-size",
+                        "errors/party/party-not-in-game",
+                        "errors/party/invite-not-found",
+                        "errors/party/identity-not-in-any-party",
+                        "errors/party/already-in-party",
+                        "errors/party/leader-not-in-same-party",
+                        "errors/party/invite-alias-not-unique",
+                        "errors/party/cannot-set-party-leader-to-self",
+                        "errors/party/party-not-joinable",
+                        "errors/party/bad-invite-alias-length",
+                        "errors/party/party-full",
+                        "errors/party/unexpected-invite-alias",
+                        "errors/party/too-many-invites",
+                        "errors/party/cannot-kick-self",
+                        "errors/party/identity-not-party-leader"
+                    ]
+                },
+                {
+                    "group": "uuid",
+                    "pages": [
+                        "errors/uuid/invalid"
+                    ]
+                },
+                {
+                    "group": "upload",
+                    "pages": [
+                        "errors/upload/nsfw-content-detected"
+                    ]
+                },
+                {
+                    "group": "group",
+                    "pages": [
+                        {
+                            "group": "invite",
+                            "pages": [
+                                "errors/group/invite/code-already-used",
+                                "errors/group/invite/code-invalid",
+                                "errors/group/invite/code-expired",
+                                "errors/group/invite/code-revoked"
+                            ]
+                        },
+                        "errors/group/failed-to-consume-invite",
+                        "errors/group/group-invalid-developer-status",
+                        "errors/group/already-member",
+                        "errors/group/member-banned",
+                        "errors/group/group-not-developer-group",
+                        "errors/group/join-request-already-exists",
+                        "errors/group/insufficient-permissions",
+                        "errors/group/not-found",
+                        "errors/group/not-member",
+                        "errors/group/full",
+                        "errors/group/cannot-request-join",
+                        "errors/group/not-joinable",
+                        "errors/group/group-enterprise-restriction"
+                    ]
+                },
+                {
+                    "group": "validation",
+                    "pages": [
+                        "errors/validation/error"
+                    ]
+                },
+                {
+                    "group": "captcha",
+                    "pages": [
+                        "errors/captcha/captcha-failed",
+                        "errors/captcha/captcha-required",
+                        "errors/captcha/captcha-origin-not-allowed",
+                        "errors/captcha/captcha-invalid"
+                    ]
+                },
+                {
+                    "group": "cloud",
+                    "pages": [
+                        "errors/cloud/device-link-already-complete",
+                        "errors/cloud/hostname-taken",
+                        "errors/cloud/too-many-pending-hostnames-for-group"
+                    ]
+                },
+                {
+                    "group": "claims",
+                    "pages": [
+                        "errors/claims/missing-entitlement",
+                        "errors/claims/entitlement-expired"
+                    ]
+                },
+                {
+                    "group": "chat",
+                    "pages": [
+                        "errors/chat/invalid-topic",
+                        "errors/chat/thread-not-found",
+                        "errors/chat/invalid-body"
+                    ]
+                },
+                {
+                    "group": "api",
+                    "pages": [
+                        {
+                            "group": "cors",
+                            "pages": [
+                                "errors/api/cors/method-not-allowed",
+                                "errors/api/cors/origin-not-allowed",
+                                "errors/api/cors/header-not-allowed"
+                            ]
+                        },
+                        "errors/api/bad-cookie",
+                        "errors/api/bad-header",
+                        "errors/api/invalid-ip",
+                        "errors/api/unauthorized",
+                        "errors/api/bad-content-length",
+                        "errors/api/bad-headers",
+                        "errors/api/missing-header",
+                        "errors/api/missing-cookie",
+                        "errors/api/forbidden",
+                        "errors/api/bad-body",
+                        "errors/api/bad-query-parameter",
+                        "errors/api/bad-query",
+                        "errors/api/not-found",
+                        "errors/api/body-too-large",
+                        "errors/api/rate-limit"
+                    ]
+                },
+                {
+                    "group": "glob",
+                    "pages": [
+                        "errors/glob/invalid"
+                    ]
+                },
+                {
+                    "group": "game",
+                    "pages": [
+                        "errors/game/game-not-found"
+                    ]
+                },
+                {
+                    "group": "identity",
+                    "pages": [
+                        "errors/identity/wrong-identity",
+                        "errors/identity/not-admin",
+                        "errors/identity/not-found",
+                        "errors/identity/not-registered"
+                    ]
+                },
+                {
+                    "group": "mm",
+                    "pages": [
+                        "errors/mm/player-already-connected",
+                        "errors/mm/lobby-closed",
+                        "errors/mm/player-removed",
+                        "errors/mm/player-not-in-lobby",
+                        "errors/mm/lobby-not-started",
+                        "errors/mm/region-not-enabled-for-game-mode",
+                        "errors/mm/lobby-not-found",
+                        "errors/mm/lobby-stopped",
+                        "errors/mm/player-not-found",
+                        "errors/mm/game-mode-not-found",
+                        "errors/mm/lobby-full",
+                        "errors/mm/no-available-lobbies",
+                        "errors/mm/player-registration-expired",
+                        "errors/mm/too-many-lobbies",
+                        "errors/mm/too-many-players-from-source"
                     ]
                 }
             ]
@@ -339,6 +341,7 @@
                 "matchmaker/api/post-players-disconnected",
                 "matchmaker/api/put-lobbies-closed",
                 "matchmaker/api/get-lobbies-list",
+                "matchmaker/api/get-players-statistics",
                 "matchmaker/api/get-regions"
             ]
         },
@@ -417,6 +420,9 @@
                 "identity/api/get-identities-search",
                 "identity/api/delete-identities-self-activity",
                 "identity/api/post-identities-self-activity",
+                "identity/api/post-identities-self-beta-signup",
+                "identity/api/delete-identities-self-delete-request",
+                "identity/api/post-identities-self-delete-request",
                 "identity/api/get-identities-self-friends",
                 "identity/api/get-identities-self-profile",
                 "identity/api/post-identities-self-profile",
@@ -426,6 +432,7 @@
                 "identity/api/delete-identities-follow",
                 "identity/api/post-identities-follow",
                 "identity/api/get-identities-followers",
+                "identity/api/get-identities-following",
                 "identity/api/get-identities-mutual-friends",
                 "identity/api/get-identities-profile",
                 "identity/api/post-identities-report",
@@ -489,6 +496,7 @@
                 "cloud/api/post-games-tokens-development",
                 "cloud/api/post-games-tokens-development-validate",
                 "cloud/api/post-games-tokens-public",
+                "cloud/api/get-games-version-history",
                 "cloud/api/post-games-prepare",
                 "cloud/api/post-games-tokens-cloud",
                 "cloud/api/post-games-versions-validate",
