@@ -8,7 +8,9 @@
         "auth": {
             "method": "bearer"
         },
-        "hidePlayground": true
+        "playground": {
+            "mode": "hide"
+        }
     },
     "favicon": "/favicon.png",
     "colors": {
